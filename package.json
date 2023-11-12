@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "frontend:install": "cd jomodi-ui && npm install",
+    "frontend:start": "cd jomodi-ui && npm run start",
+    "api:install": "cd jomodi-api && npm install",
+    "api:start": "cd jomodi-api && npm run start"
   },
   "keywords": [],
   "author": "",
