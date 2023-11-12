@@ -1,0 +1,45 @@
+# Dependencies
+*/node_modules
+
+# Compiled/dist directories
+*/dist
+
+# IDE/editor configuration files
+*/.vscode
+*/.idea
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment configuration files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Angular specific directories and files
+/src/**/*.js.map
+/src/**/*.js
+/angular.json
+
+# Nest.js specific directories and files
+*/src/**/*.js.map
+*/src/**/*.js
+*/nest-cli.json
+
+# Package lock files
+package-lock.json
+yarn.lock
+
+# TypeScript build files
+*.tsbuildinfo
+
+# Test coverage output folder
+/coverage
