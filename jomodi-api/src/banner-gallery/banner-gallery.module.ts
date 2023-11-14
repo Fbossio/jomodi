@@ -4,6 +4,6 @@ import { BannerGalleryController } from './banner-gallery.controller';
 
 @Module({
   providers: [BannerGalleryService],
-  controllers: [BannerGalleryController]
+  controllers: [BannerGalleryController],
 })
 export class BannerGalleryModule {}
