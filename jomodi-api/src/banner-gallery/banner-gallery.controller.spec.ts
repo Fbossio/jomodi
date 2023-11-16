@@ -14,6 +14,8 @@ describe('BannerGalleryController', () => {
           provide: BannerGalleryService,
           useValue: {
             save: jest.fn(),
+            list: jest.fn(),
+            remove: jest.fn(),
           },
         },
       ],
@@ -35,6 +37,21 @@ describe('BannerGalleryController', () => {
       } as Express.Multer.File;
       await controller.save(file);
       expect(service.save).toHaveBeenCalledWith(name, image, mimeType);
+    });
+  });
+
+  describe('list', () => {
+    it('should call BannerGalleryService.list', async () => {
+      await controller.list();
+      expect(service.list).toHaveBeenCalled();
+    });
+  });
+
+  describe('remove', () => {
+    it('should call BannerGalleryService.remove with the name', async () => {
+      const name = 'test.jpg';
+      await controller.remove(name);
+      expect(service.remove).toHaveBeenCalledWith(name);
     });
   });
 });

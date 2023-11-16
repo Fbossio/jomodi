@@ -1,6 +1,9 @@
 import {
   Controller,
+  Delete,
+  Get,
   Post,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -19,5 +22,15 @@ export class BannerGalleryController {
       file.buffer,
       file.mimetype,
     );
+  }
+
+  @Get()
+  list() {
+    return this.bannerGalleryService.list();
+  }
+
+  @Delete()
+  remove(@Query('name') name: string) {
+    return this.bannerGalleryService.remove(name);
   }
 }
