@@ -1,18 +1,46 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { BannerGalleryService } from './banner-gallery.service';
+import { ImageStoragePort } from './ports/image-storage';
 
 describe('BannerGalleryService', () => {
   let service: BannerGalleryService;
+  let mockImageStoragePort: jest.Mocked<ImageStoragePort>;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [BannerGalleryService],
-    }).compile();
+    mockImageStoragePort = {
+      save: jest.fn().mockResolvedValue('mocked-url'),
+      remove: jest.fn().mockResolvedValue('mocked-remove'),
+      list: jest.fn().mockResolvedValue(['mocked-list']),
+    };
 
-    service = module.get<BannerGalleryService>(BannerGalleryService);
+    service = new BannerGalleryService(mockImageStoragePort as any);
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+  describe('save', () => {
+    it('should call imageStoragePort.save with the correct arguments', async () => {
+      const name = 'test.jpg';
+      const image = Buffer.from('test image');
+
+      await service.save(name, image);
+
+      expect(mockImageStoragePort.save).toHaveBeenCalledWith(name, image);
+    });
+  });
+
+  describe('remove', () => {
+    it('should call imageStoragePort.remove with the correct arguments', async () => {
+      const name = 'test.jpg';
+
+      await service.remove(name);
+
+      expect(mockImageStoragePort.remove).toHaveBeenCalledWith(name);
+    });
+  });
+
+  describe('list', () => {
+    it('should call imageStoragePort.list', async () => {
+      await service.list();
+
+      expect(mockImageStoragePort.list).toHaveBeenCalled();
+    });
   });
 });
