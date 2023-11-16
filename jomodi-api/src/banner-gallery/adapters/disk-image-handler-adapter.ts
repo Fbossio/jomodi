@@ -6,9 +6,9 @@ import * as path from 'path';
 
 @Injectable()
 export class DiskImageHandlerAdapter implements ImageStoragePort {
-  private readonly imageDir = path.join(__dirname, '..', 'assets');
+  private readonly imageDir = path.join(__dirname, '..', '..', '..', 'assets');
 
-  async save(name: string, image: Buffer): Promise<string> {
+  async save(name: string, image: Buffer, mimeType: string): Promise<string> {
     try {
       await fs.promises.writeFile(path.join(this.imageDir, name), image);
       return Promise.resolve(path.join(this.imageDir, name));

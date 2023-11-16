@@ -6,8 +6,8 @@ import {
 } from '@aws-sdk/client-s3';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { nanoid } from 'nanoid';
 import { ImageStoragePort } from '../ports/image-storage';
+import { UuidService } from '../uuid.service';
 
 @Injectable()
 export class S3ImageHandlerAdapter implements ImageStoragePort {
@@ -20,17 +20,24 @@ export class S3ImageHandlerAdapter implements ImageStoragePort {
     });
   }
 
-  constructor(private readonly configService: ConfigService) {
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly uuidService: UuidService,
+  ) {
     this.s3Client = this.getS3Client();
   }
-  async save(name: string, image: Buffer): Promise<string> {
-    const suffix = nanoid(7);
+
+  async save(name: string, image: Buffer, mimeType: string): Promise<string> {
+    const uuid = this.uuidService.generateUuid();
+
     try {
       await this.s3Client.send(
         new PutObjectCommand({
           Bucket: this.configService.getOrThrow('AWS_S3_BUCKET'),
-          Key: `${this.prefix}${name}-${suffix}`,
+          Key: `${this.prefix}${uuid}-${name}`,
           Body: image,
+          ContentType: mimeType,
+          ContentDisposition: 'inline',
         }),
       );
 
@@ -38,7 +45,7 @@ export class S3ImageHandlerAdapter implements ImageStoragePort {
         'AWS_S3_BUCKET',
       )}.s3.${this.configService.getOrThrow('AWS_REGION')}.amazonaws.com/${
         this.prefix
-      }${name}-${suffix}`;
+      }${uuid}-${name}`;
       return url;
     } catch (error) {
       return Promise.reject(error);

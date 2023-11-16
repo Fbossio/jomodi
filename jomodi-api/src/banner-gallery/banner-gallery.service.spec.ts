@@ -19,10 +19,15 @@ describe('BannerGalleryService', () => {
     it('should call imageStoragePort.save with the correct arguments', async () => {
       const name = 'test.jpg';
       const image = Buffer.from('test image');
+      const mimeType = 'image/jpeg';
 
-      await service.save(name, image);
+      await service.save(name, image, mimeType);
 
-      expect(mockImageStoragePort.save).toHaveBeenCalledWith(name, image);
+      expect(mockImageStoragePort.save).toHaveBeenCalledWith(
+        name,
+        image,
+        mimeType,
+      );
     });
   });
 

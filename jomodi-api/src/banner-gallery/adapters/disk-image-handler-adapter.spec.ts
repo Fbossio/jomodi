@@ -5,7 +5,7 @@ import { DiskImageHandlerAdapter } from './disk-image-handler-adapter';
 
 describe('DiskImageHandlerAdapter', () => {
   let adapter: DiskImageHandlerAdapter;
-  const imageDir = path.join(__dirname, '..', 'assets');
+  const imageDir = path.join(__dirname, '..', '..', '..', 'assets');
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -31,8 +31,9 @@ describe('DiskImageHandlerAdapter', () => {
     it('should save an image', async () => {
       const name = 'test-image.png';
       const image = Buffer.from('test-image-data');
+      const mimeType = 'image/jpeg';
 
-      const result = await adapter.save(name, image);
+      const result = await adapter.save(name, image, mimeType);
 
       expect(result).toBe(path.join(imageDir, name));
     });
@@ -42,8 +43,9 @@ describe('DiskImageHandlerAdapter', () => {
     it('should remove an image', async () => {
       const name = 'test-image.png';
       const image = Buffer.from('test-image-data');
+      const mimeType = 'image/jpeg';
 
-      await adapter.save(name, image);
+      await adapter.save(name, image, mimeType);
 
       const result = await adapter.remove(name);
 
@@ -55,8 +57,9 @@ describe('DiskImageHandlerAdapter', () => {
     it('should list all images', async () => {
       const name = 'test-image.png';
       const image = Buffer.from('test-image-data');
+      const mimeType = 'image/jpeg';
 
-      await adapter.save(name, image);
+      await adapter.save(name, image, mimeType);
 
       const result = await adapter.list();
 
