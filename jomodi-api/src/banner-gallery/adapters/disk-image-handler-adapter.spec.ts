@@ -1,69 +1,53 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import * as fs from 'fs';
-import * as path from 'path';
+import { UuidService } from '../uuid.service';
 import { DiskImageHandlerAdapter } from './disk-image-handler-adapter';
 
+jest.mock('fs', () => ({
+  promises: {
+    writeFile: jest.fn(),
+    unlink: jest.fn(),
+    readdir: jest.fn().mockResolvedValue(['image1.png', 'image2.png']),
+  },
+}));
+
 describe('DiskImageHandlerAdapter', () => {
-  let adapter: DiskImageHandlerAdapter;
-  const imageDir = path.join(__dirname, '..', '..', '..', 'assets');
+  let diskImageHandlerAdapter: DiskImageHandlerAdapter;
+  let mockUuidService: UuidService;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [DiskImageHandlerAdapter],
-    }).compile();
-
-    adapter = module.get<DiskImageHandlerAdapter>(DiskImageHandlerAdapter);
+  beforeEach(() => {
+    mockUuidService = { generateUuid: jest.fn().mockReturnValue('test-uuid') };
+    diskImageHandlerAdapter = new DiskImageHandlerAdapter(mockUuidService);
   });
 
-  afterEach(async () => {
-    // delete all files in the imageDir
-    const files = await fs.promises.readdir(imageDir);
-    for (const file of files) {
-      await fs.promises.unlink(path.join(imageDir, file));
-    }
+  it('should save an image', async () => {
+    const testImage = Buffer.from('test-image');
+    const savedImagePath = await diskImageHandlerAdapter.save(
+      'test-name',
+      testImage,
+      'image/png',
+    );
+
+    expect(mockUuidService.generateUuid).toHaveBeenCalled();
+    expect(fs.promises.writeFile).toHaveBeenCalledWith(
+      expect.stringContaining('test-uuid-test-name'),
+      testImage,
+    );
+    expect(savedImagePath).toContain('test-uuid-test-name');
   });
 
-  it('should be defined', () => {
-    expect(adapter).toBeDefined();
+  it('should remove an image', async () => {
+    const response = await diskImageHandlerAdapter.remove('test-image.png');
+
+    expect(fs.promises.unlink).toHaveBeenCalledWith(
+      expect.stringContaining('test-image.png'),
+    );
+    expect(response).toBe('Image removed');
   });
 
-  describe('save', () => {
-    it('should save an image', async () => {
-      const name = 'test-image.png';
-      const image = Buffer.from('test-image-data');
-      const mimeType = 'image/jpeg';
+  it('should list all images', async () => {
+    const files = await diskImageHandlerAdapter.list();
 
-      const result = await adapter.save(name, image, mimeType);
-
-      expect(result).toBe(path.join(imageDir, name));
-    });
-  });
-
-  describe('remove', () => {
-    it('should remove an image', async () => {
-      const name = 'test-image.png';
-      const image = Buffer.from('test-image-data');
-      const mimeType = 'image/jpeg';
-
-      await adapter.save(name, image, mimeType);
-
-      const result = await adapter.remove(name);
-
-      expect(result).toEqual('Image removed');
-    });
-  });
-
-  describe('list', () => {
-    it('should list all images', async () => {
-      const name = 'test-image.png';
-      const image = Buffer.from('test-image-data');
-      const mimeType = 'image/jpeg';
-
-      await adapter.save(name, image, mimeType);
-
-      const result = await adapter.list();
-
-      expect(result).toEqual([name]);
-    });
+    expect(fs.promises.readdir).toHaveBeenCalledWith(expect.any(String));
+    expect(files).toEqual(['image1.png', 'image2.png']);
   });
 });

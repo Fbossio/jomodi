@@ -11,8 +11,8 @@ import { UuidService } from '../uuid.service';
 
 @Injectable()
 export class S3ImageHandlerAdapter implements ImageStoragePort {
-  private readonly prefix = 'banner/';
-  private readonly delimiter = '/';
+  private readonly prefix = 'banner-';
+  private readonly delimiter = '-';
   private readonly s3Client: S3Client;
   private getS3Client(): S3Client {
     return new S3Client({
@@ -56,7 +56,7 @@ export class S3ImageHandlerAdapter implements ImageStoragePort {
       await this.s3Client.send(
         new DeleteObjectCommand({
           Bucket: this.configService.getOrThrow('AWS_S3_BUCKET'),
-          Key: `${this.prefix}${name}`,
+          Key: name,
         }),
       );
       return 'Image removed';

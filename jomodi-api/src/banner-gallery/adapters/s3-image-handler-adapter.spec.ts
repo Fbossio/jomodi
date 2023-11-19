@@ -57,7 +57,7 @@ describe('S3ImageHandlerAdapter', () => {
     const mimeType = 'image/jpeg';
 
     const url = await s3ImageHandlerAdapter.save(name, image, mimeType);
-    const expectedKey = `banner/mocked-id-${name}`;
+    const expectedKey = `banner-mocked-id-${name}`;
 
     expect(PutObjectCommand).toHaveBeenCalledWith({
       Bucket: 'my-test-bucket',
@@ -72,13 +72,13 @@ describe('S3ImageHandlerAdapter', () => {
   });
 
   it('should successfully remove an image', async () => {
-    const name = 'test-image.jpg';
+    const name = 'banner-test-image.jpg';
 
     await s3ImageHandlerAdapter.remove(name);
 
     expect(DeleteObjectCommand).toHaveBeenCalledWith({
       Bucket: 'my-test-bucket',
-      Key: `banner/${name}`,
+      Key: name,
     });
   });
 });

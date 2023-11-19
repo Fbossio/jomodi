@@ -1,13 +1,16 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
+  Param,
   Post,
-  Query,
+  Put,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { UpdateBannerDto } from './Dtos/banner';
 import { BannerGalleryService } from './banner-gallery.service';
 
 @Controller('banner')
@@ -29,8 +32,18 @@ export class BannerGalleryController {
     return this.bannerGalleryService.list();
   }
 
-  @Delete()
-  remove(@Query('name') name: string) {
-    return this.bannerGalleryService.remove(name);
+  @Get('admin')
+  listAdmin() {
+    return this.bannerGalleryService.listAdmin();
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.bannerGalleryService.remove(id);
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() banner: UpdateBannerDto) {
+    return this.bannerGalleryService.update(id, banner);
   }
 }
