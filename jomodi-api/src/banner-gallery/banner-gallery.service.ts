@@ -31,8 +31,8 @@ export class BannerGalleryService {
     return this.bannerRepository.findAll();
   }
 
-  async listAdmin(): Promise<Banner[]> {
-    return this.bannerRepository.findAllAdmin();
+  async listAdmin(month?: number, year?: number): Promise<Banner[]> {
+    return this.bannerRepository.findAllAdmin(month, year);
   }
 
   async update(id: string, banner: UpdateBannerDto): Promise<Banner> {

@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -33,8 +34,10 @@ export class BannerGalleryController {
   }
 
   @Get('admin')
-  listAdmin() {
-    return this.bannerGalleryService.listAdmin();
+  listAdmin(@Query('month') month?: string, @Query('year') year?: string) {
+    const monthInt = month ? parseInt(month, 10) : undefined;
+    const yearInt = year ? parseInt(year, 10) : undefined;
+    return this.bannerGalleryService.listAdmin(monthInt, yearInt);
   }
 
   @Delete(':id')

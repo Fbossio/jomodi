@@ -32,9 +32,35 @@ export class BannerPostgresAdapter implements BannerRepository {
     }
   }
 
-  async findAllAdmin(): Promise<Banner[]> {
+  async findAllAdmin(month?: number, year?: number): Promise<Banner[]> {
     try {
-      const banners = await this.bannerRepository.find();
+      const query = this.bannerRepository.createQueryBuilder('banner');
+
+      if (month !== undefined && year !== undefined) {
+        // Case: both month and year are present
+        const startDate = new Date(year, month - 1, 1);
+        const endDate = new Date(year, month, 0);
+        query.where(
+          'banner.createdAt >= :startDate AND banner.createdAt <= :endDate',
+          { startDate, endDate },
+        );
+      } else if (year !== undefined) {
+        // Case: only year is present
+        const startDate = new Date(year, 0, 1);
+        const endDate = new Date(year + 1, 0, 1);
+        query.where(
+          'banner.createdAt >= :startDate AND banner.createdAt < :endDate',
+          { startDate, endDate },
+        );
+      } else if (month !== undefined) {
+        // Case: only month is present
+
+        throw new Error(
+          'Month provided without year. Please provide both month and year, or year only.',
+        );
+      }
+      // Case: neither month nor year is present
+      const banners = await query.getMany();
       return banners.map((banner) => new Banner(banner));
     } catch (error) {
       Promise.reject(error);
