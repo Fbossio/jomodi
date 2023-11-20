@@ -1,11 +1,16 @@
 export class Banner {
   id: number;
   imageUrl: string;
-  status: string;
+  status: BannerStatus;
   createdAt: Date;
   updatedAt: Date;
 
   constructor(banner: Partial<Banner>) {
     Object.assign(this, banner);
   }
+}
+
+export enum BannerStatus {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
 }

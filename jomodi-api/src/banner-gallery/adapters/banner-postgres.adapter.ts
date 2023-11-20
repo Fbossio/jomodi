@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateBannerDto, UpdateBannerDto } from '../Dtos/banner';
-import { Banner } from '../Entities/banner';
+import { Banner, BannerStatus } from '../Entities/banner';
 import { BannerRepository } from '../ports/banner-repository';
 import { BannerEntity } from '../schemas/banner.schema';
 
@@ -24,7 +24,7 @@ export class BannerPostgresAdapter implements BannerRepository {
   async findAll(): Promise<Banner[]> {
     try {
       const banners = await this.bannerRepository.find({
-        where: { status: 'active' },
+        where: { status: BannerStatus.ACTIVE },
       });
       return banners.map((banner) => new Banner(banner));
     } catch (error) {

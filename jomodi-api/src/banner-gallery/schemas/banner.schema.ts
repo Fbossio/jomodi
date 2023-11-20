@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { BannerStatus } from '../Entities/banner';
 
 @Entity()
 export class BannerEntity extends BaseEntity {
@@ -15,8 +16,8 @@ export class BannerEntity extends BaseEntity {
   @Column()
   imageUrl: string;
 
-  @Column({ default: 'active' })
-  status: string;
+  @Column({ default: BannerStatus.ACTIVE })
+  status: BannerStatus;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

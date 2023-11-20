@@ -1,8 +1,15 @@
+import { IsEnum, IsOptional, IsString } from 'class-validator';
+import { BannerStatus } from '../Entities/banner';
+
 export class CreateBannerDto {
+  @IsString()
   imageUrl: string;
-  status?: string;
+  @IsOptional()
+  @IsEnum(BannerStatus)
+  status?: BannerStatus;
 }
 
 export class UpdateBannerDto {
-  status: string;
+  @IsEnum(BannerStatus)
+  status: BannerStatus;
 }
