@@ -6,5 +6,4 @@ export interface ImageStoragePort {
     prefix: string,
   ): Promise<string>;
   remove(name: string): Promise<string>;
-  // list(): Promise<string[]>;
 }

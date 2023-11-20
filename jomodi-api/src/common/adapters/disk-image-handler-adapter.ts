@@ -8,7 +8,6 @@ import { UuidService } from '../uuid.service';
 @Injectable()
 export class DiskImageHandlerAdapter implements ImageStoragePort {
   private readonly imageDir = path.join(__dirname, '..', '..', '..', 'assets');
-  // private readonly prefix = 'banner-';
 
   constructor(private readonly uuidService: UuidService) {}
 
@@ -40,13 +39,4 @@ export class DiskImageHandlerAdapter implements ImageStoragePort {
       return Promise.reject(error);
     }
   }
-
-  // async list(): Promise<string[]> {
-  //   try {
-  //     const files = await fs.promises.readdir(this.imageDir);
-  //     return files;
-  //   } catch (error) {
-  //     return Promise.reject(error);
-  //   }
-  // }
 }

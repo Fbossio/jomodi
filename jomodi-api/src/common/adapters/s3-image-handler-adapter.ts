@@ -10,8 +10,6 @@ import { UuidService } from '../uuid.service';
 
 @Injectable()
 export class S3ImageHandlerAdapter implements ImageStoragePort {
-  // private readonly prefix = 'banner-';
-  private readonly delimiter = '-';
   private readonly s3Client: S3Client;
   private getS3Client(): S3Client {
     return new S3Client({
@@ -68,25 +66,4 @@ export class S3ImageHandlerAdapter implements ImageStoragePort {
       return Promise.reject(error);
     }
   }
-  // async list(): Promise<string[]> {
-  //   try {
-  //     const command = new ListObjectsCommand({
-  //       Bucket: this.configService.getOrThrow('AWS_S3_BUCKET'),
-  //       Delimiter: this.delimiter,
-  //       Prefix: this.prefix,
-  //     });
-  //     const response = await this.s3Client.send(command);
-  //     return (
-  //       response.Contents?.map((item) => {
-  //         return `https://${this.configService.getOrThrow(
-  //           'AWS_S3_BUCKET',
-  //         )}.s3.${this.configService.getOrThrow('AWS_REGION')}.amazonaws.com/${
-  //           item.Key
-  //         }`;
-  //       }) || []
-  //     );
-  //   } catch (error) {
-  //     return Promise.reject(error);
-  //   }
-  // }
 }
