@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { ImageStoragePort } from '../common/ports/image-storage';
 import { StringFormatter } from '../utils/string-formatter';
 import { UpdateBannerDto } from './Dtos/banner';
 import { Banner } from './Entities/banner';
 import { BannerRepository } from './ports/banner-repository';
-import { ImageStoragePort } from './ports/image-storage';
 
 @Injectable()
 export class BannerGalleryService {
@@ -17,10 +17,12 @@ export class BannerGalleryService {
 
   async save(name: string, image: Buffer, mimeType: string): Promise<Banner> {
     const formattedName = this.stringFormatter.fileNameFormat(name);
+    const namePrefix = 'banner-';
     const savedImage = await this.imageStoragePort.save(
       formattedName,
       image,
       mimeType,
+      namePrefix,
     );
     const banner = await this.bannerRepository.create({ imageUrl: savedImage });
     return banner;

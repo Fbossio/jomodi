@@ -1,7 +1,7 @@
+import { ImageStoragePort } from '../common/ports/image-storage';
 import { StringFormatter } from '../utils/string-formatter';
 import { BannerGalleryService } from './banner-gallery.service';
 import { BannerRepository } from './ports/banner-repository';
-import { ImageStoragePort } from './ports/image-storage';
 
 describe('BannerGalleryService', () => {
   let service: BannerGalleryService;

@@ -1,6 +1,5 @@
 import {
   DeleteObjectCommand,
-  ListObjectsCommand,
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
@@ -11,7 +10,7 @@ import { UuidService } from '../uuid.service';
 
 @Injectable()
 export class S3ImageHandlerAdapter implements ImageStoragePort {
-  private readonly prefix = 'banner-';
+  // private readonly prefix = 'banner-';
   private readonly delimiter = '-';
   private readonly s3Client: S3Client;
   private getS3Client(): S3Client {
@@ -27,14 +26,19 @@ export class S3ImageHandlerAdapter implements ImageStoragePort {
     this.s3Client = this.getS3Client();
   }
 
-  async save(name: string, image: Buffer, mimeType: string): Promise<string> {
+  async save(
+    name: string,
+    image: Buffer,
+    mimeType: string,
+    prefix: string,
+  ): Promise<string> {
     const uuid = this.uuidService.generateUuid();
 
     try {
       await this.s3Client.send(
         new PutObjectCommand({
           Bucket: this.configService.getOrThrow('AWS_S3_BUCKET'),
-          Key: `${this.prefix}${uuid}-${name}`,
+          Key: `${prefix}${uuid}-${name}`,
           Body: image,
           ContentType: mimeType,
           ContentDisposition: 'inline',
@@ -43,9 +47,9 @@ export class S3ImageHandlerAdapter implements ImageStoragePort {
 
       const url = `https://${this.configService.getOrThrow(
         'AWS_S3_BUCKET',
-      )}.s3.${this.configService.getOrThrow('AWS_REGION')}.amazonaws.com/${
-        this.prefix
-      }${uuid}-${name}`;
+      )}.s3.${this.configService.getOrThrow(
+        'AWS_REGION',
+      )}.amazonaws.com/${prefix}${uuid}-${name}`;
       return url;
     } catch (error) {
       return Promise.reject(error);
@@ -64,25 +68,25 @@ export class S3ImageHandlerAdapter implements ImageStoragePort {
       return Promise.reject(error);
     }
   }
-  async list(): Promise<string[]> {
-    try {
-      const command = new ListObjectsCommand({
-        Bucket: this.configService.getOrThrow('AWS_S3_BUCKET'),
-        Delimiter: this.delimiter,
-        Prefix: this.prefix,
-      });
-      const response = await this.s3Client.send(command);
-      return (
-        response.Contents?.map((item) => {
-          return `https://${this.configService.getOrThrow(
-            'AWS_S3_BUCKET',
-          )}.s3.${this.configService.getOrThrow('AWS_REGION')}.amazonaws.com/${
-            item.Key
-          }`;
-        }) || []
-      );
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  }
+  // async list(): Promise<string[]> {
+  //   try {
+  //     const command = new ListObjectsCommand({
+  //       Bucket: this.configService.getOrThrow('AWS_S3_BUCKET'),
+  //       Delimiter: this.delimiter,
+  //       Prefix: this.prefix,
+  //     });
+  //     const response = await this.s3Client.send(command);
+  //     return (
+  //       response.Contents?.map((item) => {
+  //         return `https://${this.configService.getOrThrow(
+  //           'AWS_S3_BUCKET',
+  //         )}.s3.${this.configService.getOrThrow('AWS_REGION')}.amazonaws.com/${
+  //           item.Key
+  //         }`;
+  //       }) || []
+  //     );
+  //   } catch (error) {
+  //     return Promise.reject(error);
+  //   }
+  // }
 }
