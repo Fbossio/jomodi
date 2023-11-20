@@ -13,7 +13,7 @@ describe('BannerGalleryService', () => {
     mockImageStoragePort = {
       save: jest.fn().mockResolvedValue('mocked-url'),
       remove: jest.fn().mockResolvedValue('mocked-remove'),
-      list: jest.fn().mockResolvedValue(['mocked-list']),
+      // list: jest.fn().mockResolvedValue(['mocked-list']),
     };
 
     mockBannerRepository = {
@@ -49,6 +49,7 @@ describe('BannerGalleryService', () => {
         name,
         image,
         mimeType,
+        'banner-',
       );
     });
   });
@@ -64,7 +65,7 @@ describe('BannerGalleryService', () => {
   });
 
   describe('list', () => {
-    it('should call imageStoragePort.list', async () => {
+    it('should call BannerRepository.findAll', async () => {
       await service.list();
 
       expect(mockBannerRepository.findAll).toHaveBeenCalled();

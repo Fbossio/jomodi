@@ -56,7 +56,12 @@ describe('S3ImageHandlerAdapter', () => {
     const image = Buffer.from('test-image-data');
     const mimeType = 'image/jpeg';
 
-    const url = await s3ImageHandlerAdapter.save(name, image, mimeType);
+    const url = await s3ImageHandlerAdapter.save(
+      name,
+      image,
+      mimeType,
+      'banner-',
+    );
     const expectedKey = `banner-mocked-id-${name}`;
 
     expect(PutObjectCommand).toHaveBeenCalledWith({
