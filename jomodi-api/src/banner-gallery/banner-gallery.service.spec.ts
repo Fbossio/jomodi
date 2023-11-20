@@ -1,3 +1,4 @@
+import { StringFormatter } from '../utils/string-formatter';
 import { BannerGalleryService } from './banner-gallery.service';
 import { BannerRepository } from './ports/banner-repository';
 import { ImageStoragePort } from './ports/image-storage';
@@ -6,6 +7,7 @@ describe('BannerGalleryService', () => {
   let service: BannerGalleryService;
   let mockImageStoragePort: jest.Mocked<ImageStoragePort>;
   let mockBannerRepository: jest.Mocked<BannerRepository>;
+  let mockStringFormatter: jest.Mocked<StringFormatter>;
 
   beforeEach(async () => {
     mockImageStoragePort = {
@@ -23,9 +25,15 @@ describe('BannerGalleryService', () => {
       findOne: jest.fn().mockResolvedValue('banner-test.jpg'),
     };
 
+    mockStringFormatter = {
+      fileNameFormat: jest.fn().mockReturnValue('test.jpg'),
+      extractSubstring: jest.fn().mockReturnValue('banner-test.jpg'),
+    };
+
     service = new BannerGalleryService(
       mockImageStoragePort,
       mockBannerRepository,
+      mockStringFormatter,
     );
   });
 

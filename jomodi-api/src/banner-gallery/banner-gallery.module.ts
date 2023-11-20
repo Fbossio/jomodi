@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { StringFormatter } from '../utils/string-formatter';
 import { BannerPostgresAdapter } from './adapters/banner-postgres.adapter';
 import { DiskImageHandlerAdapter } from './adapters/disk-image-handler-adapter';
 // import { S3ImageHandlerAdapter } from './adapters/s3-image-handler-adapter';
@@ -13,6 +14,7 @@ import { UuidService } from './uuid.service';
   providers: [
     BannerGalleryService,
     UuidService,
+    StringFormatter,
     {
       provide: 'ImageStoragePort',
       useClass: DiskImageHandlerAdapter,

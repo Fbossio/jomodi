@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { StringFormatter } from '../utils/string-formatter';
 import { UpdateBannerDto } from './Dtos/banner';
 import { Banner } from './Entities/banner';
 import { BannerRepository } from './ports/banner-repository';
@@ -11,18 +12,26 @@ export class BannerGalleryService {
     private readonly imageStoragePort: ImageStoragePort,
     @Inject('BannerRepository')
     private readonly bannerRepository: BannerRepository,
+    private readonly stringFormatter: StringFormatter,
   ) {}
 
   async save(name: string, image: Buffer, mimeType: string): Promise<Banner> {
-    const savedImage = await this.imageStoragePort.save(name, image, mimeType);
+    const formattedName = this.stringFormatter.fileNameFormat(name);
+    const savedImage = await this.imageStoragePort.save(
+      formattedName,
+      image,
+      mimeType,
+    );
     const banner = await this.bannerRepository.create({ imageUrl: savedImage });
     return banner;
   }
 
   async remove(id: string): Promise<Banner> {
     const banner = await this.bannerRepository.findOne(id);
-    const regex = /banner-.*/;
-    const imageName = banner.imageUrl.match(regex)[0];
+    const imageName = this.stringFormatter.extractSubstring(
+      banner.imageUrl,
+      'banner',
+    );
     await this.imageStoragePort.remove(imageName);
     return this.bannerRepository.remove(id);
   }
