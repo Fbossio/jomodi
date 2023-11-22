@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { BannerGalleryModule } from './banner-gallery/banner-gallery.module';
 import { DatabaseModule } from './database/database.module';
 import { ProductsModule } from './products/products.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ProductsModule } from './products/products.module';
     BannerGalleryModule,
     DatabaseModule,
     ProductsModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
