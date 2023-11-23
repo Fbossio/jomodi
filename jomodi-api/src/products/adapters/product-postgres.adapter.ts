@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from '../dto/create-product.dto';
@@ -6,6 +7,7 @@ import { Product } from '../entities/product.entity';
 import { ProductRepository } from '../ports/product-port';
 import { ProductEntity } from '../schemas/products.schema';
 
+@Injectable()
 export class ProductPostgresAdapter implements ProductRepository {
   constructor(
     @InjectRepository(ProductEntity)
@@ -14,9 +16,14 @@ export class ProductPostgresAdapter implements ProductRepository {
 
   async create(product: CreateProductDto): Promise<Product> {
     const createdProduct = this.productRepository.create(product);
+
     try {
       await this.productRepository.save(createdProduct);
-      return new Product(createdProduct);
+      return new Product({
+        ...createdProduct,
+        categoryId: createdProduct.category.id,
+        categoryName: createdProduct.category.name,
+      });
     } catch (error) {
       Promise.reject(error);
     }
@@ -24,8 +31,17 @@ export class ProductPostgresAdapter implements ProductRepository {
 
   async findAll(): Promise<Product[]> {
     try {
-      const products = await this.productRepository.find();
-      return products.map((product) => new Product(product));
+      const products = await this.productRepository.find({
+        relations: ['category'],
+      });
+      return products.map(
+        (product) =>
+          new Product({
+            ...product,
+            categoryId: product.category.id,
+            categoryName: product.category.name,
+          }),
+      );
     } catch (error) {
       Promise.reject(error);
     }

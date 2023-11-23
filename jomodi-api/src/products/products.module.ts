@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CategoryModule } from '../category/category.module';
 import { DiskImageHandlerAdapter } from '../common/adapters/disk-image-handler-adapter';
 import { UuidService } from '../common/uuid.service';
 import { StringFormatter } from '../utils/string-formatter';
@@ -9,7 +10,7 @@ import { ProductsService } from './products.service';
 import { ProductEntity } from './schemas/products.schema';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ProductEntity])],
+  imports: [TypeOrmModule.forFeature([ProductEntity]), CategoryModule],
   controllers: [ProductsController],
   providers: [
     ProductsService,

@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { CategoryService } from '../category/category.service';
 import { ImageStoragePort } from '../common/ports/image-storage';
 import { StringFormatter } from '../utils/string-formatter';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -14,6 +15,7 @@ export class ProductsService {
     @Inject('ProductRepository')
     private readonly productRepository: ProductRepository,
     private readonly stringFormatter: StringFormatter,
+    private readonly categoryService: CategoryService,
   ) {}
   async uploadImage(
     name: string,
@@ -31,9 +33,15 @@ export class ProductsService {
     return savedImage;
   }
   async create(createProductDto: CreateProductDto): Promise<Product> {
+    const category = await this.categoryService.findOne(
+      createProductDto.categoryId,
+    );
+
+    createProductDto.category = category;
     const createdProduct = await this.productRepository.create(
       createProductDto,
     );
+
     return createdProduct;
   }
 
