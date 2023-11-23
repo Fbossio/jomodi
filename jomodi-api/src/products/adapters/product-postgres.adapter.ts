@@ -19,9 +19,7 @@ export class ProductPostgresAdapter implements ProductRepository {
 
     try {
       await this.productRepository.save(createdProduct);
-      return new Product({
-        ...createdProduct,
-      });
+      return new Product(createdProduct);
     } catch (error) {
       Promise.reject(error);
     }
@@ -41,6 +39,7 @@ export class ProductPostgresAdapter implements ProductRepository {
   async findOne(id: string): Promise<Product> {
     try {
       const product = await this.productRepository.findOne({
+        relations: ['category'],
         where: { id: Number(id) },
       });
       return new Product(product);
@@ -53,6 +52,7 @@ export class ProductPostgresAdapter implements ProductRepository {
     try {
       await this.productRepository.update(id, product);
       const updatedProduct = await this.productRepository.findOne({
+        relations: ['category'],
         where: { id: Number(id) },
       });
       return new Product(updatedProduct);
@@ -64,6 +64,7 @@ export class ProductPostgresAdapter implements ProductRepository {
   async remove(id: string): Promise<Product> {
     try {
       const product = await this.productRepository.findOne({
+        relations: ['category'],
         where: { id: Number(id) },
       });
       await this.productRepository.remove(product);
