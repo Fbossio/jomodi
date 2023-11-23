@@ -55,12 +55,18 @@ export class CategoryPostgresAdapter implements CategoryRepository {
   async remove(id: string): Promise<Category> {
     try {
       const category = await this.categoryRepository.findOne({
+        relations: ['products'],
         where: { id: Number(id) },
       });
+
+      if (category.products.length > 0) {
+        throw new Error('Category has products');
+      }
+
       await this.categoryRepository.delete(id);
       return new Category(category);
     } catch (error) {
-      Promise.reject(error);
+      throw error;
     }
   }
 }
