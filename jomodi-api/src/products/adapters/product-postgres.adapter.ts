@@ -21,8 +21,6 @@ export class ProductPostgresAdapter implements ProductRepository {
       await this.productRepository.save(createdProduct);
       return new Product({
         ...createdProduct,
-        categoryId: createdProduct.category.id,
-        categoryName: createdProduct.category.name,
       });
     } catch (error) {
       Promise.reject(error);
@@ -34,14 +32,7 @@ export class ProductPostgresAdapter implements ProductRepository {
       const products = await this.productRepository.find({
         relations: ['category'],
       });
-      return products.map(
-        (product) =>
-          new Product({
-            ...product,
-            categoryId: product.category.id,
-            categoryName: product.category.name,
-          }),
-      );
+      return products.map((product) => new Product(product));
     } catch (error) {
       Promise.reject(error);
     }
