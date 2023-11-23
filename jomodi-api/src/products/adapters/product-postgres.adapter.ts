@@ -73,4 +73,16 @@ export class ProductPostgresAdapter implements ProductRepository {
       Promise.reject(error);
     }
   }
+
+  async productsByCategory(categoryId: string): Promise<Product[]> {
+    try {
+      const products = await this.productRepository.find({
+        relations: ['category'],
+        where: { category: { id: Number(categoryId) } },
+      });
+      return products.map((product) => new Product(product));
+    } catch (error) {
+      Promise.reject(error);
+    }
+  }
 }

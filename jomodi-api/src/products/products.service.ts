@@ -69,4 +69,8 @@ export class ProductsService {
     await this.imageStoragePort.remove(imageName);
     return this.productRepository.remove(id);
   }
+
+  async productsByCategory(categoryId: string): Promise<Product[]> {
+    return this.productRepository.productsByCategory(categoryId);
+  }
 }

@@ -8,4 +8,5 @@ export interface ProductRepository {
   findOne(id: string): Promise<Product>;
   update(id: string, product: UpdateProductDto): Promise<Product>;
   remove(id: string): Promise<Product>;
+  productsByCategory(categoryId: string): Promise<Product[]>;
 }
