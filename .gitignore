@@ -42,4 +42,5 @@ yarn.lock
 *.tsbuildinfo
 
 # Test coverage output folder
-/coverage
+**/coverage/
+
