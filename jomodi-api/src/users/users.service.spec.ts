@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-// import { CreateUserDto } from './dto/create-user.dto';
+import { EncryptionPort } from '../common/ports/encription.port';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 import { UsersRepository } from './ports/users-repository';
@@ -8,6 +8,7 @@ import { UsersService } from './users.service';
 describe('UsersService', () => {
   let service: UsersService;
   let repository: jest.Mocked<UsersRepository>;
+  let encryptionPort: jest.Mocked<EncryptionPort>;
 
   beforeEach(async () => {
     repository = {
@@ -16,6 +17,12 @@ describe('UsersService', () => {
       findOne: jest.fn(),
       update: jest.fn(),
       remove: jest.fn(),
+      findOneByEmail: jest.fn(),
+    };
+
+    encryptionPort = {
+      comparePassword: jest.fn(),
+      hashPassword: jest.fn(),
     };
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -23,6 +30,10 @@ describe('UsersService', () => {
         {
           provide: 'UsersRepository',
           useValue: repository,
+        },
+        {
+          provide: 'EncryptionPort',
+          useValue: encryptionPort,
         },
       ],
     }).compile();
@@ -42,6 +53,8 @@ describe('UsersService', () => {
         email: '',
         password: '',
       };
+
+      jest.spyOn(encryptionPort, 'hashPassword').mockResolvedValue('');
 
       await service.create(createUserDto);
 

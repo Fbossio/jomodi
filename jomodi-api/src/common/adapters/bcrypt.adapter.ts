@@ -1,12 +1,25 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import bcrypt from 'bcrypt';
 import { EncryptionPort } from '../ports/encription.port';
 
 @Injectable()
 export class BcryptAdapter implements EncryptionPort {
-  hashPassword(password: string): Promise<string> {
-    throw new Error('Method not implemented.');
+  private saltRounds: number;
+
+  constructor(private readonly configService: ConfigService) {
+    this.saltRounds = this.configService.get<number>('SALT_ROUNDS');
   }
-  comparePassword(password: string, hashedPassword: string): Promise<boolean> {
-    throw new Error('Method not implemented.');
+
+  async hashPassword(password: string): Promise<string> {
+    const salt = await bcrypt.genSalt(this.saltRounds);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    return hashedPassword;
+  }
+  async comparePassword(
+    password: string,
+    hashedPassword: string,
+  ): Promise<boolean> {
+    return await bcrypt.compare(password, hashedPassword);
   }
 }

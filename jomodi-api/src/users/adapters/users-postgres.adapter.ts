@@ -41,6 +41,18 @@ export class UsersPostgresAdapter implements UsersRepository {
       throw error;
     }
   }
+
+  async findOneByEmail(email: string): Promise<User> {
+    try {
+      const user = await this.userRepository.findOne({
+        where: { email },
+      });
+      return new User(user);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async update(id: string, user: UpdateUserDto): Promise<User> {
     try {
       await this.userRepository.update(id, user);

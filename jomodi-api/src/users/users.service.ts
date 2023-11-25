@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { EncryptionPort } from '../common/ports/encription.port';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './ports/users-repository';
@@ -8,9 +9,27 @@ export class UsersService {
   constructor(
     @Inject('UsersRepository')
     private readonly usersRepository: UsersRepository,
+    @Inject('EncryptionPort')
+    private readonly encryptionPort: EncryptionPort,
   ) {}
+
+  async checkPassword(password: string, hashedPassword: string) {
+    return this.encryptionPort.comparePassword(password, hashedPassword);
+  }
+
   async create(createUserDto: CreateUserDto) {
-    return this.usersRepository.create(createUserDto);
+    const user = await this.usersRepository.findOneByEmail(createUserDto.email);
+    if (user) {
+      throw new Error('User already exists');
+    }
+    const hashedPassword = await this.encryptionPort.hashPassword(
+      createUserDto.password,
+    );
+    const userToCreate = {
+      ...createUserDto,
+      password: hashedPassword,
+    };
+    return this.usersRepository.create(userToCreate);
   }
 
   async findAll() {
