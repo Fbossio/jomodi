@@ -3,10 +3,11 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BannerGalleryModule } from './banner-gallery/banner-gallery.module';
+import { CategoryModule } from './category/category.module';
 import { DatabaseModule } from './database/database.module';
 import { ProductsModule } from './products/products.module';
-import { CategoryModule } from './category/category.module';
 import { UsersModule } from './users/users.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { UsersModule } from './users/users.module';
     ProductsModule,
     CategoryModule,
     UsersModule,
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [AppService],
