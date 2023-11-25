@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CategoryService } from '../category/category.service';
 import { CategoryRepository } from '../category/ports/category-repository';
 import { ImageStoragePort } from '../common/ports/image-storage';
-import { StringFormatter } from '../utils/string-formatter';
+import { StringFormatter } from '../common/string-formatter';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './entities/product.entity';
 import { ProductRepository } from './ports/product-port';

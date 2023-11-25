@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CategoryService } from '../category/category.service';
 import { ImageStoragePort } from '../common/ports/image-storage';
-import { StringFormatter } from '../utils/string-formatter';
+import { StringFormatter } from '../common/string-formatter';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';

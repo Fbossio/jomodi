@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ImageStoragePort } from '../common/ports/image-storage';
-import { StringFormatter } from '../utils/string-formatter';
+import { StringFormatter } from '../common/string-formatter';
 import { UpdateBannerDto } from './Dtos/banner';
 import { Banner } from './Entities/banner';
 import { BannerRepository } from './ports/banner-repository';

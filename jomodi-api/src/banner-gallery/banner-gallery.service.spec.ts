@@ -1,5 +1,5 @@
 import { ImageStoragePort } from '../common/ports/image-storage';
-import { StringFormatter } from '../utils/string-formatter';
+import { StringFormatter } from '../common/string-formatter';
 import { BannerGalleryService } from './banner-gallery.service';
 import { BannerRepository } from './ports/banner-repository';
 
