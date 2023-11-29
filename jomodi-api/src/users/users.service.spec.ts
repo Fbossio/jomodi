@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { EncryptionPort } from '../common/ports/encription.port';
 import { CreateUserDto } from './dto/create-user.dto';
-import { User } from './entities/user.entity';
+import { User, UserRole } from './entities/user.entity';
 import { UsersRepository } from './ports/users-repository';
 import { UsersService } from './users.service';
 
@@ -80,7 +80,7 @@ describe('UsersService', () => {
 
       repository.findOne.mockResolvedValue(user as any);
 
-      const result = await service.findOne(1);
+      const result = await service.findOne('1');
 
       expect(result).toEqual(user);
     });
@@ -101,11 +101,14 @@ describe('UsersService', () => {
         lastName: '',
         email: '',
         password: '',
+        role: UserRole.USER,
+        createdAt: undefined,
+        updatedAt: undefined,
       };
 
       repository.update.mockResolvedValue(updatedUser);
 
-      const result = await service.update(1, updateUserDto);
+      const result = await service.update('1', updateUserDto);
       expect(result).toEqual(updatedUser);
     });
   });
@@ -116,7 +119,7 @@ describe('UsersService', () => {
 
       repository.remove.mockResolvedValue(user as any);
 
-      const result = await service.remove(1);
+      const result = await service.remove('1');
 
       expect(result).toEqual(user);
     });

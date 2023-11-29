@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { EncryptionPort } from '../common/ports/encription.port';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
 import { UsersRepository } from './ports/users-repository';
 
 @Injectable()
@@ -32,19 +33,23 @@ export class UsersService {
     return this.usersRepository.create(userToCreate);
   }
 
-  async findAll() {
+  async findAll(): Promise<User[]> {
     return this.usersRepository.findAll();
   }
 
-  async findOne(id: number) {
-    return this.usersRepository.findOne(id.toString());
+  async findOne(id: string): Promise<User> {
+    return this.usersRepository.findOne(id);
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
-    return this.usersRepository.update(id.toString(), updateUserDto);
+  async findOneByEmail(email: string): Promise<User> {
+    return this.usersRepository.findOneByEmail(email);
   }
 
-  async remove(id: number) {
-    return this.usersRepository.remove(id.toString());
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+    return this.usersRepository.update(id, updateUserDto);
+  }
+
+  async remove(id: string): Promise<User> {
+    return this.usersRepository.remove(id);
   }
 }

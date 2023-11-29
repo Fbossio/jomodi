@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { UserRole } from '../entities/user.entity';
 
 @Entity()
 export class UserEntity extends BaseEntity {
@@ -20,6 +21,9 @@ export class UserEntity extends BaseEntity {
 
   @Column({ unique: true })
   email: string;
+
+  @Column({ default: UserRole.USER })
+  role: UserRole;
 
   @Column()
   password: string;
