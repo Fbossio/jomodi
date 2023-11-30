@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { EncryptionPort } from '../common/ports/encription.port';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -45,14 +45,24 @@ export class UsersService {
     return this.usersRepository.findOneByEmail(email);
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+  async update(
+    id: string,
+    updateUserDto: UpdateUserDto,
+    user: any,
+  ): Promise<User> {
+    if (id !== user.id) {
+      throw new UnauthorizedException();
+    }
     if ('role' in updateUserDto) {
-      throw new Error('Cannot update role');
+      throw new UnauthorizedException();
     }
     return this.usersRepository.update(id, updateUserDto);
   }
 
-  async remove(id: string): Promise<User> {
+  async remove(id: string, user: any): Promise<User> {
+    if (id !== user.id) {
+      throw new UnauthorizedException();
+    }
     return this.usersRepository.remove(id);
   }
 }

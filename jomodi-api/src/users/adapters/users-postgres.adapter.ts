@@ -66,7 +66,6 @@ export class UsersPostgresAdapter implements UsersRepository {
   async remove(id: string): Promise<User> {
     try {
       const user = await this.userRepository.findOne({
-        relations: ['products'],
         where: { id: Number(id) },
       });
 
