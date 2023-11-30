@@ -20,7 +20,7 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     const user = await this.usersRepository.findOneByEmail(createUserDto.email);
-    if (user) {
+    if (user !== null) {
       throw new Error('User already exists');
     }
     const hashedPassword = await this.encryptionPort.hashPassword(

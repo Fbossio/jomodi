@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import { EncryptionPort } from '../ports/encription.port';
 
 @Injectable()
@@ -9,6 +9,7 @@ export class BcryptAdapter implements EncryptionPort {
 
   constructor(private readonly configService: ConfigService) {
     this.saltRounds = this.configService.get<number>('SALT_ROUNDS');
+    this.saltRounds = Number(this.saltRounds);
   }
 
   async hashPassword(password: string): Promise<string> {
