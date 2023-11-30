@@ -46,6 +46,9 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+    if ('role' in updateUserDto) {
+      throw new Error('Cannot update role');
+    }
     return this.usersRepository.update(id, updateUserDto);
   }
 
