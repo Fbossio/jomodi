@@ -10,11 +10,14 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Serialize } from '../common/interceptors/serialize.interceptor';
 import { CreateProductDto } from './dto/create-product.dto';
+import { ProductDto } from './dto/product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductsService } from './products.service';
 
 @Controller('products')
+@Serialize(ProductDto)
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
