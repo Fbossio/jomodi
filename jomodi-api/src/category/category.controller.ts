@@ -10,11 +10,14 @@ import {
   Res,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { Serialize } from '../common/interceptors/serialize.interceptor';
 import { CategoryService } from './category.service';
+import { CategoryDto } from './dto/category.dto';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @Controller('category')
+@Serialize(CategoryDto)
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
