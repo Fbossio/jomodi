@@ -6,11 +6,20 @@ export class BannerDto {
   @Expose()
   title: string;
   @Expose()
-  description: string;
+  imageUrl: string;
+}
+
+export class BannerAdminDto {
   @Expose()
-  image: string;
+  id: string;
   @Expose()
-  link: string;
+  title: string;
   @Expose()
-  order: number;
+  imageUrl: string;
+  @Expose()
+  status: string;
+  @Expose()
+  createdAt: string;
+  @Expose()
+  updatedAt: string;
 }
