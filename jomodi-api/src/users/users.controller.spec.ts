@@ -63,9 +63,12 @@ describe('UsersController', () => {
     it('should update a user by id', async () => {
       const updateUserDto: UpdateUserDto = { firstName: 'Jane Doe' };
       const updatedUser = { id: '1', firstName: 'Jane Doe' };
+      const request = { user: { id: '1' } };
       jest.spyOn(usersService, 'update').mockResolvedValue(updatedUser as any);
 
-      expect(await controller.update('1', updateUserDto)).toBe(updatedUser);
+      expect(await controller.update('1', updateUserDto, request as any)).toBe(
+        updatedUser,
+      );
     });
   });
 
@@ -78,9 +81,10 @@ describe('UsersController', () => {
         email: 'john@john.com',
         password: '12345',
       };
+      const request = { user: { id: '1' } };
       jest.spyOn(usersService, 'remove').mockResolvedValue(user as any);
 
-      expect(await controller.remove('1')).toBe(user);
+      expect(await controller.remove('1', request as any)).toBe(user);
     });
   });
 });

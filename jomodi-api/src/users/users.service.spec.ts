@@ -55,6 +55,7 @@ describe('UsersService', () => {
       };
 
       jest.spyOn(encryptionPort, 'hashPassword').mockResolvedValue('');
+      jest.spyOn(repository, 'findOneByEmail').mockResolvedValue(null as any);
 
       await service.create(createUserDto);
 
@@ -106,9 +107,14 @@ describe('UsersService', () => {
         updatedAt: undefined,
       };
 
+      const requestUser = {
+        id: '1',
+        email: '',
+      };
+
       repository.update.mockResolvedValue(updatedUser);
 
-      const result = await service.update('1', updateUserDto);
+      const result = await service.update('1', updateUserDto, requestUser);
       expect(result).toEqual(updatedUser);
     });
   });
@@ -116,10 +122,14 @@ describe('UsersService', () => {
   describe('remove', () => {
     it('should remove a user', async () => {
       const user = {}; // Provide a user for testing
+      const requestUser = {
+        id: '1',
+        email: '',
+      };
 
       repository.remove.mockResolvedValue(user as any);
 
-      const result = await service.remove('1');
+      const result = await service.remove('1', requestUser);
 
       expect(result).toEqual(user);
     });
