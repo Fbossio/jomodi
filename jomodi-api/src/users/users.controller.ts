@@ -9,11 +9,14 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Serialize } from '../common/interceptors/serialize.interceptor';
 import { RequestWithUser } from '../common/types/interfaces';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserDto } from './dto/user.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
+@Serialize(UserDto)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
