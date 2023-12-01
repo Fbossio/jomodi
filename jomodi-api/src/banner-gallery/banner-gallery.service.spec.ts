@@ -43,7 +43,7 @@ describe('BannerGalleryService', () => {
       const image = Buffer.from('test image');
       const mimeType = 'image/jpeg';
 
-      await service.save(name, image, mimeType);
+      await service.uploadImage(name, image, mimeType);
 
       expect(mockImageStoragePort.save).toHaveBeenCalledWith(
         name,
@@ -51,6 +51,21 @@ describe('BannerGalleryService', () => {
         mimeType,
         'banner-',
       );
+    });
+  });
+
+  describe('create', () => {
+    it('should call BannerRepository.create with the correct arguments', async () => {
+      const banner = {
+        name: 'test',
+        imageUrl: 'test.jpg',
+        link: 'test',
+        active: true,
+      };
+
+      await service.create(banner as any);
+
+      expect(mockBannerRepository.create).toHaveBeenCalledWith(banner);
     });
   });
 

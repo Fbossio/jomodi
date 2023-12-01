@@ -36,22 +36,6 @@ export class BannerGalleryService {
     return createdBanner;
   }
 
-  // async save(name: string, image: Buffer, mimeType: string): Promise<Banner> {
-  //   const formattedName = this.stringFormatter.fileNameFormat(name);
-  //   const namePrefix = 'banner-';
-  //   const savedImage = await this.imageStoragePort.save(
-  //     formattedName,
-  //     image,
-  //     mimeType,
-  //     namePrefix,
-  //   );
-  //   const banner = await this.bannerRepository.create({
-  //     imageUrl: savedImage,
-  //     title: '',
-  //   });
-  //   return banner;
-  // }
-
   async remove(id: string): Promise<Banner> {
     const banner = await this.bannerRepository.findOne(id);
     const imageName = this.stringFormatter.extractSubstring(

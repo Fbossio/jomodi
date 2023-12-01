@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { BannerStatus } from './Entities/banner';
 import { BannerGalleryController } from './banner-gallery.controller';
 import { BannerGalleryService } from './banner-gallery.service';
 
@@ -13,7 +14,8 @@ describe('BannerGalleryController', () => {
         {
           provide: BannerGalleryService,
           useValue: {
-            save: jest.fn(),
+            uploadImage: jest.fn(),
+            create: jest.fn(),
             list: jest.fn(),
             remove: jest.fn(),
           },
@@ -25,7 +27,22 @@ describe('BannerGalleryController', () => {
     service = module.get<BannerGalleryService>(BannerGalleryService);
   });
 
-  describe('uploadFile', () => {
+  // describe('uploadFile', () => {
+  //   it('should call BannerGalleryService.save with the uploaded file', async () => {
+  //     const name = 'test.jpg';
+  //     const image = Buffer.from('test image');
+  //     const mimeType = 'image/jpeg';
+  //     const file = {
+  //       originalname: name,
+  //       buffer: image,
+  //       mimetype: mimeType,
+  //     } as Express.Multer.File;
+  //     await controller.save(file);
+  //     expect(service.save).toHaveBeenCalledWith(name, image, mimeType);
+  //   });
+  // });
+
+  describe('create', () => {
     it('should call BannerGalleryService.save with the uploaded file', async () => {
       const name = 'test.jpg';
       const image = Buffer.from('test image');
@@ -35,8 +52,23 @@ describe('BannerGalleryController', () => {
         buffer: image,
         mimetype: mimeType,
       } as Express.Multer.File;
-      await controller.save(file);
-      expect(service.save).toHaveBeenCalledWith(name, image, mimeType);
+
+      const mockSavedImage = 'test.jpg';
+      const mockCreateBannerDto = {
+        title: 'test',
+        status: BannerStatus.ACTIVE,
+      };
+      const mockCreateBanner = {
+        ...mockCreateBannerDto,
+        imageUrl: mockSavedImage,
+      };
+      service.uploadImage = jest.fn().mockResolvedValue(mockSavedImage);
+      service.create = jest.fn().mockResolvedValue(mockCreateBanner as any);
+
+      const result = await controller.create(file, mockCreateBannerDto);
+      expect(result).toEqual(mockCreateBanner);
+      expect(service.uploadImage).toHaveBeenCalledWith(name, image, mimeType);
+      expect(service.create).toHaveBeenCalledWith(mockCreateBannerDto);
     });
   });
 
