@@ -1,5 +1,6 @@
 export class Banner {
   id: number;
+  title: string;
   imageUrl: string;
   status: BannerStatus;
   createdAt: Date;

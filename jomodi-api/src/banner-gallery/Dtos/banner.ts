@@ -3,7 +3,10 @@ import { BannerStatus } from '../Entities/banner';
 
 export class CreateBannerDto {
   @IsString()
-  imageUrl: string;
+  title: string;
+  @IsOptional()
+  @IsString()
+  imageUrl?: string;
   @IsOptional()
   @IsEnum(BannerStatus)
   status?: BannerStatus;

@@ -11,7 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UpdateBannerDto } from './Dtos/banner';
+import { CreateBannerDto, UpdateBannerDto } from './Dtos/banner';
 import { BannerGalleryService } from './banner-gallery.service';
 
 @Controller('banner')
@@ -20,12 +20,19 @@ export class BannerGalleryController {
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
-  save(@UploadedFile() file: Express.Multer.File) {
-    return this.bannerGalleryService.save(
+  async create(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() banner: CreateBannerDto,
+  ) {
+    const savedImage = await this.bannerGalleryService.uploadImage(
       file.originalname,
       file.buffer,
       file.mimetype,
     );
+
+    banner.imageUrl = savedImage;
+
+    return this.bannerGalleryService.create(banner);
   }
 
   @Get()

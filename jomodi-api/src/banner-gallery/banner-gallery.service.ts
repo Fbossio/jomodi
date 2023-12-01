@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ImageStoragePort } from '../common/ports/image-storage';
 import { StringFormatter } from '../common/string-formatter';
-import { UpdateBannerDto } from './Dtos/banner';
+import { CreateBannerDto, UpdateBannerDto } from './Dtos/banner';
 import { Banner } from './Entities/banner';
 import { BannerRepository } from './ports/banner-repository';
 
@@ -15,7 +15,11 @@ export class BannerGalleryService {
     private readonly stringFormatter: StringFormatter,
   ) {}
 
-  async save(name: string, image: Buffer, mimeType: string): Promise<Banner> {
+  async uploadImage(
+    name: string,
+    image: Buffer,
+    mimeType: string,
+  ): Promise<string> {
     const formattedName = this.stringFormatter.fileNameFormat(name);
     const namePrefix = 'banner-';
     const savedImage = await this.imageStoragePort.save(
@@ -24,9 +28,29 @@ export class BannerGalleryService {
       mimeType,
       namePrefix,
     );
-    const banner = await this.bannerRepository.create({ imageUrl: savedImage });
-    return banner;
+    return savedImage;
   }
+
+  async create(banner: CreateBannerDto): Promise<Banner> {
+    const createdBanner = await this.bannerRepository.create(banner);
+    return createdBanner;
+  }
+
+  // async save(name: string, image: Buffer, mimeType: string): Promise<Banner> {
+  //   const formattedName = this.stringFormatter.fileNameFormat(name);
+  //   const namePrefix = 'banner-';
+  //   const savedImage = await this.imageStoragePort.save(
+  //     formattedName,
+  //     image,
+  //     mimeType,
+  //     namePrefix,
+  //   );
+  //   const banner = await this.bannerRepository.create({
+  //     imageUrl: savedImage,
+  //     title: '',
+  //   });
+  //   return banner;
+  // }
 
   async remove(id: string): Promise<Banner> {
     const banner = await this.bannerRepository.findOne(id);

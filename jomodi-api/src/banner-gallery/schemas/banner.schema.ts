@@ -14,6 +14,9 @@ export class BannerEntity extends BaseEntity {
   id: number;
 
   @Column()
+  title: string;
+
+  @Column()
   imageUrl: string;
 
   @Column({ default: BannerStatus.ACTIVE })
