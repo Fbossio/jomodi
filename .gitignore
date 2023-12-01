@@ -44,3 +44,5 @@ yarn.lock
 # Test coverage output folder
 **/coverage/
 
+/jomodi-api/assets/
+
