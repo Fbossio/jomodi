@@ -8,11 +8,14 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
+import { Roles } from '../auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
 import { Serialize } from '../common/interceptors/serialize.interceptor';
 import { RequestWithUser } from '../common/types/interfaces';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
+import { UserRole } from './entities/user.entity';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -20,7 +23,8 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(JwtAuthGuard)
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get()
   findAll() {
     return this.usersService.findAll();

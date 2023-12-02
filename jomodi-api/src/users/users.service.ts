@@ -50,7 +50,8 @@ export class UsersService {
     updateUserDto: UpdateUserDto,
     user: any,
   ): Promise<User> {
-    if (id !== user.id) {
+    const userId = user.id.toString();
+    if (id !== userId) {
       throw new UnauthorizedException();
     }
     if ('role' in updateUserDto) {

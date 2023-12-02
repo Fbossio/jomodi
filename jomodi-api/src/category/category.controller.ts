@@ -8,9 +8,14 @@ import {
   Post,
   Put,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
 import { Serialize } from '../common/interceptors/serialize.interceptor';
+import { UserRole } from '../users/entities/user.entity';
 import { CategoryService } from './category.service';
 import { CategoryDto } from './dto/category.dto';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -22,6 +27,8 @@ export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Post()
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   create(@Body() createCategoryDto: CreateCategoryDto) {
     return this.categoryService.create(createCategoryDto);
   }
@@ -37,6 +44,8 @@ export class CategoryController {
   }
 
   @Put(':id')
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   update(
     @Param('id') id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
@@ -45,6 +54,8 @@ export class CategoryController {
   }
 
   @Delete(':id')
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   async remove(@Param('id') id: string, @Res() res: Response) {
     try {
       const deletedCategory = await this.categoryService.remove(id);
