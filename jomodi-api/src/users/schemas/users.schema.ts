@@ -3,9 +3,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { OrderEntity } from '../../orders/schemas/order.schema';
 import { UserRole } from '../entities/user.entity';
 
 @Entity()
@@ -27,6 +29,9 @@ export class UserEntity extends BaseEntity {
 
   @Column()
   password: string;
+
+  @OneToMany(() => OrderEntity, (order) => order.user)
+  orders: OrderEntity[];
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
