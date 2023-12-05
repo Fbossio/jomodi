@@ -16,7 +16,7 @@ export class OrderEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ default: OrderStatus.PENDING })
   status: OrderStatus;
 
   @ManyToOne(() => UserEntity, (user) => user.orders)
