@@ -5,14 +5,13 @@ import {
   Get,
   Param,
   Put,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { OwnGuard } from '../auth/guards/own.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Serialize } from '../common/interceptors/serialize.interceptor';
-import { RequestWithUser } from '../common/types/interfaces';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { UserRole } from './entities/user.entity';
@@ -36,19 +35,15 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, OwnGuard)
   @Put(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserDto,
-    @Req() req: RequestWithUser,
-  ) {
-    return this.usersService.update(id, updateUserDto, req.user);
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(id, updateUserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, OwnGuard)
   @Delete(':id')
-  remove(@Param('id') id: string, @Req() req: RequestWithUser) {
-    return this.usersService.remove(id, req.user);
+  remove(@Param('id') id: string) {
+    return this.usersService.remove(id);
   }
 }

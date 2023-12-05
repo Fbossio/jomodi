@@ -6,6 +6,7 @@ import { UsersModule } from '../users/users.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { OwnGuard } from './guards/own.guard';
 import { RolesGuard } from './guards/roles.guard';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
@@ -32,6 +33,7 @@ import { LocalStrategy } from './strategies/local.strategy';
     LocalStrategy,
     JwtAuthGuard,
     RolesGuard,
+    OwnGuard,
   ],
 })
 export class AuthModule {}

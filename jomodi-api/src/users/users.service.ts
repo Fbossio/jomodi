@@ -45,25 +45,14 @@ export class UsersService {
     return this.usersRepository.findOneByEmail(email);
   }
 
-  async update(
-    id: string,
-    updateUserDto: UpdateUserDto,
-    user: any,
-  ): Promise<User> {
-    const userId = user.id.toString();
-    if (id !== userId) {
-      throw new UnauthorizedException();
-    }
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     if ('role' in updateUserDto) {
       throw new UnauthorizedException();
     }
     return this.usersRepository.update(id, updateUserDto);
   }
 
-  async remove(id: string, user: any): Promise<User> {
-    if (id !== user.id) {
-      throw new UnauthorizedException();
-    }
+  async remove(id: string): Promise<User> {
     return this.usersRepository.remove(id);
   }
 }
