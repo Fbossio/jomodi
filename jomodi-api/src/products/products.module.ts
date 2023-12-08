@@ -21,5 +21,6 @@ import { ProductEntity } from './schemas/products.schema';
       useClass: ProductPostgresAdapter,
     },
   ],
+  exports: [ProductsService],
 })
 export class ProductsModule {}

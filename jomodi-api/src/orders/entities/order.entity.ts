@@ -5,18 +5,18 @@ export class Order {
   status: OrderStatus;
   userId: number;
   user?: User;
-  userFirstName: string;
-  userLastName: string;
-  userEmail: string;
+  details: any;
+  firstName: string;
+  lastName: string;
+  email: string;
   createdAt: Date;
   updatedAt: Date;
 
   constructor(order: Partial<Order>) {
     Object.assign(this, order);
-    this.userFirstName = order.user.firstName;
-    this.userLastName = order.user.lastName;
-    this.userEmail = order.user.email;
-    this.userId = order.user.id;
+    this.firstName = this.user.firstName;
+    this.lastName = this.user.lastName;
+    this.email = this.user.email;
   }
 }
 
