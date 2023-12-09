@@ -6,6 +6,7 @@ export class Order {
   userId: number;
   user?: User;
   details: any;
+  total: number;
   firstName: string;
   lastName: string;
   email: string;

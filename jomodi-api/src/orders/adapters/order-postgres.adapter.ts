@@ -43,6 +43,7 @@ export class OrderPostgresAdapter implements OrderRepository {
       );
 
       const orderCreated = new Order(createdOrder);
+      orderCreated.total = this.getTotal(orderDetails);
 
       // return this.serializeOrder(orderCreated, orderDetails);
       return { ...orderCreated, details: orderDetails };
@@ -133,26 +134,9 @@ export class OrderPostgresAdapter implements OrderRepository {
     }
   }
 
-  private serializeOrder(order: Order, details: OrderDetails[]) {
-    const serializedOrder = {
-      data: {
-        id: order.id,
-        status: order.status,
-        firstName: order.firstName,
-        lastName: order.lastName,
-        email: order.email,
-        details: [],
-      },
-    };
-    const serializedDetails = details.map((detail) => {
-      return {
-        id: detail.id,
-        quantity: detail.quantity,
-        price: detail.price,
-        product: detail.product.name,
-      };
-    });
-    serializedOrder.data.details = serializedDetails;
-    return serializedOrder;
+  private getTotal(details: OrderDetails[]) {
+    return details.reduce((total, detail) => {
+      return total + detail.price * detail.quantity;
+    }, 0);
   }
 }

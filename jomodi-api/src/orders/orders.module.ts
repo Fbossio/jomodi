@@ -4,6 +4,7 @@ import { ProductsModule } from '../products/products.module';
 import { UsersModule } from '../users/users.module';
 import { OrderDetailsPostgresAdapter } from './adapters/order-details-postgres.adapter';
 import { OrderPostgresAdapter } from './adapters/order-postgres.adapter';
+import { OrderSerializerPostgresAdapter } from './adapters/order-serializer-postgres.adapter';
 import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
 import { OrderDetailsEntity } from './schemas/order.details.schema';
@@ -21,6 +22,10 @@ import { OrderEntity } from './schemas/order.schema';
     {
       provide: 'OrderRepository',
       useClass: OrderPostgresAdapter,
+    },
+    {
+      provide: 'OrderSerializerPort',
+      useClass: OrderSerializerPostgresAdapter,
     },
     OrderDetailsPostgresAdapter,
   ],
