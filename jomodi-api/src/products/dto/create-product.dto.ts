@@ -5,6 +5,7 @@ export class CreateProductDto {
   description?: string;
   imageUrl?: string;
   price: string;
+  stock: number;
   categoryId: string;
   category?: Category;
 }

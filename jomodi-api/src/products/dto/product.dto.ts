@@ -12,6 +12,8 @@ export class ProductDto {
   @Expose()
   price: string;
   @Expose()
+  stock: number;
+  @Expose()
   categoryId: number;
   @Expose()
   categoryName: string;
