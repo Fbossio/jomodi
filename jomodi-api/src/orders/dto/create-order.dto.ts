@@ -6,5 +6,6 @@ export class CreateOrderDto {
   status?: OrderStatus;
   userId?: string;
   user?: User;
+  total?: number;
   details: CreateOrderDetailsDto[];
 }

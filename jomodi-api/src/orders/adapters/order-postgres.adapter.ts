@@ -1,12 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductsService } from '../../products/products.service';
 import { UsersService } from '../../users/users.service';
 import { CreateOrderDto } from '../dto/create-order.dto';
 import { UpdateOrderDto } from '../dto/update-order.dto';
-import { OrderDetails } from '../entities/order-details.entity';
 import { Order } from '../entities/order.entity';
+import { OrderHelperPort } from '../ports/order-helper-port';
 import { OrderRepository } from '../ports/order-port';
 import { OrderEntity } from '../schemas/order.schema';
 import { OrderDetailsPostgresAdapter } from './order-details-postgres.adapter';
@@ -16,6 +16,7 @@ export class OrderPostgresAdapter implements OrderRepository {
   constructor(
     @InjectRepository(OrderEntity)
     private readonly orderRepository: Repository<OrderEntity>,
+    @Inject('OrderHelperPort') private readonly orderHelper: OrderHelperPort,
     private readonly orderDetailsAdapter: OrderDetailsPostgresAdapter,
     private readonly usersService: UsersService,
     private readonly productsService: ProductsService,
@@ -23,6 +24,19 @@ export class OrderPostgresAdapter implements OrderRepository {
   async create(order: CreateOrderDto): Promise<Order> {
     const { details, ...otherData } = order;
     const orderObject = { ...otherData };
+    const processedDetails = await Promise.all(
+      details.map(async (detail) => {
+        const product = await this.productsService.findOne(
+          detail.productId.toString(),
+        );
+        return {
+          ...detail,
+          price: Number(product.price),
+        };
+      }),
+    );
+
+    orderObject.total = this.orderHelper.getTotal(processedDetails);
     const user = await this.usersService.findOne(order.userId);
     orderObject.user = user;
     const createdOrder = this.orderRepository.create(orderObject);
@@ -43,9 +57,7 @@ export class OrderPostgresAdapter implements OrderRepository {
       );
 
       const orderCreated = new Order(createdOrder);
-      orderCreated.total = this.getTotal(orderDetails);
 
-      // return this.serializeOrder(orderCreated, orderDetails);
       return { ...orderCreated, details: orderDetails };
     } catch (error) {
       throw error;
@@ -81,7 +93,6 @@ export class OrderPostgresAdapter implements OrderRepository {
         orderId.toString(),
       );
       const orderCreated = new Order(order);
-      // return this.serializeOrder(orderCreated, details);
       return { ...orderCreated, details };
     } catch (error) {
       throw error;
@@ -104,6 +115,7 @@ export class OrderPostgresAdapter implements OrderRepository {
       throw error;
     }
   }
+
   async remove(id: string): Promise<Order> {
     try {
       const order = await this.orderRepository.findOne({
@@ -132,11 +144,5 @@ export class OrderPostgresAdapter implements OrderRepository {
     } catch (error) {
       throw error;
     }
-  }
-
-  private getTotal(details: OrderDetails[]) {
-    return details.reduce((total, detail) => {
-      return total + detail.price * detail.quantity;
-    }, 0);
   }
 }
