@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
 import { Product } from '../entities/product.entity';
-import { ProductRepository } from '../ports/product-port';
+import { ProductRepository } from '../ports/product-repository';
 import { ProductEntity } from '../schemas/products.schema';
 
 @Injectable()
@@ -83,6 +83,20 @@ export class ProductPostgresAdapter implements ProductRepository {
       return products.map((product) => new Product(product));
     } catch (error) {
       Promise.reject(error);
+    }
+  }
+
+  async subtractStock(id: string, quantity: number): Promise<void> {
+    try {
+      const product = await this.findOne(id);
+      const stock = product.getStock();
+      if (stock > quantity) {
+        this.update(id, { stock: stock - quantity });
+      } else {
+        throw new BadRequestException('Not enough stock');
+      }
+    } catch (error) {
+      throw error;
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductsService } from '../../products/products.service';
@@ -24,8 +24,25 @@ export class OrderPostgresAdapter implements OrderRepository {
   async create(order: CreateOrderDto): Promise<Order> {
     const { details, ...otherData } = order;
     const orderObject = { ...otherData };
+    const validDetails = [];
+
+    for (const detail of details) {
+      const product = await this.productsService.findOne(
+        detail.productId.toString(),
+      );
+      if (product.stock >= detail.quantity) {
+        validDetails.push({
+          ...detail,
+          price: Number(product.price),
+          product,
+        });
+      }
+    }
+    if (validDetails.length === 0) {
+      throw new BadRequestException('No valid details');
+    }
     const processedDetails = await Promise.all(
-      details.map(async (detail) => {
+      validDetails.map(async (detail) => {
         const product = await this.productsService.findOne(
           detail.productId.toString(),
         );
@@ -52,6 +69,10 @@ export class OrderPostgresAdapter implements OrderRepository {
           detail.product = product;
           detail.order = order;
           detail.price = Number(product.price);
+          await this.productsService.subtractStock(
+            product.id.toString(),
+            detail.quantity,
+          );
           return await this.orderDetailsAdapter.create(detail);
         }),
       );

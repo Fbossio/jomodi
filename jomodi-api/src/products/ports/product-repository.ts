@@ -9,4 +9,5 @@ export interface ProductRepository {
   update(id: string, product: UpdateProductDto): Promise<Product>;
   remove(id: string): Promise<Product>;
   productsByCategory(categoryId: string): Promise<Product[]>;
+  subtractStock(productId: string, quantity: number): Promise<void>;
 }

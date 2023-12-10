@@ -5,7 +5,7 @@ import { ImageStoragePort } from '../common/ports/image-storage';
 import { StringFormatter } from '../common/string-formatter';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './entities/product.entity';
-import { ProductRepository } from './ports/product-port';
+import { ProductRepository } from './ports/product-repository';
 import { ProductsService } from './products.service';
 
 describe('ProductsService', () => {

@@ -18,4 +18,8 @@ export class Product {
     this.categoryName = product.category.name;
     this.categoryId = product.category.id;
   }
+
+  getStock() {
+    return this.stock;
+  }
 }

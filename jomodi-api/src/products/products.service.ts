@@ -5,7 +5,7 @@ import { StringFormatter } from '../common/string-formatter';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
-import { ProductRepository } from './ports/product-port';
+import { ProductRepository } from './ports/product-repository';
 
 @Injectable()
 export class ProductsService {
@@ -72,5 +72,9 @@ export class ProductsService {
 
   async productsByCategory(categoryId: string): Promise<Product[]> {
     return this.productRepository.productsByCategory(categoryId);
+  }
+
+  async subtractStock(productId: string, quantity: number): Promise<void> {
+    await this.productRepository.subtractStock(productId, quantity);
   }
 }
