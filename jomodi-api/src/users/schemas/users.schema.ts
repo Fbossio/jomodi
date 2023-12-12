@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { OrderEntity } from '../../orders/schemas/order.schema';
 import { UserRole } from '../entities/user.entity';
+import { AddressEntity } from './address.schema';
 
 @Entity()
 export class UserEntity extends BaseEntity {
@@ -32,6 +33,9 @@ export class UserEntity extends BaseEntity {
 
   @OneToMany(() => OrderEntity, (order) => order.user)
   orders: OrderEntity[];
+
+  @OneToMany(() => AddressEntity, (address) => address.user)
+  addresses: AddressEntity[];
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
