@@ -9,4 +9,5 @@ export interface AddressRepository {
   remove(id: string): Promise<Address>;
   findByUser(userId: string): Promise<Address[]>;
   changeDefaultAddress(userId: string, addressId: string): Promise<Address>;
+  getDefaultAddress(userId: string): Promise<Address>;
 }

@@ -28,6 +28,6 @@ import { UsersService } from './users.service';
       useClass: AddressPostgresAdapter,
     },
   ],
-  exports: [UsersService],
+  exports: [UsersService, AddressService],
 })
 export class UsersModule {}

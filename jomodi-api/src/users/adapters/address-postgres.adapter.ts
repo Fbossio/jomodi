@@ -87,4 +87,16 @@ export class AddressPostgresAdapter implements AddressRepository {
       throw error;
     }
   }
+
+  async getDefaultAddress(userId: string): Promise<Address> {
+    try {
+      const address = await this.addressRepository.findOne({
+        relations: ['user'],
+        where: { user: { id: Number(userId) }, isDefault: true },
+      });
+      return new Address(address);
+    } catch (error) {
+      throw error;
+    }
+  }
 }

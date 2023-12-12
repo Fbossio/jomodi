@@ -58,4 +58,10 @@ export class AddressController {
   ) {
     return this.addressService.changeDefaultAddress(userId, addressId);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':userId/default')
+  async getDefaultAddress(@Param('userId') userId: string) {
+    return this.addressService.getDefaultAddress(userId);
+  }
 }

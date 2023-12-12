@@ -51,4 +51,8 @@ export class AddressService {
     }
     return await this.addressRepository.remove(id);
   }
+
+  async getDefaultAddress(userId: string): Promise<Address> {
+    return await this.addressRepository.getDefaultAddress(userId);
+  }
 }
