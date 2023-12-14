@@ -1,3 +1,6 @@
 export interface OrderHelperPort {
-  getTotal(orderDetails: any): number;
+  getsubTotal(orderDetails: any): number;
+  getTax(): number;
+  getShippingCost(subtotal: number): number;
+  getTotal(subtotal: number, shippingCost: number, tax: number): number;
 }

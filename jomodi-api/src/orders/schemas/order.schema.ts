@@ -6,11 +6,13 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { UserEntity } from '../../users/schemas/users.schema';
 import { OrderStatus } from '../entities/order.entity';
+import { OrderCostsEntity } from './order.costs.schema';
 import { OrderDetailsEntity } from './order.details.schema';
 
 @Entity()
@@ -21,15 +23,15 @@ export class OrderEntity extends BaseEntity {
   @Column({ default: OrderStatus.PENDING })
   status: OrderStatus;
 
-  @Column({ type: 'real' })
-  total: number;
-
   @ManyToOne(() => UserEntity, (user) => user.orders)
   @JoinColumn({ name: 'userId' })
   user: UserEntity;
 
   @OneToMany(() => OrderDetailsEntity, (orderDetails) => orderDetails.order)
   orderDetails: OrderDetailsEntity[];
+  @OneToOne(() => OrderCostsEntity)
+  @JoinColumn({ name: 'orderCostsId' })
+  orderCosts: OrderCostsEntity;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

@@ -2,7 +2,7 @@ import { OrderSerializerPort } from '../ports/order-serializer-port';
 
 export class OrderSerializerPostgresAdapter implements OrderSerializerPort {
   serializeOrder(order: any) {
-    const { details, ...otherData } = order;
+    const { details, costs, billingAddress, ...otherData } = order;
     const orderObject = { ...otherData };
     const serializedOrder = {
       data: {
@@ -13,6 +13,8 @@ export class OrderSerializerPostgresAdapter implements OrderSerializerPort {
         email: orderObject.email,
         total: orderObject.total,
         details: [],
+        costs: {},
+        billingAddress: {},
       },
     };
     const serializedDetails = details.map((detail) => {
@@ -23,7 +25,23 @@ export class OrderSerializerPostgresAdapter implements OrderSerializerPort {
         product: detail.product.name,
       };
     });
+    const serializedCosts = {
+      id: costs.id,
+      subtotal: costs.subtotal,
+      shippingCost: costs.shippingCost,
+      tax: costs.tax,
+      totalCost: costs.totalCost,
+    };
+    const serializedBillingAddress = {
+      id: billingAddress.id,
+      address: billingAddress.address,
+      city: billingAddress.city,
+      zipCode: billingAddress.zip,
+      country: billingAddress.country,
+    };
     serializedOrder.data.details = serializedDetails;
+    serializedOrder.data.costs = serializedCosts;
+    serializedOrder.data.billingAddress = serializedBillingAddress;
     return serializedOrder;
   }
 }

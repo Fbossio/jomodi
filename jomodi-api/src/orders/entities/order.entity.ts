@@ -5,8 +5,9 @@ export class Order {
   status: OrderStatus;
   userId: number;
   user?: User;
+  costs: any;
   details: any;
-  total: number;
+  billingAddress: any;
   firstName: string;
   lastName: string;
   email: string;

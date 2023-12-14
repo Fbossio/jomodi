@@ -2,10 +2,12 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductsService } from '../../products/products.service';
+import { AddressService } from '../../users/address.service';
 import { UsersService } from '../../users/users.service';
 import { CreateOrderDto } from '../dto/create-order.dto';
 import { UpdateOrderDto } from '../dto/update-order.dto';
 import { Order } from '../entities/order.entity';
+import { OrderCostsPort } from '../ports/order-costs-port';
 import { OrderHelperPort } from '../ports/order-helper-port';
 import { OrderRepository } from '../ports/order-port';
 import { OrderEntity } from '../schemas/order.schema';
@@ -17,15 +19,18 @@ export class OrderPostgresAdapter implements OrderRepository {
     @InjectRepository(OrderEntity)
     private readonly orderRepository: Repository<OrderEntity>,
     @Inject('OrderHelperPort') private readonly orderHelper: OrderHelperPort,
+    @Inject('OrderCostsPort') private readonly orderCostsPort: OrderCostsPort,
     private readonly orderDetailsAdapter: OrderDetailsPostgresAdapter,
     private readonly usersService: UsersService,
     private readonly productsService: ProductsService,
+    private readonly addressService: AddressService,
   ) {}
   async create(order: CreateOrderDto): Promise<Order> {
+    // Split the order object into two objects: order and details
     const { details, ...otherData } = order;
     const orderObject = { ...otherData };
     const validDetails = [];
-
+    // Check if the product has enough stock
     for (const detail of details) {
       const product = await this.productsService.findOne(
         detail.productId.toString(),
@@ -41,6 +46,7 @@ export class OrderPostgresAdapter implements OrderRepository {
     if (validDetails.length === 0) {
       throw new BadRequestException('No valid details');
     }
+    // Add product price to the details
     const processedDetails = await Promise.all(
       validDetails.map(async (detail) => {
         const product = await this.productsService.findOne(
@@ -53,14 +59,32 @@ export class OrderPostgresAdapter implements OrderRepository {
       }),
     );
 
-    orderObject.total = this.orderHelper.getTotal(processedDetails);
     const user = await this.usersService.findOne(order.userId);
     orderObject.user = user;
     const createdOrder = this.orderRepository.create(orderObject);
 
     try {
+      const billingAddress = await this.addressService.getDefaultAddress(
+        user.id.toString(),
+      );
+      if (!billingAddress) {
+        throw new BadRequestException('Please add a billing address');
+      }
       const orderSaved = await this.orderRepository.save(createdOrder);
       const order = await this.findOne(orderSaved.id.toString());
+      // Create order costs
+      const subtotal = this.orderHelper.getsubTotal(processedDetails);
+      const shippingCost = this.orderHelper.getShippingCost(subtotal);
+      const tax = this.orderHelper.getTax();
+      const total = this.orderHelper.getTotal(subtotal, shippingCost, tax);
+      const orderCosts = await this.orderCostsPort.create({
+        order: order,
+        orderId: order.id,
+        subtotal,
+        shippingCost,
+        tax,
+        totalCost: total,
+      });
       const orderDetails = await Promise.all(
         details.map(async (detail) => {
           const product = await this.productsService.findOne(
@@ -79,7 +103,12 @@ export class OrderPostgresAdapter implements OrderRepository {
 
       const orderCreated = new Order(createdOrder);
 
-      return { ...orderCreated, details: orderDetails };
+      return {
+        ...orderCreated,
+        details: orderDetails,
+        costs: orderCosts,
+        billingAddress,
+      };
     } catch (error) {
       throw error;
     }
@@ -106,15 +135,20 @@ export class OrderPostgresAdapter implements OrderRepository {
   async findOne(id: string): Promise<Order> {
     try {
       const order = await this.orderRepository.findOne({
-        relations: ['user'],
+        relations: ['user', 'orderCosts'],
         where: { id: Number(id) },
       });
       const orderId = order.id;
       const details = await this.orderDetailsAdapter.findByOrderId(
         orderId.toString(),
       );
+      const costs = await this.orderCostsPort.findOne(orderId.toString());
+      const billingAddress = await this.addressService.getDefaultAddress(
+        order.user.id.toString(),
+      );
+
       const orderCreated = new Order(order);
-      return { ...orderCreated, details };
+      return { ...orderCreated, details, costs, billingAddress };
     } catch (error) {
       throw error;
     }
