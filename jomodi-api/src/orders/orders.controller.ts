@@ -9,8 +9,10 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
+import { Roles } from '../auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RequestWithUser } from '../common/types/interfaces';
+import { UserRole } from '../users/entities/user.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { OrdersService } from './orders.service';
@@ -28,6 +30,8 @@ export class OrdersController {
   }
 
   @Get()
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async findAll() {
     return this.ordersService.findAll();
   }
@@ -38,6 +42,8 @@ export class OrdersController {
   }
 
   @Put(':id')
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async update(
     @Param('id') id: string,
     @Body() updateOrderDto: UpdateOrderDto,
@@ -46,6 +52,8 @@ export class OrdersController {
   }
 
   @Delete(':id')
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async remove(@Param('id') id: string) {
     return this.ordersService.remove(id);
   }
