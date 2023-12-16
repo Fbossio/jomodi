@@ -18,20 +18,21 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { Serialize } from '../common/interceptors/serialize.interceptor';
 import { UserRole } from '../users/entities/user.entity';
 import { CreateBannerDto, UpdateBannerDto } from './Dtos/banner';
-import { BannerAdminDto, BannerDto } from './Dtos/banner.dto';
+import { BannerDto } from './Dtos/banner.dto';
 import { BannerGalleryService } from './banner-gallery.service';
 
 @Controller('banner')
+@Serialize(BannerDto)
 export class BannerGalleryController {
   constructor(private readonly bannerGalleryService: BannerGalleryService) {}
 
   @Post()
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Serialize(BannerDto)
   @UseInterceptors(FileInterceptor('file'))
   async create(
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile()
+    file: Express.Multer.File,
     @Body() banner: CreateBannerDto,
   ) {
     const savedImage = await this.bannerGalleryService.uploadImage(
@@ -46,7 +47,6 @@ export class BannerGalleryController {
   }
 
   @Get()
-  @Serialize(BannerDto)
   list() {
     return this.bannerGalleryService.list();
   }
@@ -54,7 +54,6 @@ export class BannerGalleryController {
   @Get('admin')
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Serialize(BannerAdminDto)
   listAdmin(@Query('month') month?: string, @Query('year') year?: string) {
     const monthInt = month ? parseInt(month, 10) : undefined;
     const yearInt = year ? parseInt(year, 10) : undefined;
@@ -64,7 +63,6 @@ export class BannerGalleryController {
   @Delete(':id')
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Serialize(BannerDto)
   remove(@Param('id') id: string) {
     return this.bannerGalleryService.remove(id);
   }
@@ -72,7 +70,6 @@ export class BannerGalleryController {
   @Put(':id')
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Serialize(BannerDto)
   update(@Param('id') id: string, @Body() banner: UpdateBannerDto) {
     return this.bannerGalleryService.update(id, banner);
   }

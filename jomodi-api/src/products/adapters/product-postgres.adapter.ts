@@ -1,5 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import {
+  IPaginationOptions,
+  Pagination,
+  paginate,
+} from 'nestjs-typeorm-paginate';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
@@ -21,7 +26,7 @@ export class ProductPostgresAdapter implements ProductRepository {
       await this.productRepository.save(createdProduct);
       return new Product(createdProduct);
     } catch (error) {
-      Promise.reject(error);
+      throw error;
     }
   }
 
@@ -32,7 +37,28 @@ export class ProductPostgresAdapter implements ProductRepository {
       });
       return products.map((product) => new Product(product));
     } catch (error) {
-      Promise.reject(error);
+      throw error;
+    }
+  }
+
+  async paginate(options: IPaginationOptions): Promise<Pagination<Product>> {
+    try {
+      const queryBuilder = this.productRepository
+        .createQueryBuilder('product')
+        .leftJoinAndSelect('product.category', 'category')
+        .orderBy('product.createdAt', 'DESC');
+      const paginatedProducts = await paginate<ProductEntity>(
+        queryBuilder,
+        options,
+      );
+
+      return new Pagination(
+        paginatedProducts.items.map((product) => new Product(product)),
+        paginatedProducts.meta,
+        paginatedProducts.links,
+      );
+    } catch (error) {
+      throw error;
     }
   }
 
@@ -44,7 +70,7 @@ export class ProductPostgresAdapter implements ProductRepository {
       });
       return new Product(product);
     } catch (error) {
-      Promise.reject(error);
+      throw error;
     }
   }
 
@@ -57,7 +83,7 @@ export class ProductPostgresAdapter implements ProductRepository {
       });
       return new Product(updatedProduct);
     } catch (error) {
-      Promise.reject(error);
+      throw error;
     }
   }
 
@@ -70,7 +96,7 @@ export class ProductPostgresAdapter implements ProductRepository {
       await this.productRepository.remove(product);
       return new Product(product);
     } catch (error) {
-      Promise.reject(error);
+      throw error;
     }
   }
 
@@ -82,7 +108,7 @@ export class ProductPostgresAdapter implements ProductRepository {
       });
       return products.map((product) => new Product(product));
     } catch (error) {
-      Promise.reject(error);
+      throw error;
     }
   }
 

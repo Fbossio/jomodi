@@ -18,14 +18,27 @@ export function Serialize(dto: classConstructor) {
 
 export class SerializeInterceptor implements NestInterceptor {
   constructor(private readonly dto: classConstructor) {}
+
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
       map((data: any) => {
-        return {
-          data: plainToInstance(this.dto, data, {
+        // Verify if the response is paginated
+        if (data.items && data.meta) {
+          // Paginated response
+          return {
+            ...data,
+            items: data.items.map((item: any) =>
+              plainToInstance(this.dto, item, {
+                excludeExtraneousValues: true,
+              }),
+            ),
+          };
+        } else {
+          // Single response
+          return plainToInstance(this.dto, data, {
             excludeExtraneousValues: true,
-          }),
-        };
+          });
+        }
       }),
     );
   }

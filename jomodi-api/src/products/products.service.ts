@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { IPaginationOptions, Pagination } from 'nestjs-typeorm-paginate';
 import { CategoryService } from '../category/category.service';
 import { ImageStoragePort } from '../common/ports/image-storage';
 import { StringFormatter } from '../common/string-formatter';
@@ -45,8 +46,8 @@ export class ProductsService {
     return createdProduct;
   }
 
-  async findAll(): Promise<Product[]> {
-    return this.productRepository.findAll();
+  async findAll(options: IPaginationOptions): Promise<Pagination<Product>> {
+    return this.productRepository.paginate(options);
   }
 
   async findOne(id: string): Promise<Product> {
