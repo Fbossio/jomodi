@@ -34,10 +34,12 @@ describe('ProductsController', () => {
     mockProductRepository = {
       create: jest.fn(),
       findAll: jest.fn(),
+      paginate: jest.fn(),
       findOne: jest.fn(),
       update: jest.fn(),
       remove: jest.fn(),
       productsByCategory: jest.fn(),
+      subtractStock: jest.fn(),
     };
 
     mockStringFormatter = {
@@ -129,13 +131,17 @@ describe('ProductsController', () => {
         description: 'test',
         imageUrl: 'test',
         price: 1,
+        stock: 1,
         categoryId: 'test',
         categoryName: 'test',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
     ];
-    mockProductsService.findAll.mockResolvedValue(mockProducts as any);
+
+    jest
+      .spyOn(mockProductsService, 'findAll')
+      .mockResolvedValue(mockProducts as any);
 
     const result = await controller.findAll();
 
