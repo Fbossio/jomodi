@@ -114,7 +114,7 @@ describe('UsersService', () => {
 
       repository.update.mockResolvedValue(updatedUser);
 
-      const result = await service.update('1', updateUserDto, requestUser);
+      const result = await service.update('1', updateUserDto);
       expect(result).toEqual(updatedUser);
     });
   });
@@ -129,7 +129,7 @@ describe('UsersService', () => {
 
       repository.remove.mockResolvedValue(user as any);
 
-      const result = await service.remove('1', requestUser);
+      const result = await service.remove('1');
 
       expect(result).toEqual(user);
     });

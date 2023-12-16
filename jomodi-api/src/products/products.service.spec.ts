@@ -24,10 +24,12 @@ describe('ProductsService', () => {
     mockProductRepository = {
       create: jest.fn(),
       findAll: jest.fn(),
+      paginate: jest.fn(),
       findOne: jest.fn(),
       update: jest.fn(),
       remove: jest.fn(),
       productsByCategory: jest.fn(),
+      subtractStock: jest.fn(),
     };
 
     mockStringFormatter = {
@@ -83,6 +85,7 @@ describe('ProductsService', () => {
       description: 'Testing product description',
       imageUrl: 'https://test.com/image.jpg',
       price: '15.99',
+      stock: 10,
       categoryId: '1',
       category: {
         id: 1,
@@ -97,8 +100,12 @@ describe('ProductsService', () => {
       name: 'Test Product',
       description: 'https://test.com/image.jpg',
       price: '15.99',
+      stock: 10,
       categoryId: 1,
       categoryName: 'Test Category',
+      getStock() {
+        return this.stock;
+      },
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -123,23 +130,32 @@ describe('ProductsService', () => {
         name: 'Test Product',
         description: 'https://test.com/image.jpg',
         price: '15.99',
+        stock: 10,
         categoryId: 1,
         categoryName: 'Test Category',
         createdAt: new Date(),
         updatedAt: new Date(),
+        getStock() {
+          return this.stock;
+        },
       },
     ];
 
+    const options = {
+      limit: 10,
+      page: 1,
+    };
+
     jest
-      .spyOn(mockProductRepository, 'findAll')
-      .mockResolvedValue(expectedProducts);
+      .spyOn(mockProductRepository, 'paginate')
+      .mockResolvedValue(expectedProducts as any);
 
     // Act
-    const result = await service.findAll();
+    const result = await service.findAll(options);
 
     // Assert
     expect(result).toEqual(expectedProducts);
-    expect(mockProductRepository.findAll).toHaveBeenCalled();
+    expect(mockProductRepository.paginate).toHaveBeenCalledWith(options);
   });
 
   it('should find one product', async () => {
@@ -149,10 +165,14 @@ describe('ProductsService', () => {
       name: 'Test Product',
       description: 'https://test.com/image.jpg',
       price: '15.99',
+      stock: 10,
       categoryId: 1,
       categoryName: 'Test Category',
       createdAt: new Date(),
       updatedAt: new Date(),
+      getStock() {
+        return this.stock;
+      },
     };
 
     jest
@@ -174,6 +194,7 @@ describe('ProductsService', () => {
       description: 'Testing product description',
       imageUrl: 'https://test.com/image.jpg',
       price: '15.99',
+      stock: 10,
       categoryId: '1',
       category: {
         id: 1,
@@ -188,10 +209,14 @@ describe('ProductsService', () => {
       name: 'Test Product',
       description: 'https://test.com/image.jpg',
       price: '15.99',
+      stock: 10,
       categoryId: 1,
       categoryName: 'Test Category',
       createdAt: new Date(),
       updatedAt: new Date(),
+      getStock() {
+        return this.stock;
+      },
     };
 
     jest
@@ -216,10 +241,14 @@ describe('ProductsService', () => {
       name: 'Test Product',
       description: 'https://test.com/image.jpg',
       price: '15.99',
+      stock: 10,
       categoryId: 1,
       categoryName: 'Test Category',
       createdAt: new Date(),
       updatedAt: new Date(),
+      getStock() {
+        return this.stock;
+      },
     };
 
     jest
@@ -246,10 +275,14 @@ describe('ProductsService', () => {
         name: 'Test Product',
         description: 'https://test.com/image.jpg',
         price: '15.99',
+        stock: 10,
         categoryId: 1,
         categoryName: 'Test Category',
         createdAt: new Date(),
         updatedAt: new Date(),
+        getStock() {
+          return this.stock;
+        },
       },
     ];
 

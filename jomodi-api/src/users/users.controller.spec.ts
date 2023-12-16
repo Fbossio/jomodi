@@ -66,9 +66,7 @@ describe('UsersController', () => {
       const request = { user: { id: '1' } };
       jest.spyOn(usersService, 'update').mockResolvedValue(updatedUser as any);
 
-      expect(await controller.update('1', updateUserDto, request as any)).toBe(
-        updatedUser,
-      );
+      expect(await controller.update('1', updateUserDto)).toBe(updatedUser);
     });
   });
 
@@ -84,7 +82,7 @@ describe('UsersController', () => {
       const request = { user: { id: '1' } };
       jest.spyOn(usersService, 'remove').mockResolvedValue(user as any);
 
-      expect(await controller.remove('1', request as any)).toBe(user);
+      expect(await controller.remove('1')).toBe(user);
     });
   });
 });
