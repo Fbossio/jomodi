@@ -71,7 +71,6 @@ describe('OrdersService', () => {
       OrderRepository.findAll.mockResolvedValue([order] as any);
       OrderSerializerPort.serializeOrder.mockReturnValue(order);
       const result = await service.findAll();
-      console.log(typeof result);
       expect(result).toEqual([order]);
     });
   });
