@@ -1,18 +1,12 @@
 version: '3.9'
-
 services:
-  postgres:
+  test-db:
     image: postgres:latest
     env_file:
-      - ./config/env/development.env
+      - ./config/env/testing.env
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-    volumes:
-      - data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
-
-volumes:
-  data:
+      - 5433:5432

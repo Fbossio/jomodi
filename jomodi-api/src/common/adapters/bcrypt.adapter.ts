@@ -8,7 +8,7 @@ export class BcryptAdapter implements EncryptionPort {
   private saltRounds: number;
 
   constructor(private readonly configService: ConfigService) {
-    this.saltRounds = this.configService.get<number>('SALT_ROUNDS');
+    this.saltRounds = this.configService.get<number>('bcrypt.salt');
     this.saltRounds = Number(this.saltRounds);
   }
 

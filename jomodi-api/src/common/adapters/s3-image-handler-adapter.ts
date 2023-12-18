@@ -13,7 +13,7 @@ export class S3ImageHandlerAdapter implements ImageStoragePort {
   private readonly s3Client: S3Client;
   private getS3Client(): S3Client {
     return new S3Client({
-      region: this.configService.getOrThrow('AWS_REGION'),
+      region: this.configService.getOrThrow('region'),
     });
   }
 
@@ -35,7 +35,7 @@ export class S3ImageHandlerAdapter implements ImageStoragePort {
     try {
       await this.s3Client.send(
         new PutObjectCommand({
-          Bucket: this.configService.getOrThrow('AWS_S3_BUCKET'),
+          Bucket: this.configService.getOrThrow('aws.bucket'),
           Key: `${prefix}${uuid}-${name}`,
           Body: image,
           ContentType: mimeType,
@@ -44,9 +44,9 @@ export class S3ImageHandlerAdapter implements ImageStoragePort {
       );
 
       const url = `https://${this.configService.getOrThrow(
-        'AWS_S3_BUCKET',
+        'aws.bucket',
       )}.s3.${this.configService.getOrThrow(
-        'AWS_REGION',
+        'aws.region',
       )}.amazonaws.com/${prefix}${uuid}-${name}`;
       return url;
     } catch (error) {
@@ -57,7 +57,7 @@ export class S3ImageHandlerAdapter implements ImageStoragePort {
     try {
       await this.s3Client.send(
         new DeleteObjectCommand({
-          Bucket: this.configService.getOrThrow('AWS_S3_BUCKET'),
+          Bucket: this.configService.getOrThrow('aws.bucket'),
           Key: name,
         }),
       );
