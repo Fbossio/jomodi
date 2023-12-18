@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UsersService } from '../users/users.service';
@@ -26,7 +26,7 @@ export class AuthService {
 
   async signin(user: SigninDto) {
     const registeredUser = await this.validateUser(user.email, user.password);
-    if (!registeredUser) throw new Error('Invalid credentials');
+    if (!registeredUser) throw new UnauthorizedException('Invalid credentials');
     try {
       const payload = {
         email: registeredUser.email,

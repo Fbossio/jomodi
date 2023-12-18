@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DatabaseCleanupService } from './database-cleanup.service';
 
 @Module({
   imports: [
@@ -18,5 +19,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       inject: [ConfigService],
     }),
   ],
+  providers: [DatabaseCleanupService],
 })
 export class DatabaseModule {}
