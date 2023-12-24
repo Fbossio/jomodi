@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
 import { Category } from '../../category/entities/category.entity';
 
@@ -12,6 +13,7 @@ export class CreateProductDto {
   imageUrl?: string;
   @IsString()
   price: string;
+  @Transform(({ value }) => parseInt(value, 10))
   @IsNumber()
   stock: number;
   @IsString()

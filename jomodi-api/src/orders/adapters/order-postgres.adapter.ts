@@ -142,6 +142,9 @@ export class OrderPostgresAdapter implements OrderRepository {
         relations: ['user', 'orderCosts'],
         where: { id: Number(id) },
       });
+      if (!order) {
+        throw new BadRequestException('Order not found');
+      }
       const orderId = order.id;
       const details = await this.orderDetailsAdapter.findByOrderId(
         orderId.toString(),
@@ -219,8 +222,15 @@ export class OrderPostgresAdapter implements OrderRepository {
         order.user.id.toString(),
       );
       const orderCreated = new Order(order);
-      // await this.orderDetailsAdapter.remove(orderId.toString());
-      // await this.orderCostsPort.remove(orderId.toString());
+
+      const removalOperations = [];
+      removalOperations.push(
+        this.orderDetailsAdapter.remove(order.id.toString()),
+      );
+      removalOperations.push(this.orderCostsPort.remove(order.id.toString()));
+
+      await Promise.all(removalOperations);
+
       await this.orderRepository.delete(id);
 
       return { ...orderCreated, details, costs, billingAddress };
@@ -228,6 +238,7 @@ export class OrderPostgresAdapter implements OrderRepository {
       throw error;
     }
   }
+
   async ordersByUser(userId: string): Promise<Order[]> {
     try {
       const orders = await this.orderRepository.find({

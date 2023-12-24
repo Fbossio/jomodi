@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -22,6 +23,7 @@ export class OrderCostsEntity extends BaseEntity {
   @Column({ type: 'real' })
   totalCost: number;
   @OneToOne(() => OrderEntity, (order) => order.orderCosts)
+  @JoinColumn({ name: 'orderId' })
   order: OrderEntity;
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

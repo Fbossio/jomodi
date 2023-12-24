@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { IPaginationOptions, Pagination } from 'nestjs-typeorm-paginate';
 import { CategoryService } from '../category/category.service';
 import { ImageStoragePort } from '../common/ports/image-storage';
@@ -37,6 +37,9 @@ export class ProductsService {
     const category = await this.categoryService.findOne(
       createProductDto.categoryId,
     );
+    if (category.id === undefined) {
+      throw new BadRequestException('Category not found');
+    }
 
     createProductDto.category = category;
     const createdProduct = await this.productRepository.create(

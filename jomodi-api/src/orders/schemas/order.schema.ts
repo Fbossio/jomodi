@@ -28,11 +28,11 @@ export class OrderEntity extends BaseEntity {
   user: UserEntity;
 
   @OneToMany(() => OrderDetailsEntity, (orderDetails) => orderDetails.order, {
-    cascade: ['remove'],
+    onDelete: 'CASCADE',
   })
   orderDetails: OrderDetailsEntity[];
   @OneToOne(() => OrderCostsEntity, {
-    cascade: ['remove'],
+    onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'orderCostsId' })
   orderCosts: OrderCostsEntity;

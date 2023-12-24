@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { ImageStoragePort } from '../ports/image-storage';
 
 import * as fs from 'fs';
@@ -7,9 +8,13 @@ import { UuidService } from '../uuid.service';
 
 @Injectable()
 export class DiskImageHandlerAdapter implements ImageStoragePort {
-  private readonly imageDir = path.join(__dirname, '..', '..', '..', 'assets');
+  private readonly imageDir =
+    this.configService.get<string>('IMAGE_STORAGE_PATH');
 
-  constructor(private readonly uuidService: UuidService) {}
+  constructor(
+    private readonly uuidService: UuidService,
+    private readonly configService: ConfigService,
+  ) {}
 
   async save(
     name: string,
