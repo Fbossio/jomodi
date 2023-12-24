@@ -14,6 +14,7 @@ describe('OrdersService', () => {
       findAll: jest.fn(),
       findOne: jest.fn(),
       update: jest.fn(),
+      updatePayment: jest.fn(),
       remove: jest.fn(),
       ordersByUser: jest.fn(),
     };
