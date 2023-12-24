@@ -13,7 +13,7 @@ export class S3ImageHandlerAdapter implements ImageStoragePort {
   private readonly s3Client: S3Client;
   private getS3Client(): S3Client {
     return new S3Client({
-      region: this.configService.getOrThrow('region'),
+      region: this.configService.getOrThrow('aws.region'),
     });
   }
 

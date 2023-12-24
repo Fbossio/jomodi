@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
+import { BcryptAdapter } from './adapters/bcrypt.adapter';
 import { DiskImageHandlerAdapter } from './adapters/disk-image-handler-adapter';
 // import { S3ImageHandlerAdapter } from './adapters/s3-image-handler-adapter';
-import { BcryptAdapter } from './adapters/bcrypt.adapter';
 import { StringFormatter } from './string-formatter';
 import { UuidService } from './uuid.service';
 

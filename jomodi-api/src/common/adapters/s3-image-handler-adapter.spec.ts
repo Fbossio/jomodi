@@ -39,9 +39,10 @@ describe('S3ImageHandlerAdapter', () => {
   beforeEach(() => {
     configService = new ConfigService();
     uuidService = new UuidService();
-    jest.spyOn(configService, 'getOrThrow').mockImplementation((key) => {
-      if (key === 'AWS_REGION') return 'us-east-1';
-      if (key === 'AWS_S3_BUCKET') return 'my-test-bucket';
+
+    jest.spyOn(configService, 'get').mockImplementation((key) => {
+      if (key === 'aws.region') return 'us-east-1';
+      if (key === 'aws.bucket') return 'my-test-bucket';
     });
 
     s3Client = new S3Client({});

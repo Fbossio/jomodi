@@ -109,6 +109,12 @@ describe('ProductsService', () => {
       createdAt: new Date(),
       updatedAt: new Date(),
     };
+    jest.spyOn(mockCategoryRepository, 'findOne').mockResolvedValue({
+      id: 1,
+      name: 'Test Category',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
 
     jest
       .spyOn(mockProductRepository, 'create')

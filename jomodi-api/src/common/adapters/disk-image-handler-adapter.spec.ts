@@ -13,10 +13,15 @@ jest.mock('fs', () => ({
 describe('DiskImageHandlerAdapter', () => {
   let diskImageHandlerAdapter: DiskImageHandlerAdapter;
   let mockUuidService: UuidService;
+  let mockConfigService: any;
 
   beforeEach(() => {
     mockUuidService = { generateUuid: jest.fn().mockReturnValue('test-uuid') };
-    diskImageHandlerAdapter = new DiskImageHandlerAdapter(mockUuidService);
+    mockConfigService = { get: jest.fn().mockReturnValue('test-path') };
+    diskImageHandlerAdapter = new DiskImageHandlerAdapter(
+      mockUuidService,
+      mockConfigService,
+    );
   });
 
   it('should save an image', async () => {

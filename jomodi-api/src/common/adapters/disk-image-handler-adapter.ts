@@ -9,7 +9,7 @@ import { UuidService } from '../uuid.service';
 @Injectable()
 export class DiskImageHandlerAdapter implements ImageStoragePort {
   private readonly imageDir =
-    this.configService.get<string>('IMAGE_STORAGE_PATH');
+    this.configService.get<string>('diskStorage.path');
 
   constructor(
     private readonly uuidService: UuidService,

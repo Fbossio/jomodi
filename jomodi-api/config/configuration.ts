@@ -22,4 +22,7 @@ export const configuration = () => ({
   bcrypt: {
     salt: parseInt(process.env.SALT_ROUNDS, 10) || 10,
   },
+  diskStorage: {
+    path: process.env.IMAGE_STORAGE_PATH,
+  },
 });
