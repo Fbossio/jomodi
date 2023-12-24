@@ -27,11 +27,18 @@ export class OrderEntity extends BaseEntity {
   @JoinColumn({ name: 'userId' })
   user: UserEntity;
 
-  @OneToMany(() => OrderDetailsEntity, (orderDetails) => orderDetails.order)
+  @OneToMany(() => OrderDetailsEntity, (orderDetails) => orderDetails.order, {
+    cascade: ['remove'],
+  })
   orderDetails: OrderDetailsEntity[];
-  @OneToOne(() => OrderCostsEntity)
+  @OneToOne(() => OrderCostsEntity, {
+    cascade: ['remove'],
+  })
   @JoinColumn({ name: 'orderCostsId' })
   orderCosts: OrderCostsEntity;
+
+  @Column({ nullable: true })
+  paymentId: string;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

@@ -11,12 +11,12 @@ export class OrderSerializerPostgresAdapter implements OrderSerializerPort {
         firstName: orderObject.firstName,
         lastName: orderObject.lastName,
         email: orderObject.email,
-        total: orderObject.total,
         details: [],
         costs: {},
         billingAddress: {},
       },
     };
+
     const serializedDetails = details.map((detail) => {
       return {
         id: detail.id,
@@ -43,5 +43,20 @@ export class OrderSerializerPostgresAdapter implements OrderSerializerPort {
     serializedOrder.data.costs = serializedCosts;
     serializedOrder.data.billingAddress = serializedBillingAddress;
     return serializedOrder;
+  }
+
+  serializeCheckout(order: any) {
+    const { details, costs, billingAddress, ...otherData } = order;
+    const orderObject = { ...otherData };
+    const serializedOrder = {
+      intent: 'CAPTURE',
+      purchase_units: [],
+      application_context: {
+        brand_name: 'Jomodi',
+        landing_page: 'NO_PREFERENCE',
+        user_action: 'PAY_NOW',
+        return_url: 'http://localhost:3000/orders',
+      },
+    };
   }
 }

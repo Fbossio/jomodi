@@ -116,15 +116,19 @@ export class OrderPostgresAdapter implements OrderRepository {
   async findAll(): Promise<Order[]> {
     try {
       const orders = await this.orderRepository.find({
-        relations: ['user'],
+        relations: ['user', 'orderCosts'],
       });
       const ordersDetails = await Promise.all(
         orders.map(async (order) => {
           const details = await this.orderDetailsAdapter.findByOrderId(
             order.id.toString(),
           );
+          const costs = await this.orderCostsPort.findOne(order.id.toString());
+          const billingAddress = await this.addressService.getDefaultAddress(
+            order.user.id.toString(),
+          );
           const orderCreated = new Order(order);
-          return { ...orderCreated, details };
+          return { ...orderCreated, details, costs, billingAddress };
         }),
       );
       return ordersDetails;
@@ -157,15 +161,41 @@ export class OrderPostgresAdapter implements OrderRepository {
     try {
       await this.orderRepository.update(id, order);
       const updatedOrder = await this.orderRepository.findOne({
-        relations: ['user'],
+        relations: ['user', 'orderCosts'],
         where: { id: Number(id) },
       });
       const orderId = updatedOrder.id;
       const details = await this.orderDetailsAdapter.findByOrderId(
         orderId.toString(),
       );
+      const costs = await this.orderCostsPort.findOne(orderId.toString());
+      const billingAddress = await this.addressService.getDefaultAddress(
+        updatedOrder.user.id.toString(),
+      );
       const orderCreated = new Order(updatedOrder);
-      return { ...orderCreated, details };
+      return { ...orderCreated, details, costs, billingAddress };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async updatePayment(id: string, paymentId: string): Promise<Order> {
+    try {
+      await this.orderRepository.update(id, { paymentId });
+      const order = await this.orderRepository.findOne({
+        relations: ['user', 'orderCosts'],
+        where: { id: Number(id) },
+      });
+      const orderId = order.id;
+      const details = await this.orderDetailsAdapter.findByOrderId(
+        orderId.toString(),
+      );
+      const costs = await this.orderCostsPort.findOne(orderId.toString());
+      const billingAddress = await this.addressService.getDefaultAddress(
+        order.user.id.toString(),
+      );
+      const orderCreated = new Order(order);
+      return { ...orderCreated, details, costs, billingAddress };
     } catch (error) {
       throw error;
     }
@@ -174,17 +204,26 @@ export class OrderPostgresAdapter implements OrderRepository {
   async remove(id: string): Promise<Order> {
     try {
       const order = await this.orderRepository.findOne({
-        relations: ['user'],
+        relations: ['user', 'orderCosts'],
         where: { id: Number(id) },
       });
+      if (!order) {
+        throw new BadRequestException('Order not found');
+      }
       const orderId = order.id;
       const details = await this.orderDetailsAdapter.findByOrderId(
         orderId.toString(),
       );
+      const costs = await this.orderCostsPort.findOne(orderId.toString());
+      const billingAddress = await this.addressService.getDefaultAddress(
+        order.user.id.toString(),
+      );
       const orderCreated = new Order(order);
-      await this.orderDetailsAdapter.remove(orderId.toString());
+      // await this.orderDetailsAdapter.remove(orderId.toString());
+      // await this.orderCostsPort.remove(orderId.toString());
       await this.orderRepository.delete(id);
-      return { ...orderCreated, details };
+
+      return { ...orderCreated, details, costs, billingAddress };
     } catch (error) {
       throw error;
     }
@@ -192,7 +231,7 @@ export class OrderPostgresAdapter implements OrderRepository {
   async ordersByUser(userId: string): Promise<Order[]> {
     try {
       const orders = await this.orderRepository.find({
-        relations: ['user'],
+        relations: ['user', 'orderCosts'],
         where: { user: { id: Number(userId) } },
       });
       return orders.map((order) => new Order(order));

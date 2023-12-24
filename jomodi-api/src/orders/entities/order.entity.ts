@@ -11,6 +11,7 @@ export class Order {
   firstName: string;
   lastName: string;
   email: string;
+  paymentId?: string;
   createdAt: Date;
   updatedAt: Date;
 
@@ -26,4 +27,5 @@ export enum OrderStatus {
   PENDING = 'pending',
   IN_PROGRESS = 'in_progress',
   DELIVERED = 'delivered',
+  CANCELLED = 'cancelled',
 }

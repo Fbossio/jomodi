@@ -1,3 +1,4 @@
+import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductsModule } from '../products/products.module';
@@ -9,6 +10,8 @@ import { OrderPostgresAdapter } from './adapters/order-postgres.adapter';
 import { OrderSerializerPostgresAdapter } from './adapters/order-serializer-postgres.adapter';
 import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
+import { PaymentsController } from './payments.controller';
+import { PaymentsService } from './payments.service';
 import { OrderCostsEntity } from './schemas/order.costs.schema';
 import { OrderDetailsEntity } from './schemas/order.details.schema';
 import { OrderEntity } from './schemas/order.schema';
@@ -22,10 +25,12 @@ import { OrderEntity } from './schemas/order.schema';
     ]),
     UsersModule,
     ProductsModule,
+    HttpModule,
   ],
-  controllers: [OrdersController],
+  controllers: [OrdersController, PaymentsController],
   providers: [
     OrdersService,
+    PaymentsService,
     {
       provide: 'OrderRepository',
       useClass: OrderPostgresAdapter,

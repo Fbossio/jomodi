@@ -33,8 +33,27 @@ export class OrdersService {
     return this.orderSerializer.serializeOrder(order);
   }
 
+  async updatePayment(id: string, paymentId: string) {
+    const order = await this.orderRepository.updatePayment(id, paymentId);
+    return this.orderSerializer.serializeOrder(order);
+  }
+
   async remove(id: string) {
     const order = await this.orderRepository.remove(id);
     return this.orderSerializer.serializeOrder(order);
+  }
+
+  async prepareStripeCharge(order: any) {
+    return {
+      amount: Math.round(order.data.costs.totalCost * 100),
+      currency: 'usd',
+      description: `Payment for order ${order.data.id}`,
+      metadata: {
+        orderId: order.data.id,
+        subtotal: order.data.costs.subtotal,
+        shipping: order.data.costs.shippingCost,
+        tax: order.data.costs.tax,
+      },
+    };
   }
 }

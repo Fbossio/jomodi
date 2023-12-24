@@ -7,6 +7,7 @@ export interface OrderRepository {
   findAll(): Promise<Order[]>;
   findOne(id: string): Promise<Order>;
   update(id: string, order: UpdateOrderDto): Promise<Order>;
+  updatePayment(id: string, paymentId: string): Promise<Order>;
   remove(id: string): Promise<Order>;
   ordersByUser(userId: string): Promise<Order[]>;
 }
