@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
-import { User } from '../entities/user.entity';
+import { User, UserRole } from '../entities/user.entity';
 import { UsersRepository } from '../ports/users-repository';
 import { UserEntity } from '../schemas/users.schema';
 
@@ -71,6 +71,19 @@ export class UsersPostgresAdapter implements UsersRepository {
 
       await this.userRepository.delete(id);
       return new User(user);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async changeToAdmin(id: string): Promise<User> {
+    try {
+      const payload = { role: UserRole.ADMIN };
+      await this.userRepository.update(id, payload);
+      const user = await this.userRepository.findOne({
+        where: { id: Number(id) },
+      });
+      return user;
     } catch (error) {
       throw error;
     }

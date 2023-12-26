@@ -9,4 +9,5 @@ export interface UsersRepository {
   findOne(id: string): Promise<User>;
   update(id: string, user: UpdateUserDto): Promise<User>;
   remove(id: string): Promise<User>;
+  changeToAdmin(id: string): Promise<User>;
 }

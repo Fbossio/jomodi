@@ -18,7 +18,7 @@ export class BannerPostgresAdapter implements BannerRepository {
       await this.bannerRepository.save(createdBanner);
       return new Banner(createdBanner);
     } catch (error) {
-      Promise.reject(error);
+      throw error;
     }
   }
   async findAll(): Promise<Banner[]> {
@@ -28,7 +28,7 @@ export class BannerPostgresAdapter implements BannerRepository {
       });
       return banners.map((banner) => new Banner(banner));
     } catch (error) {
-      Promise.reject(error);
+      throw error;
     }
   }
 
@@ -63,7 +63,7 @@ export class BannerPostgresAdapter implements BannerRepository {
       const banners = await query.getMany();
       return banners.map((banner) => new Banner(banner));
     } catch (error) {
-      Promise.reject(error);
+      throw error;
     }
   }
 
@@ -74,7 +74,7 @@ export class BannerPostgresAdapter implements BannerRepository {
       });
       return new Banner(banner);
     } catch (error) {
-      Promise.reject(error);
+      throw error;
     }
   }
   async update(id: string, status: UpdateBannerDto): Promise<Banner> {
@@ -85,7 +85,7 @@ export class BannerPostgresAdapter implements BannerRepository {
       });
       return new Banner(updatedBanner);
     } catch (error) {
-      Promise.reject(error);
+      throw error;
     }
   }
   async remove(id: string): Promise<Banner> {
@@ -96,7 +96,7 @@ export class BannerPostgresAdapter implements BannerRepository {
       await this.bannerRepository.delete(id);
       return new Banner(banner);
     } catch (error) {
-      Promise.reject(error);
+      throw error;
     }
   }
 }

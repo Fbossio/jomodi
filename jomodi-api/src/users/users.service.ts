@@ -1,4 +1,5 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { EncryptionPort } from '../common/ports/encription.port';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -12,6 +13,7 @@ export class UsersService {
     private readonly usersRepository: UsersRepository,
     @Inject('EncryptionPort')
     private readonly encryptionPort: EncryptionPort,
+    private configService: ConfigService,
   ) {}
 
   async checkPassword(password: string, hashedPassword: string) {
@@ -54,5 +56,12 @@ export class UsersService {
 
   async remove(id: string): Promise<User> {
     return this.usersRepository.remove(id);
+  }
+
+  async changeToAdmin(id: string): Promise<User> {
+    if (this.configService.get('NODE_ENV') !== 'testing') {
+      throw new Error('Thid method can only be used in testing environment');
+    }
+    return this.usersRepository.changeToAdmin(id);
   }
 }
