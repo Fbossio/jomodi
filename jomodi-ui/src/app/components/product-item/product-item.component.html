@@ -1,0 +1,35 @@
+<!-- <div class="product-list-item-image">
+  <img [src]="product.image" alt="Product image" class="product-image">
+</div>
+<div class="product-list-item-details">
+  <div class="product-list-item-details-title">
+    {{ product.title }}
+  </div>
+  <div class="product-list-item-details-price">
+    {{ product.price | currency }}
+  </div>
+</div> -->
+<mat-card class="example-card item-container">
+  <mat-card-header></mat-card-header>
+  <img mat-card-image [src]="product.image" [alt]="product.title" [routerLink]="['/product', product.id] "
+    class="card-image product-image">
+  <mat-card-content [routerLink]="['/product', product.id]" class="card-content">
+    <p class="product-title">
+      {{ product!.title }}
+    </p>
+    <p class="product-price">
+      {{ product!.price | currency }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions class="actions">
+    <mat-form-field>
+      <mat-label>Quantity</mat-label>
+      <mat-select>
+        <mat-option></mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button>
+      <mat-icon>add_shopping_cart</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

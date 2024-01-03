@@ -1,0 +1,7 @@
+<angular-carousel [infinite]="true" [auto]="true">
+  <ng-template ngFor let-slide [ngForOf]="slides">
+    <div *angularCarouselSlide>
+      <img [src]="slide.imageUrl" alt="Slide image" class="slider-image">
+    </div>
+  </ng-template>
+</angular-carousel>
