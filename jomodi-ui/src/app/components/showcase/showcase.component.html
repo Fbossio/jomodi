@@ -1,0 +1,5 @@
+<div class="product-list" *ngIf="items$ | async as items">
+  <div *ngFor="let product of items">
+    <app-product-item [product]=product></app-product-item>
+  </div>
+</div>

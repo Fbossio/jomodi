@@ -1,5 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 import { configuration } from '../config/configuration';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -15,6 +17,11 @@ import { UsersModule } from './users/users.module';
 @Global()
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), 'assets'),
+      serveRoot: '/assets',
+      renderPath: undefined,
+    }),
     ConfigModule.forRoot({
       envFilePath: `${process.cwd()}/config/env/${process.env.NODE_ENV}.env`,
       load: [configuration],
