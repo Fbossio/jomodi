@@ -12,6 +12,6 @@ export const initialState: ItemsState = {
 export const itemsReducer = createReducer(
   initialState,
   on(loadItems, state => ({ ...state, loading: true })),
-  on(loadItemsSuccess, (state, { items }) => ({ ...state, loading: false, items })),
+  on(loadItemsSuccess, (state, { items, meta }) => ({ ...state, loading: false, items, meta })),
   on(loadItemsFailure, state => ({ ...state, loading: false }))
 )

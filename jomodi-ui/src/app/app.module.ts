@@ -19,6 +19,7 @@ import { MaterialModule } from './material/material.module';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { ProductListComponent } from './pages/product-list/product-list.component';
 import { ROOT_REDUCERS } from './state/app.state';
+import { ItemsEffect } from './state/effects/items.effect';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { ROOT_REDUCERS } from './state/app.state';
     CarouselModule,
     StoreModule.forRoot(ROOT_REDUCERS),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([ItemsEffect])
   ],
   providers: [],
   bootstrap: [AppComponent]

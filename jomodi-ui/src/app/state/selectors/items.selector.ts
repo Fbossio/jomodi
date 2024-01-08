@@ -13,3 +13,8 @@ export const selectItemsLoading = createSelector(
   selectItemsFeature,
   (state: ItemsState) => state.loading
 )
+
+export const selectItemsMeta = createSelector(
+  selectItemsFeature,
+  (state: ItemsState) => state.meta
+);
