@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { loadBanners } from '../../state/actions/banner.actions';
+import { AppState } from '../../state/app.state';
+import { selectBannerList } from '../../state/selectors/banner.selector';
 
 @Component({
   selector: 'app-carousel',
@@ -8,17 +13,15 @@ import { Component, OnInit } from '@angular/core';
 export class CarouselComponent implements OnInit {
 
 
-  slides: any[] = [];
+  slides$: Observable<any> = new Observable();
+
+  constructor(
+    private store: Store<AppState>,
+    ) { }
 
   ngOnInit(): void {
-    this.slides = [
-      {id: 1, imageUrl: '/assets/4712256.jpg'},
-      {id: 2, imageUrl: '/assets/4773142.jpg'},
-      {id: 3, imageUrl: '/assets/5594188.jpg'},
-      {id: 4, imageUrl: '/assets/4810804.jpg'},
-      {id: 5, imageUrl: '/assets/6874380.jpg'},
-      {id: 6, imageUrl: '/assets/6003842.jpg'}
-    ];
+    this.store.dispatch(loadBanners())
+    this.slides$ = this.store.select(selectBannerList)
   }
 
 

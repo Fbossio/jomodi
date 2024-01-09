@@ -21,6 +21,7 @@ import { MaterialModule } from './material/material.module';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { ProductListComponent } from './pages/product-list/product-list.component';
 import { ROOT_REDUCERS } from './state/app.state';
+import { BannerEffect } from './state/effects/banner.effect';
 import { ItemsEffect } from './state/effects/items.effect';
 
 @NgModule({
@@ -45,7 +46,7 @@ import { ItemsEffect } from './state/effects/items.effect';
     MatCarouselModule.forRoot(),
     StoreModule.forRoot(ROOT_REDUCERS),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([ItemsEffect])
+    EffectsModule.forRoot([ItemsEffect, BannerEffect])
   ],
   providers: [],
   bootstrap: [AppComponent]
