@@ -8,11 +8,12 @@ import { environment } from '../../environments/environment';
 })
 export class ShowcaseServiceService {
   api = environment.API_URL;
-  endpoint = `${this.api}/products`
+
 
   constructor(private http: HttpClient) { }
 
-  gedDataApi(): Observable<any> {
-    return this.http.get(this.endpoint);
+  gedDataApi(page: number=1, limit:number=10): Observable<any> {
+    const endpoint = `${this.api}/products/?page=${page}&limit=${limit}`
+    return this.http.get(endpoint);
   }
 }
