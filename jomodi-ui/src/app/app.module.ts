@@ -20,6 +20,7 @@ import { ProductDetailsComponent } from './pages/product-details/product-details
 import { ProductListComponent } from './pages/product-list/product-list.component';
 import { ROOT_REDUCERS } from './state/app.state';
 import { ItemsEffect } from './state/effects/items.effect';
+import { PaginatorComponent } from './components/paginator/paginator.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ItemsEffect } from './state/effects/items.effect';
     ProductDetailsComponent,
     CarouselComponent,
     ProductItemComponent,
-    ShowcaseComponent
+    ShowcaseComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,

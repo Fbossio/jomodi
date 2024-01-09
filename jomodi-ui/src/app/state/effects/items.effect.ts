@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { catchError, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { ShowcaseServiceService } from '../../services/showcase-service.service';
 import { loadItems, loadItemsFailure, loadItemsSuccess } from '../actions/itmems.actions';
+import { setLimit, setPage } from '../actions/pagination.actions';
 import { AppState } from '../app.state';
 import { selectLimit, selectPage } from '../selectors/pagination.selector';
 
@@ -12,7 +13,7 @@ import { selectLimit, selectPage } from '../selectors/pagination.selector';
 export class ItemsEffect {
 
   loadItems$ = createEffect(() => this.actions$.pipe(
-    ofType(loadItems),
+    ofType(loadItems, setPage, setLimit),
     withLatestFrom(
       this.store.pipe(select(selectPage)),
       this.store.pipe(select(selectLimit))
