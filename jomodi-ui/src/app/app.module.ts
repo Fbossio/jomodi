@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCarouselModule } from '@magloft/material-carousel';
 import { CarouselModule } from '@marcreichel/angular-carousel';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { EffectsModule } from '@ngrx/effects';
@@ -13,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { PaginatorComponent } from './components/paginator/paginator.component';
 import { ProductItemComponent } from './components/product-item/product-item.component';
 import { ShowcaseComponent } from './components/showcase/showcase.component';
 import { MaterialModule } from './material/material.module';
@@ -20,7 +22,6 @@ import { ProductDetailsComponent } from './pages/product-details/product-details
 import { ProductListComponent } from './pages/product-list/product-list.component';
 import { ROOT_REDUCERS } from './state/app.state';
 import { ItemsEffect } from './state/effects/items.effect';
-import { PaginatorComponent } from './components/paginator/paginator.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
     MaterialModule,
     FlexLayoutModule,
     CarouselModule,
+    MatCarouselModule.forRoot(),
     StoreModule.forRoot(ROOT_REDUCERS),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     EffectsModule.forRoot([ItemsEffect])

@@ -1,7 +1,9 @@
-<angular-carousel [infinite]="true" [auto]="true">
-  <ng-template ngFor let-slide [ngForOf]="slides">
-    <div *angularCarouselSlide>
-      <img [src]="slide.imageUrl" alt="Slide image" class="slider-image">
-    </div>
-  </ng-template>
-</angular-carousel>
+<mat-carousel color="accent" [hideIndicators]="false" [hideArrows]="false" color="accent">
+  <mat-carousel-slide *ngFor="let slide of slides" [image]="slide.imageUrl" overlayColor="#00000040"
+    [hideOverlay]="true">
+    <!-- <ng-template matCarouselSlideContent>
+      <h3>{{slide.title}}</h3>
+      <p>{{slide.description}}</p>
+    </ng-template> -->
+  </mat-carousel-slide>
+</mat-carousel>
