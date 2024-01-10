@@ -16,6 +16,11 @@
   padding: 1rem;
   /* object-fit: cover; */
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.card-content {
+  cursor: pointer;
 }
 
 .product-list-item-details {

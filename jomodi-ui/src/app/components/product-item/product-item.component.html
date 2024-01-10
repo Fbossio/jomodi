@@ -1,8 +1,8 @@
 <mat-card class="example-card item-container">
   <mat-card-header></mat-card-header>
   <img mat-card-image [src]="product.imageUrl" [alt]="product.name" [routerLink]="['/product', product.id] "
-    class="card-image product-image">
-  <mat-card-content [routerLink]="['/product', product.id]" class="card-content">
+    class="card-image product-image" (click)="handleClick()">
+  <mat-card-content [routerLink]="['/product', product.id]" class="card-content" (click)="handleClick()">
     <p class="product-title">
       {{ product!.name}}
     </p>

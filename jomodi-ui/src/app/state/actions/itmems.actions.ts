@@ -15,6 +15,11 @@ export const loadItemsFailure = createAction(
   props<{ error: any }>()
 );
 
+export const setCurrentItem = createAction(
+  '[Item List] Set Current Item',
+  props<{ item: Item }>()
+);
+
 
 
 

@@ -23,6 +23,7 @@ import { ProductListComponent } from './pages/product-list/product-list.componen
 import { ROOT_REDUCERS } from './state/app.state';
 import { BannerEffect } from './state/effects/banner.effect';
 import { ItemsEffect } from './state/effects/items.effect';
+import { ProductInfoDisplayComponent } from './components/product-info-display/product-info-display.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ItemsEffect } from './state/effects/items.effect';
     CarouselComponent,
     ProductItemComponent,
     ShowcaseComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    ProductInfoDisplayComponent,
   ],
   imports: [
     BrowserModule,

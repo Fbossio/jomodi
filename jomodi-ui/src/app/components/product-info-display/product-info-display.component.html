@@ -1,0 +1,32 @@
+<div class="product-detail-container">
+  <mat-card class="left-card">
+    <img mat-card-image [src]="currentItem.imageUrl" [alt]="currentItem.name">
+    <mat-card-content>
+      <p>{{currentItem.description}}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="right-card">
+    <mat-card-header>
+      <mat-card-title>{{ currentItem.name }}</mat-card-title>
+      <mat-card-subtitle>{{ currentItem.categoryName | titlecase }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="product-price"><span>{{ currentItem.price | currency }}</span></p>
+    </mat-card-content>
+    <div class="actions">
+      <mat-form-field>
+        <mat-label>Quantity</mat-label>
+        <mat-select>
+          <mat-option></mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" class="add-to-cart-btn">
+          <mat-icon>add_shopping_cart</mat-icon>
+          <span class="cart-button-text">Add to cart</span>
+        </button>
+      </mat-card-actions>
+    </div>
+  </mat-card>
+</div>

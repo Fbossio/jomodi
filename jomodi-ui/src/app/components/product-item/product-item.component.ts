@@ -1,4 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { setCurrentItem } from '../../state/actions/itmems.actions';
+import { AppState } from '../../state/app.state';
 
 @Component({
   selector: 'app-product-item',
@@ -7,5 +10,11 @@ import { Component, Input } from '@angular/core';
 })
 export class ProductItemComponent {
   @Input() product:any = {};
+
+  constructor(private store: Store<AppState>) { }
+
+  handleClick() {
+    this.store.dispatch(setCurrentItem({ item: this.product }));
+  }
 
 }

@@ -23,3 +23,8 @@ export const selecTotalItems = createSelector(
   selectItemsFeature,
   (state: ItemsState) => state.meta?.totalItems
 )
+
+export const selectCurrentItem = createSelector(
+  selectItemsFeature,
+  (state: ItemsState) => state.currentItem
+)
