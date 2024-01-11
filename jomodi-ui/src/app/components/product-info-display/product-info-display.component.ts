@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { Item } from '../../core/models/item.interface';
+import { addCartItem } from '../../state/actions/cart.actions';
 import { loadItem } from '../../state/actions/itmems.actions';
 import { AppState } from '../../state/app.state';
 import { selectItem } from '../../state/selectors/item.selector';
@@ -51,6 +52,13 @@ export class ProductInfoDisplayComponent implements OnInit, OnDestroy {
           }
         })
       );
+    }
+  }
+
+  addToCart() {
+    if (this.currentItem) {
+      const item = { ...this.currentItem, quantity: this.selectedQuantity };
+      this.store.dispatch(addCartItem({ item }));
     }
   }
 
