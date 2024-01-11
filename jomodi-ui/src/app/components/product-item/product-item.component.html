@@ -13,8 +13,8 @@
   <mat-card-actions class="actions">
     <mat-form-field>
       <mat-label>Quantity</mat-label>
-      <mat-select>
-        <mat-option></mat-option>
+      <mat-select [(ngModel)]="selectedQuantity">
+        <mat-option *ngFor="let quantity of quantityArray" [value]="quantity">{{ quantity }}</mat-option>
       </mat-select>
     </mat-form-field>
     <button mat-button>
