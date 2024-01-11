@@ -20,6 +20,21 @@ export const setCurrentItem = createAction(
   props<{ item: Item }>()
 );
 
+export const loadItem = createAction(
+  '[Item List] Load Item',
+  props<{ id: number }>()
+);
+
+export const loadItemSuccess = createAction(
+  '[Item List] Load Item Success',
+  props<{ item: Item }>()
+);
+
+export const loadItemFailure = createAction(
+  '[Item List] Load Item Failure',
+  props<{ error: any }>()
+);
+
 
 
 

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ShowcaseServiceService } from './showcase-service.service';
+import { ShowcaseServiceService } from './Items.service';
 
 describe('ShowcaseServiceService', () => {
   let service: ShowcaseServiceService;

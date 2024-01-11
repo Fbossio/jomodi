@@ -6,3 +6,8 @@ export interface ItemsState {
   meta?: Meta;
   currentItem: null | Item;
 }
+
+export interface ItemState {
+  loading: boolean;
+  item: Item;
+}
