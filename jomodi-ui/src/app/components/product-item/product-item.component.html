@@ -17,7 +17,7 @@
         <mat-option *ngFor="let quantity of quantityArray" [value]="quantity">{{ quantity }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-button>
+    <button mat-button (click)="addToCart()">
       <mat-icon>add_shopping_cart</mat-icon>
     </button>
   </mat-card-actions>

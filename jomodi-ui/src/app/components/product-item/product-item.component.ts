@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { addCartItem } from '../../state/actions/cart.actions';
 import { setCurrentItem } from '../../state/actions/itmems.actions';
 import { AppState } from '../../state/app.state';
 
@@ -23,6 +24,13 @@ export class ProductItemComponent {
   ngOnInit() {
     this.maxQuantity = this.product && this.product.stock >= 20 ? 20 : this.product?.stock || 0;
     this.quantityArray = Array.from({ length: this.maxQuantity }, (_, i) => i + 1);
+  }
+
+  addToCart() {
+    if (this.product) {
+      const item = { ...this.product, quantity: this.selectedQuantity };
+      this.store.dispatch(addCartItem({ item }));
+    }
   }
 
 }
