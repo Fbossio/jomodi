@@ -13,7 +13,8 @@
     <div fxShow="true" fxHide.lt-md="true" class="link-container">
       <a mat-button routerLink="/">Product List</a>
       <button mat-icon-button class="example-icon" aria-label="Example icon-button with heart icon">
-        <mat-icon matBadgeColor="warn">shopping_cart</mat-icon>
+        <mat-icon matBadgeColor="warn" [matBadge]="totalQuantity"
+          [matBadgeHidden]="totalQuantity <= 0">shopping_cart</mat-icon>
       </button>
 
     </div>
