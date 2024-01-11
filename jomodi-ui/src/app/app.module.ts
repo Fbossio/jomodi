@@ -1,7 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule, isDevMode } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCarouselModule } from '@magloft/material-carousel';
@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
+import { ProductInfoDisplayComponent } from './components/product-info-display/product-info-display.component';
 import { ProductItemComponent } from './components/product-item/product-item.component';
 import { ShowcaseComponent } from './components/showcase/showcase.component';
 import { MaterialModule } from './material/material.module';
@@ -23,7 +24,6 @@ import { ProductListComponent } from './pages/product-list/product-list.componen
 import { ROOT_REDUCERS } from './state/app.state';
 import { BannerEffect } from './state/effects/banner.effect';
 import { ItemsEffect } from './state/effects/items.effect';
-import { ProductInfoDisplayComponent } from './components/product-info-display/product-info-display.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +45,7 @@ import { ProductInfoDisplayComponent } from './components/product-info-display/p
     MaterialModule,
     FlexLayoutModule,
     CarouselModule,
+    FormsModule,
     MatCarouselModule.forRoot(),
     StoreModule.forRoot(ROOT_REDUCERS),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),

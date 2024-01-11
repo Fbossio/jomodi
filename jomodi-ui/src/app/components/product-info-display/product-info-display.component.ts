@@ -21,12 +21,17 @@ export class ProductInfoDisplayComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
   currentItem$: Observable<any> = new Observable();
   currentItem: Item | null = null;
+  maxQuantity: number = 0;
+  quantityArray: number[] = [];
+  selectedQuantity = 1;
 
 
   ngOnInit() {
     this.subscriptions.add(
       this.store.select(selectCurrentItem).subscribe(item => {
         this.currentItem = item;
+        this.maxQuantity = item && item.stock >= 20 ? 20 : item?.stock || 0;
+        this.quantityArray = Array.from({ length: this.maxQuantity }, (_, i) => i + 1);
       })
     );
 
@@ -39,6 +44,8 @@ export class ProductInfoDisplayComponent implements OnInit, OnDestroy {
             this.subscriptions.add(
               this.store.select(selectItem).subscribe(item => {
                 this.currentItem = item;
+                this.maxQuantity = item && item.stock >= 20 ? 20 : item?.stock || 0;
+                this.quantityArray = Array.from({ length: this.maxQuantity }, (_, i) => i + 1);
               })
             );
           }

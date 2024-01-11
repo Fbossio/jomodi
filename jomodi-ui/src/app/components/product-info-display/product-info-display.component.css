@@ -47,12 +47,19 @@
 .left-card {
   max-width: 400px;
   margin-bottom: 20px;
+  padding: 1rem;
+}
+
+.product-description {
+  margin-top: 20px;
 }
 
 .right-card {
   max-width: 400px;
   padding: 10px;
 }
+
+
 
 .actions {
   display: flex;
@@ -79,7 +86,13 @@
   .left-card {
     max-width: 400px;
     margin-bottom: 20px;
+    padding: 1rem
   }
+
+  .product-description {
+    margin-top: 20px;
+  }
+
   .right-card {
     max-width: 400px;
     padding: 10px;

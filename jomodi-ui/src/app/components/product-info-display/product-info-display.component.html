@@ -1,7 +1,7 @@
 <div class="product-detail-container">
   <mat-card class="left-card">
     <img mat-card-image [src]="currentItem?.imageUrl" [alt]="currentItem?.name">
-    <mat-card-content>
+    <mat-card-content class="product-description">
       <p>{{currentItem?.description}}</p>
     </mat-card-content>
   </mat-card>
@@ -17,8 +17,8 @@
     <div class="actions">
       <mat-form-field>
         <mat-label>Quantity</mat-label>
-        <mat-select>
-          <mat-option></mat-option>
+        <mat-select [(ngModel)]="selectedQuantity">
+          <mat-option *ngFor="let quantity of quantityArray" [value]="quantity">{{ quantity }}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-card-actions>
