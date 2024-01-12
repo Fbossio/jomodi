@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { CartItem } from '../../core/models/cart.interface';
 import { removeCartItem } from '../../state/actions/cart.actions';
 import { AppState } from '../../state/app.state';
-import { selectCartTotal } from '../../state/selectors/cart.selector';
+import { selectCartItems, selectCartTotal } from '../../state/selectors/cart.selector';
 
 @Component({
   selector: 'app-cart-table',
@@ -15,7 +16,10 @@ export class CartTableComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store<AppState>,
+    private router: Router
+    ) {}
 
 
   cartItems: readonly CartItem[] = [];
@@ -25,10 +29,14 @@ export class CartTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription.add(
-      this.store.select(store => store.cart).subscribe((data) => {
-        if (data.items.length > 0) {
-          this.cartItems = data.items;
+      this.store.select(selectCartItems).subscribe((data) => {
+        if (data.length > 0) {
+          this.cartItems = data;
         }
+        if (data.length === 0) {
+          this.router.navigate(['/empty-cart'])
+        }
+
       })
     );
 

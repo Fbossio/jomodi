@@ -26,6 +26,7 @@ import { BannerEffect } from './state/effects/banner.effect';
 import { ItemsEffect } from './state/effects/items.effect';
 import { CartPageComponent } from './pages/cart-page/cart-page.component';
 import { CartTableComponent } from './components/cart-table/cart-table.component';
+import { EmptyCartComponent } from './pages/empty-cart/empty-cart.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { CartTableComponent } from './components/cart-table/cart-table.component
     ProductInfoDisplayComponent,
     CartPageComponent,
     CartTableComponent,
+    EmptyCartComponent,
   ],
   imports: [
     BrowserModule,
