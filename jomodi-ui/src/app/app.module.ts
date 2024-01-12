@@ -24,6 +24,8 @@ import { ProductListComponent } from './pages/product-list/product-list.componen
 import { ROOT_REDUCERS } from './state/app.state';
 import { BannerEffect } from './state/effects/banner.effect';
 import { ItemsEffect } from './state/effects/items.effect';
+import { CartPageComponent } from './pages/cart-page/cart-page.component';
+import { CartTableComponent } from './components/cart-table/cart-table.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { ItemsEffect } from './state/effects/items.effect';
     ShowcaseComponent,
     PaginatorComponent,
     ProductInfoDisplayComponent,
+    CartPageComponent,
+    CartTableComponent,
   ],
   imports: [
     BrowserModule,

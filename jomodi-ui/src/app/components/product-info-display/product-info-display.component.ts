@@ -62,6 +62,7 @@ export class ProductInfoDisplayComponent implements OnInit, OnDestroy {
     }
   }
 
+
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
