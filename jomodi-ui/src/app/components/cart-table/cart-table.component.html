@@ -20,7 +20,7 @@
     <td mat-cell *matCellDef="let item">
       <mat-form-field>
         <mat-label>Quantity</mat-label>
-        <mat-select [(ngModel)]="item.quantity">
+        <mat-select [(ngModel)]="item.quantity" (ngModelChange)="onItemQuantityChange(item.id, item.quantity)">
           <mat-option *ngFor="let quantity of quantityArray" [value]="quantity">{{ quantity }}</mat-option>
         </mat-select>
       </mat-form-field>
