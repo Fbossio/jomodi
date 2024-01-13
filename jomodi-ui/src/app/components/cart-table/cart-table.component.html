@@ -2,7 +2,7 @@
   <table>
     <thead>
       <tr>
-        <th>Name</th>
+        <th class="column-name">Name</th>
         <th>Price</th>
         <th>Image</th>
         <th>Quantity</th>
@@ -11,7 +11,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of cartItems">
-        <td>{{ item.name }}</td>
+        <td class="column-name">{{ item.name }}</td>
         <td>{{ item.price | currency }}</td>
         <td>
           <img [src]="item.imageUrl" [alt]="item.name" class="small-image">

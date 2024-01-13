@@ -35,4 +35,10 @@ tr {
   background-color: #FFFFFF;
 }
 
+@media screen and (max-width: 600px) {
+  .column-name {
+    display: none;
+  }
+}
+
 
