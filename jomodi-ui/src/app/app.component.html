@@ -3,8 +3,8 @@
   <mat-sidenav #sidenav mode="over" color="primary" fxLayout="column" opened="false" fxHide.gt-sm="true">
     <div fxLayout="column">
       <a mat-button routerLink="/">Product List</a>
-      <button mat-icon-button>
-        <mat-icon>shopping_cart</mat-icon>
+      <button mat-icon-button routerLink="/cart">
+        <mat-icon [matBadge]="totalQuantity" [matBadgeHidden]="totalQuantity <= 0">shopping_cart</mat-icon>
       </button>
     </div>
   </mat-sidenav>
