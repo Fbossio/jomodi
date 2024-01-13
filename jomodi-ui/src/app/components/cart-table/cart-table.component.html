@@ -1,40 +1,36 @@
-<table mat-table [dataSource]="cartItems" class="mat-elevation-z8">
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let item"> {{item.name}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="price">
-    <th mat-header-cell *matHeaderCellDef> Price </th>
-    <td mat-cell *matCellDef="let item"> {{item.price | currency}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="image">
-    <th mat-header-cell *matHeaderCellDef> Image </th>
-    <td mat-cell *matCellDef="let item"> <img mat-card-image [src]="item.imageUrl" [alt]="item.name"
-        class="small-image"> </td>
-  </ng-container>
-
-  <ng-container matColumnDef="quantity">
-    <th mat-header-cell *matHeaderCellDef> Quantity </th>
-    <td mat-cell *matCellDef="let item">
-      <mat-form-field>
-        <mat-label>Quantity</mat-label>
-        <mat-select [(ngModel)]="item.quantity" (ngModelChange)="onItemQuantityChange(item.id, item.quantity)">
-          <mat-option *ngFor="let quantity of quantityArray" [value]="quantity">{{ quantity }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="action">
-    <th mat-header-cell *matHeaderCellDef> Action </th>
-    <td mat-cell *matCellDef="let item"> <button mat-button
-        (click)="removeItem(item.id)"><mat-icon>delete</mat-icon></button></td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+<div class="responsive-table mat-elevation-z8">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Image</th>
+        <th>Quantity</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of cartItems">
+        <td>{{ item.name }}</td>
+        <td>{{ item.price | currency }}</td>
+        <td>
+          <img [src]="item.imageUrl" [alt]="item.name" class="small-image">
+        </td>
+        <td>
+          <mat-form-field>
+            <mat-label>Quantity</mat-label>
+            <mat-select [(ngModel)]="item.quantity" (ngModelChange)="onItemQuantityChange(item.id, item.quantity)">
+              <mat-option *ngFor="let quantity of quantityArray" [value]="quantity">{{ quantity }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td>
+          <button mat-button (click)="removeItem(item.id)"><mat-icon>delete</mat-icon></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <div class="total-container mat-elevation-z8">
   SUBTOTAL: {{ totalPrice | currency }}
