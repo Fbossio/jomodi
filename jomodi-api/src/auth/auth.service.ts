@@ -1,5 +1,4 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UsersService } from '../users/users.service';
@@ -10,7 +9,6 @@ export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-    private configService: ConfigService,
   ) {}
 
   async validateUser(email: string, password: string) {
@@ -37,7 +35,6 @@ export class AuthService {
       };
       return {
         access_token: this.jwtService.sign(payload),
-        expiresIn: this.configService.get('jwt.expiresIn'),
       };
     } catch (error) {
       throw new Error(error);
@@ -53,7 +50,6 @@ export class AuthService {
     };
     return {
       access_token: this.jwtService.sign(payload),
-      expiresIn: this.configService.get('jwt.expiresIn'),
     };
   }
 }
