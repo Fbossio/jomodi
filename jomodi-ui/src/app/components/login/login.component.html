@@ -1,0 +1,24 @@
+<div class="login-container">
+  <h1>Login</h1>
+  <h4>Please sign in below</h4>
+
+  <form [formGroup]="form" (ngSubmit)="signIn(form.value)">
+
+    <mat-form-field appearance="fill" class="full-width-input">
+      <mat-label>Enter email</mat-label>
+      <input formControlName="email" matInput>
+      <mat-error *ngIf="form.controls['email'].invalid">Please enter a valid email</mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill" class="full-width-input">
+      <mat-label>Enter password</mat-label>
+      <input type="password" formControlName="password" matInput>
+      <mat-error *ngIf="form.controls['password'].invalid">Please enter a valid password</mat-error>
+    </mat-form-field>
+
+
+    <button [disabled]="!form.valid || formSubmitted" type="submit" mat-raised-button color="primary">Login</button>
+
+  </form>
+</div>
