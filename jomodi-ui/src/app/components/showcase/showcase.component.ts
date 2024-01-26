@@ -24,7 +24,6 @@ export class ShowcaseComponent {
   ngOnInit(): void {
     this.store.dispatch(loadItems())
     this.items$ = this.store.select(selectItemsList);
-
   }
 
 }

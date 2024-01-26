@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 import { AppState } from '../../state/app.state';
 import { selectCartItems } from '../../state/selectors/cart.selector';
 
@@ -13,7 +14,10 @@ export class NavBarComponent implements OnInit, OnDestroy {
   @Output() toggle = new EventEmitter<void>();
   private subscription = new Subscription();
 
-  constructor(private store: Store<AppState>) { }
+  constructor(
+    private store: Store<AppState>,
+    public authService: AuthService
+    ) { }
 
   totalQuantity: number = 0;
 
@@ -23,6 +27,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
         this.totalQuantity = items.reduce((acc, item) => acc + item.quantity, 0);
       })
     )
+
   }
 
   toggleSidenav() {
