@@ -11,7 +11,7 @@
     </a>
     <span class="example-spacer"></span>
     <div fxShow="true" fxHide.lt-md="true" class="link-container">
-      <a mat-button routerLink="/">Product List</a>
+      <a mat-button routerLink="/signup" *ngIf="!(authService.isLoggedIn())">Sign Up</a>
       <a mat-button routerLink="/login" *ngIf="!(authService.isLoggedIn())">Login</a>
       <a mat-button (click)="authService.logout()" *ngIf="authService.isLoggedIn()">Logout</a>
       <button mat-icon-button class="example-icon" aria-label="Example icon-button with heart icon" routerLink="/cart">

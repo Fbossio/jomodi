@@ -29,6 +29,7 @@ import { ProductListComponent } from './pages/product-list/product-list.componen
 import { ROOT_REDUCERS } from './state/app.state';
 import { BannerEffect } from './state/effects/banner.effect';
 import { ItemsEffect } from './state/effects/items.effect';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ItemsEffect } from './state/effects/items.effect';
     CartTableComponent,
     EmptyCartComponent,
     LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { jwtDecode } from "jwt-decode";
-import { Observable, map, shareReplay, tap } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { LoginCredentials } from '../core/models/auth.interface';
+import { LoginCredentials, SignUpCredentials } from '../core/models/auth.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +15,17 @@ export class AuthService {
     private http: HttpClient,
     ) { }
 
- signup(data: any): Observable<any> {
+ signup(data: SignUpCredentials): Observable<any> {
     const endpoint = `${this.api}/auth/signup`
     return this.http.post(endpoint, data)
       .pipe(
-            tap(res => this.setSession(res)),
-            shareReplay()
+        map((res: any) => {
+          if (res && res.access_token) {
+            this.setSession(res);
+            return true;
+          }
+          return false;
+        }),
             );
  }
 

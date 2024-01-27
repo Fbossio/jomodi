@@ -1,0 +1,36 @@
+<div class="login-container">
+  <h1>Sign Up</h1>
+  <h4>Please create an account</h4>
+
+  <form [formGroup]="form" (ngSubmit)="signUp(form.value)">
+
+    <mat-form-field appearance="fill" class="full-width-input">
+      <mat-label>Enter first name</mat-label>
+      <input formControlName="firstName" matInput>
+      <mat-error *ngIf="form.controls['firstName'].invalid">Please enter a valid first name</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width-input">
+      <mat-label>Enter last name</mat-label>
+      <input formControlName="lastName" matInput>
+      <mat-error *ngIf="form.controls['lastName'].invalid">Please enter a valid last name</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width-input">
+      <mat-label>Enter email</mat-label>
+      <input formControlName="email" matInput>
+      <mat-error *ngIf="form.controls['email'].invalid">Please enter a valid email</mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill" class="full-width-input">
+      <mat-label>Enter password</mat-label>
+      <input type="password" formControlName="password" matInput>
+      <mat-error *ngIf="form.controls['password'].invalid">Please enter a valid password</mat-error>
+    </mat-form-field>
+
+
+    <button [disabled]="!form.valid || formSubmitted" type="submit" mat-raised-button color="primary">Login</button>
+
+  </form>
+</div>
