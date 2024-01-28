@@ -30,6 +30,8 @@ import { ROOT_REDUCERS } from './state/app.state';
 import { BannerEffect } from './state/effects/banner.effect';
 import { ItemsEffect } from './state/effects/items.effect';
 import { RegisterComponent } from './components/register/register.component';
+import { AdminComponent } from './pages/admin/admin.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import { RegisterComponent } from './components/register/register.component';
     EmptyCartComponent,
     LoginComponent,
     RegisterComponent,
+    AdminComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

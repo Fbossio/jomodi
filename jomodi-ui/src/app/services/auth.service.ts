@@ -1,9 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { jwtDecode } from "jwt-decode";
+import { JwtPayload, jwtDecode } from "jwt-decode";
 import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { LoginCredentials, SignUpCredentials } from '../core/models/auth.interface';
+
+
+interface UserPayload extends JwtPayload {
+  role?: string;
+  name?: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -69,16 +76,30 @@ export class AuthService {
     return false;
   }
 
-  // isLoggedOut() {
-  //   return !this.isLoggedIn();
-  // }
+  isLoggedOut() {
+    return !this.isLoggedIn();
+  }
 
-  // getExpiration() {
-  //   const expiration = localStorage.getItem("expires_at");
-  //   if (expiration !== null) {
-  //     const expiresAt = JSON.parse(expiration);
-  //     return moment(expiresAt);
-  //   }
-  //   return null;
-  // }
+  get currentUser(): UserPayload | null {
+    let token = localStorage.getItem('id_token');
+    if (!token) {
+      return null;
+    }
+    try {
+      const decodedToken = jwtDecode(token);
+      return decodedToken;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  isAdmin() {
+    const user = this.currentUser;
+    if (user && user.role === 'admin') {
+      return true;
+    }
+    return false;
+  }
+
+
 }
