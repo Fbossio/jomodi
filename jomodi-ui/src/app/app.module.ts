@@ -32,6 +32,7 @@ import { ItemsEffect } from './state/effects/items.effect';
 import { RegisterComponent } from './components/register/register.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     RegisterComponent,
     AdminComponent,
     NotFoundComponent,
+    UnauthorizedComponent,
   ],
   imports: [
     BrowserModule,
