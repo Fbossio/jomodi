@@ -1,4 +1,9 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { EncryptionPort } from '../common/ports/encription.port';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -23,7 +28,7 @@ export class UsersService {
   async create(createUserDto: CreateUserDto) {
     const user = await this.usersRepository.findOneByEmail(createUserDto.email);
     if (user !== null) {
-      throw new Error('User already exists');
+      throw new BadRequestException('User already exists');
     }
     const hashedPassword = await this.encryptionPort.hashPassword(
       createUserDto.password,

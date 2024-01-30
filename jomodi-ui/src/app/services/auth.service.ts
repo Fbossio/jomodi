@@ -34,6 +34,10 @@ export class AuthService {
           }
           return false;
         }),
+        catchError(err => {
+          alert('Error', err.error.message, 'error');
+          return throwError(err);
+        })
             );
  }
 
