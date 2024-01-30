@@ -11,17 +11,22 @@ import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { CartTableComponent } from './components/cart-table/cart-table.component';
 import { LoginComponent } from './components/login/login.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
 import { ProductInfoDisplayComponent } from './components/product-info-display/product-info-display.component';
 import { ProductItemComponent } from './components/product-item/product-item.component';
+import { RegisterComponent } from './components/register/register.component';
 import { ShowcaseComponent } from './components/showcase/showcase.component';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { MaterialModule } from './material/material.module';
+import { AdminComponent } from './pages/admin/admin.component';
 import { CartPageComponent } from './pages/cart-page/cart-page.component';
 import { EmptyCartComponent } from './pages/empty-cart/empty-cart.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
@@ -29,10 +34,6 @@ import { ProductListComponent } from './pages/product-list/product-list.componen
 import { ROOT_REDUCERS } from './state/app.state';
 import { BannerEffect } from './state/effects/banner.effect';
 import { ItemsEffect } from './state/effects/items.effect';
-import { RegisterComponent } from './components/register/register.component';
-import { AdminComponent } from './pages/admin/admin.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
-import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
     MatCarouselModule.forRoot(),
     StoreModule.forRoot(ROOT_REDUCERS),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([ItemsEffect, BannerEffect])
+    EffectsModule.forRoot([ItemsEffect, BannerEffect]),
+    SweetAlert2Module.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

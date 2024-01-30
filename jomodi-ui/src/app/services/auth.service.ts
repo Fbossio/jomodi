@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtPayload, jwtDecode } from "jwt-decode";
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { LoginCredentials, SignUpCredentials } from '../core/models/auth.interface';
+import { alert } from '../utils/alert';
 
 
 interface UserPayload extends JwtPayload {
@@ -47,6 +48,10 @@ export class AuthService {
                   }
                   return false;
                 }),
+                catchError(err => {
+                  alert('Error', err.error.message, 'error');
+                  return throwError(err);
+                })
               )
   }
 
