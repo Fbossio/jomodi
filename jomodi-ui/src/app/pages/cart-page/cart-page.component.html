@@ -1,3 +1,9 @@
 <div class="cart-container">
-  <app-cart-table />
+  <div *ngIf="hasDefaultAddress">
+    <app-default-address-display />
+  </div>
+  <div *ngIf="!hasDefaultAddress" class="form-container">
+    <app-cart-form />
+  </div>
+  <app-cart-table [isLoggedIn]="isLoggedIn()" />
 </div>

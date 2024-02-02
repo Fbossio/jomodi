@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtPayload, jwtDecode } from "jwt-decode";
 import { Observable, catchError, map, throwError } from 'rxjs';
@@ -7,9 +7,10 @@ import { LoginCredentials, SignUpCredentials } from '../core/models/auth.interfa
 import { alert } from '../utils/alert';
 
 
-interface UserPayload extends JwtPayload {
+export interface UserPayload extends JwtPayload {
   role?: string;
   name?: string;
+  sub?: string;
 }
 
 
@@ -108,6 +109,16 @@ export class AuthService {
       return true;
     }
     return false;
+  }
+
+  getHeaders() {
+    let headers = new HttpHeaders();
+    let token = localStorage.getItem('id_token');
+    headers = headers.set('Authorization', `Bearer ${token}`);
+    const httpOptions = {
+      headers: headers
+    };
+    return httpOptions;
   }
 
 

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -6,6 +6,7 @@ import { CartItem } from '../../core/models/cart.interface';
 import { removeCartItem, updateQuantity } from '../../state/actions/cart.actions';
 import { AppState } from '../../state/app.state';
 import { selectCartItems, selectCartTotal } from '../../state/selectors/cart.selector';
+import { alert } from '../../utils/alert';
 
 @Component({
   selector: 'app-cart-table',
@@ -15,10 +16,11 @@ import { selectCartItems, selectCartTotal } from '../../state/selectors/cart.sel
 export class CartTableComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
+  @Input() isLoggedIn: boolean = false;
 
   constructor(
     private store: Store<AppState>,
-    private router: Router
+    private router: Router,
     ) {}
 
 
@@ -53,6 +55,14 @@ export class CartTableComponent implements OnInit, OnDestroy {
   onItemQuantityChange(id: number, newQuantity: number) {
     const updatedItem = { ...this.cartItems.find(item => item.id === id), quantity: newQuantity } as CartItem;
     this.store.dispatch(updateQuantity({ updatedItem }));
+  }
+
+  placeOrder() {
+    if (!this.isLoggedIn) {
+      this.router.navigate(['/login']);
+      alert('Login first', 'Please login to place order', 'warning');
+    }
+    console.log('Order placed');
   }
 
   ngOnDestroy(): void {

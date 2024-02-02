@@ -34,6 +34,8 @@ import { ProductListComponent } from './pages/product-list/product-list.componen
 import { ROOT_REDUCERS } from './state/app.state';
 import { BannerEffect } from './state/effects/banner.effect';
 import { ItemsEffect } from './state/effects/items.effect';
+import { CartFormComponent } from './components/cart-form/cart-form.component';
+import { DefaultAddressDisplayComponent } from './components/default-address-display/default-address-display.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { ItemsEffect } from './state/effects/items.effect';
     AdminComponent,
     NotFoundComponent,
     UnauthorizedComponent,
+    CartFormComponent,
+    DefaultAddressDisplayComponent,
   ],
   imports: [
     BrowserModule,

@@ -31,7 +31,9 @@
     </tbody>
   </table>
 </div>
-
 <div class="total-container mat-elevation-z8">
   SUBTOTAL: {{ totalPrice | currency }}
+</div>
+<div class="button-container">
+  <button mat-raised-button color="primary" (click)="placeOrder()">Place Order</button>
 </div>
