@@ -15,4 +15,9 @@ export class UsersService {
     const endpoint = `${this.api}/address/${userId}/default`;
     return this.http.get(endpoint, options);
   }
+
+  createAddress(address: any, options: any, userId: string): Observable<any> {
+    const endpoint = `${this.api}/address/${userId}`;
+    return this.http.post(endpoint, address, options);
+  }
 }

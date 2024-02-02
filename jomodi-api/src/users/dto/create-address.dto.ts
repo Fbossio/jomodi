@@ -2,8 +2,9 @@ import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 import { User } from '../entities/user.entity';
 
 export class CreateAddressDto {
+  @IsOptional()
   @IsNumber()
-  userId: number;
+  userId?: number;
   @IsOptional()
   user?: User;
   @IsString()

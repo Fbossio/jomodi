@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -9,11 +9,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class CartFormComponent {
   form!: FormGroup;
   formSubmitted: boolean = false;
+  @Output() onAddressSubmit: EventEmitter<any> = new EventEmitter();
 
   constructor(private fb: FormBuilder,) {}
 
   sendAddress(address: any) {
-    console.log(address);
+    this.onAddressSubmit.emit(address);
     this.formSubmitted = true;
   }
 

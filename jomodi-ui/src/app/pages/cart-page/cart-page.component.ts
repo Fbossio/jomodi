@@ -28,16 +28,27 @@ export class CartPageComponent {
     return null;
   }
 
+  handleAddressData(address: any) {
+    this.usersService.createAddress(address, this.authService.getHeaders(), this.currentUser?.sub as string)
+      .subscribe((res: any) => {
+        this.defaultAddress = res;
+        this.hasDefaultAddress = true;
+      });
+  }
+
   ngOnInit() {
     this.currentUser = this.getCurrentUser();
     if (this.currentUser) {
-      this.usersService.getDefaulAddress(this.currentUser.sub as string, this.authService.getHeaders)
+      this.usersService.getDefaulAddress(this.currentUser.sub as string, this.authService.getHeaders())
         .subscribe((res: any) => {
           this.defaultAddress = res;
-          this.hasDefaultAddress = true;
+          if (Object.keys(this.defaultAddress).length > 0) {
+            this.hasDefaultAddress = true;
+            console.log(this.defaultAddress);
+          }
         });
     }
-    console.log(this.currentUser);
+
   }
 
 }
