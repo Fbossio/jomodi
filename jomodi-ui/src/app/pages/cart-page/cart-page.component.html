@@ -7,5 +7,5 @@
       <app-cart-form (onAddressSubmit)="handleAddressData($event)" />
     </div>
   </div>
-  <app-cart-table [isLoggedIn]="isLoggedIn()" />
+  <app-cart-table [isLoggedIn]="isLoggedIn()" [hasDefaultAddress]="hasDefaultAddress" />
 </div>

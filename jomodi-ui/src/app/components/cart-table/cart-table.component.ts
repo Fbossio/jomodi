@@ -17,6 +17,7 @@ export class CartTableComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
   @Input() isLoggedIn: boolean = false;
+  @Input() hasDefaultAddress: boolean = false;
 
   constructor(
     private store: Store<AppState>,
@@ -61,6 +62,10 @@ export class CartTableComponent implements OnInit, OnDestroy {
     if (!this.isLoggedIn) {
       this.router.navigate(['/login']);
       alert('Login first', 'Please login to place order', 'warning');
+      return
+    } else if (this.isLoggedIn && !this.hasDefaultAddress) {
+      alert('Add address', 'Please add address to place order', 'warning');
+      return
     }
     console.log('Order placed');
   }
