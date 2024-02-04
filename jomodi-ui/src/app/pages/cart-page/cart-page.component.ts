@@ -44,7 +44,6 @@ export class CartPageComponent {
           this.defaultAddress = res;
           if (Object.keys(this.defaultAddress).length > 0) {
             this.hasDefaultAddress = true;
-            console.log(this.defaultAddress);
           }
         });
     }

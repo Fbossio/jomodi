@@ -3,7 +3,11 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { CartItem } from '../../core/models/cart.interface';
+import { CreateOrderInterface } from '../../core/models/order.interface';
+import { AuthService } from '../../services/auth.service';
+import { OrdersService } from '../../services/orders.service';
 import { removeCartItem, updateQuantity } from '../../state/actions/cart.actions';
+import { createOrder } from '../../state/actions/order.actions';
 import { AppState } from '../../state/app.state';
 import { selectCartItems, selectCartTotal } from '../../state/selectors/cart.selector';
 import { alert } from '../../utils/alert';
@@ -22,6 +26,8 @@ export class CartTableComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private router: Router,
+    private ordersService: OrdersService,
+    private authService: AuthService,
     ) {}
 
 
@@ -67,7 +73,12 @@ export class CartTableComponent implements OnInit, OnDestroy {
       alert('Add address', 'Please add address to place order', 'warning');
       return
     }
-    console.log('Order placed');
+    const order: CreateOrderInterface = {
+      details: this.cartItems.map(item => ({ productId: item.id, quantity: item.quantity }))
+    }
+
+    this.store.dispatch(createOrder({ order }))
+
   }
 
   ngOnDestroy(): void {

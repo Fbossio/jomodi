@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { Banner } from '../../core/models/banner.interface';
 
 export const loadBanners = createAction(
-  '[Banner List] Load Banners'
+  '[Banner List] Load Banners',
 );
 
 export const loadBannersSuccess = createAction(

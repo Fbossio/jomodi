@@ -2,11 +2,13 @@ import { ActionReducerMap } from "@ngrx/store";
 import { BannerState } from "../core/models/banner.state";
 import { CartState } from "../core/models/cart.state";
 import { ItemState, ItemsState } from "../core/models/item.state";
+import { OrderState } from "../core/models/order.state";
 import { PaginationState } from "../core/models/pagination.state";
 import { bannerReducer } from "./reducers/banner.reducer";
 import { cartReducer } from "./reducers/cart.reducer";
 import { itemReducer } from "./reducers/item.reducer";
 import { itemsReducer } from "./reducers/items.reducer";
+import { orderReducer } from "./reducers/order.reducer";
 import { paginationReducer } from "./reducers/pagination.reducer";
 
 export interface AppState {
@@ -15,6 +17,7 @@ export interface AppState {
   banner: BannerState;
   item: ItemState;
   cart: CartState;
+  order: OrderState;
 }
 
 export const ROOT_REDUCERS: ActionReducerMap<AppState> = {
@@ -23,4 +26,5 @@ export const ROOT_REDUCERS: ActionReducerMap<AppState> = {
   banner: bannerReducer,
   item: itemReducer,
   cart: cartReducer,
+  order: orderReducer,
 };
