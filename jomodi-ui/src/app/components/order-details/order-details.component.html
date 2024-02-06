@@ -1,0 +1,31 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Order Nº {{order?.data?.id}} </mat-card-title>
+    <mat-card-subtitle>Status: {{order?.data?.status | titlecase }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <h3>Customer Information</h3>
+    <p>Name: {{order?.data?.firstName}} {{ order?.data?.lastName }}</p>
+    <p>Email: {{order?.data?.email}}</p>
+    <p>Address: {{ order?.data?.billingAddress?.address }}, {{order?.data?.billingAddress?.city}},
+      {{order?.data?.billingAddress?.zipCode}}, {{order?.data?.billingAddress?.country}}</p>
+
+    <h3>Order Details</h3>
+    <mat-list>
+      <mat-list-item *ngFor="let detail of order?.data?.details">
+        <div matLine>{{ detail.quantity }}x {{ detail.product }}</div>
+        <div matLine>{{ detail.price | currency }}</div>
+      </mat-list-item>
+    </mat-list>
+
+    <h3>Costs</h3>
+    <p>Subtotal: {{order?.data?.costs?.subtotal | currency}}</p>
+    <p>Shipping: {{order?.data?.costs?.shippingCost | currency}}</p>
+    <p>Taxes: {{((order?.data?.costs?.tax || 0) * (order?.data?.costs?.subtotal || 0)) | currency}} </p>
+    <p>Total: {{order?.data?.costs?.totalCost| currency}}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="warn">Cancel</button>
+    <button mat-raised-button color="primary">Checkout</button>
+  </mat-card-actions>
+</mat-card>

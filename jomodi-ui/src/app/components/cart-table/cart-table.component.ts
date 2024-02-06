@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { CartItem } from '../../core/models/cart.interface';
-import { CreateOrderInterface } from '../../core/models/order.interface';
+import { CreateOrderInterface, Order } from '../../core/models/order.interface';
 import { AuthService } from '../../services/auth.service';
 import { OrdersService } from '../../services/orders.service';
 import { removeCartItem, updateQuantity } from '../../state/actions/cart.actions';
 import { createOrder } from '../../state/actions/order.actions';
 import { AppState } from '../../state/app.state';
 import { selectCartItems, selectCartTotal } from '../../state/selectors/cart.selector';
+import { selectOrder } from '../../state/selectors/order.selector';
 import { alert } from '../../utils/alert';
 
 @Component({
@@ -35,6 +36,7 @@ export class CartTableComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['name', 'image' ,'price', 'quantity', 'action'];
   quantityArray: number[] = Array.from({ length: 20 }, (_, i) => i + 1);
   totalPrice: number = 0;
+  orderPlaced: Order | null = null;
 
   ngOnInit(): void {
     this.subscription.add(
@@ -77,7 +79,14 @@ export class CartTableComponent implements OnInit, OnDestroy {
       details: this.cartItems.map(item => ({ productId: item.id, quantity: item.quantity }))
     }
 
-    this.store.dispatch(createOrder({ order }))
+    this.store.dispatch(createOrder({ order }));
+    const orderSubscription = this.store.select(selectOrder).subscribe(order => {
+      if (order && order.data && order.data.id) {
+        this.router.navigate([`/order/${order.data.id}`])
+        orderSubscription.unsubscribe();
+      }
+    })
+    this.subscription.add(orderSubscription);
 
   }
 

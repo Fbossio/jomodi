@@ -42,7 +42,7 @@ export class OrdersController {
   }
 
   @Put(':id')
-  @Roles(UserRole.ADMIN)
+  // @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard)
   async update(
     @Param('id') id: string,

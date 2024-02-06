@@ -37,6 +37,8 @@ import { ROOT_REDUCERS } from './state/app.state';
 import { BannerEffect } from './state/effects/banner.effect';
 import { ItemsEffect } from './state/effects/items.effect';
 import { OrderEffect } from './state/effects/order.effect';
+import { OrderPageComponent } from './pages/order-page/order-page.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { OrderEffect } from './state/effects/order.effect';
     UnauthorizedComponent,
     CartFormComponent,
     DefaultAddressDisplayComponent,
+    OrderPageComponent,
+    OrderDetailsComponent,
   ],
   imports: [
     BrowserModule,
