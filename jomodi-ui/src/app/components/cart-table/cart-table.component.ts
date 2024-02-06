@@ -21,6 +21,7 @@ import { alert } from '../../utils/alert';
 export class CartTableComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
+  private isOrderProcessing: boolean = false;
   @Input() isLoggedIn: boolean = false;
   @Input() hasDefaultAddress: boolean = false;
 
@@ -41,7 +42,7 @@ export class CartTableComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.add(
       this.store.select(selectCartItems).subscribe((data) => {
-        if (data.length === 0) {
+        if (data.length === 0 && !this.isOrderProcessing) {
           this.router.navigate(['/empty-cart']);
         } else {
           this.cartItems = data.map(item => ({ ...item }));
@@ -75,6 +76,7 @@ export class CartTableComponent implements OnInit, OnDestroy {
       alert('Add address', 'Please add address to place order', 'warning');
       return
     }
+    this.isOrderProcessing = true;
     const order: CreateOrderInterface = {
       details: this.cartItems.map(item => ({ productId: item.id, quantity: item.quantity }))
     }
@@ -84,8 +86,12 @@ export class CartTableComponent implements OnInit, OnDestroy {
       if (order && order.data && order.data.id) {
         this.router.navigate([`/order/${order.data.id}`])
         orderSubscription.unsubscribe();
+        const itemsId = this.cartItems.map(item => item.id);
+        itemsId.forEach(id => this.store.dispatch(removeCartItem({ id })));
       }
+
     })
+
     this.subscription.add(orderSubscription);
 
   }

@@ -15,5 +15,5 @@ export const itemsReducer = createReducer(
   on(loadItems, state => ({ ...state, loading: true })),
   on(loadItemsSuccess, (state, { items, meta }) => ({ ...state, loading: false, items, meta })),
   on(loadItemsFailure, state => ({ ...state, loading: false })),
-  on(setCurrentItem, (state, { item }) => ({ ...state, currentItem: item }))
+  on(setCurrentItem, (state, { item }) => ({ ...state, currentItem: item })),
 )
