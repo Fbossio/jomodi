@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { OrderState } from '../../core/models/order.state';
-import { createOrder, createOrderFailure, createOrderSuccess } from '../actions/order.actions';
+import { cancelOrder, cancelOrderFailure, cancelOrderSuccess, createOrder, createOrderFailure, createOrderSuccess } from '../actions/order.actions';
 
 export const initialState: OrderState = {
   order: {
@@ -40,5 +40,8 @@ export const orderReducer = createReducer(
   initialState,
   on(createOrder, state => ({ ...state })),
   on(createOrderSuccess, (state, { order }) => ({ ...state, order })),
-  on(createOrderFailure, state => ({ ...state }))
+  on(createOrderFailure, state => ({ ...state })),
+  on(cancelOrder, state => ({ ...state })),
+  on(cancelOrderSuccess, (state, { order }) => ({ ...state, order })),
+  on(cancelOrderFailure, state => ({ ...state })),
 );

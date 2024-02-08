@@ -15,4 +15,9 @@ export class OrdersService {
     const endpoint = `${this.api}/orders`;
     return this.http.post(endpoint, order, options);
   }
+
+  cancelOrder(orderId: string, payload: any, options: any): Observable<any> {
+    const endpoint = `${this.api}/orders/${orderId}`;
+    return this.http.put(endpoint, payload, options);
+  }
 }

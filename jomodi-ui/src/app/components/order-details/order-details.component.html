@@ -25,7 +25,7 @@
     <p>Total: {{order?.data?.costs?.totalCost| currency}}</p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="warn">Cancel</button>
+    <button mat-raised-button color="warn" (click)="cancelOrder(order?.data?.id?.toString())">Cancel</button>
     <button mat-raised-button color="primary">Checkout</button>
   </mat-card-actions>
 </mat-card>
