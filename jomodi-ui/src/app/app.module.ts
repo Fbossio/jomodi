@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule, isDevMode } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgxStripeModule } from 'ngx-stripe';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,6 +13,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
@@ -21,7 +23,9 @@ import { DefaultAddressDisplayComponent } from './components/default-address-dis
 import { LoginComponent } from './components/login/login.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
+import { PaymentComponent } from './components/payment/payment.component';
 import { ProductInfoDisplayComponent } from './components/product-info-display/product-info-display.component';
 import { ProductItemComponent } from './components/product-item/product-item.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -31,14 +35,14 @@ import { MaterialModule } from './material/material.module';
 import { AdminComponent } from './pages/admin/admin.component';
 import { CartPageComponent } from './pages/cart-page/cart-page.component';
 import { EmptyCartComponent } from './pages/empty-cart/empty-cart.component';
+import { OrderPageComponent } from './pages/order-page/order-page.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { ProductListComponent } from './pages/product-list/product-list.component';
 import { ROOT_REDUCERS } from './state/app.state';
 import { BannerEffect } from './state/effects/banner.effect';
 import { ItemsEffect } from './state/effects/items.effect';
 import { OrderEffect } from './state/effects/order.effect';
-import { OrderPageComponent } from './pages/order-page/order-page.component';
-import { OrderDetailsComponent } from './components/order-details/order-details.component';
+import { PaymentIntentEffect } from './state/effects/paymentIntent.effect';
 
 @NgModule({
   declarations: [
@@ -63,6 +67,7 @@ import { OrderDetailsComponent } from './components/order-details/order-details.
     DefaultAddressDisplayComponent,
     OrderPageComponent,
     OrderDetailsComponent,
+    PaymentComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,8 +82,9 @@ import { OrderDetailsComponent } from './components/order-details/order-details.
     MatCarouselModule.forRoot(),
     StoreModule.forRoot(ROOT_REDUCERS),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([ItemsEffect, BannerEffect, OrderEffect]),
+    EffectsModule.forRoot([ItemsEffect, BannerEffect, OrderEffect, PaymentIntentEffect]),
     SweetAlert2Module.forRoot(),
+    NgxStripeModule.forRoot(environment.stripe.publicKey)
   ],
   providers: [],
   bootstrap: [AppComponent]

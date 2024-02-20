@@ -1,0 +1,15 @@
+<form class="checkout-form" [formGroup]="paymentForm">
+  <input type="text" formControlName="name" placeholder="Name" />
+  <input type="text" formControlName="email" placeholder="Email">
+  <input type="number" formControlName="amount" placeholder="Amount" />
+  <div class="stripe-card" ngxStripeCardGroup [elementsOptions]="elementsOptions">
+    <h4>Enter payment details</h4>
+    <div class="stripe-element">
+      <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions"></ngx-stripe-card>
+    </div>
+  </div>
+
+  <button type="submit">
+    Submit Payment
+  </button>
+</form>

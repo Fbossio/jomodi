@@ -1,0 +1,60 @@
+.checkout-form {
+  font-family: Arial, sans-serif;
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: auto;
+  margin-top: 3rem;
+}
+
+.checkout-form input[type="text"],
+.checkout-form input[type="number"],
+.stripe-element {
+  height: 40px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.checkout-form input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.checkout-form button {
+  background-color: #666EE8;
+  color: white;
+  border: none;
+  padding: 10px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.checkout-form button:hover {
+  background-color: #555BDD;
+}
+
+.stripe-element {
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.stripe-card h4 {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+  .checkout-form {
+    width: auto;
+    margin: 10px;
+  }
+}

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Order } from '../../core/models/order.interface';
 import { cancelOrder } from '../../state/actions/order.actions';
+import { createPaymentIntent } from '../../state/actions/paymentIntent.actions';
 import { AppState } from '../../state/app.state';
 
 @Component({
@@ -26,5 +27,14 @@ export class OrderDetailsComponent {
       console.error('Order not found');
     }
 
+  }
+
+  checkout(orderId: string | undefined) {
+    if (typeof orderId === 'string') {
+      this.store.dispatch(createPaymentIntent({ orderId }))
+      this.router.navigate(['/payment'])
+    } else {
+      console.error('Order not found');
+    }
   }
 }

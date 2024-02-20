@@ -26,6 +26,6 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="warn" (click)="cancelOrder(order?.data?.id?.toString())">Cancel</button>
-    <button mat-raised-button color="primary">Checkout</button>
+    <button mat-raised-button color="primary" (click)="checkout(order?.data?.id?.toString())">Checkout</button>
   </mat-card-actions>
 </mat-card>
