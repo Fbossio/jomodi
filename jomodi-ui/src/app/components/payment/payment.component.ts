@@ -3,16 +3,17 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { selectOrder } from '../../state/selectors/order.selector';
 import { selectClientSecret } from '../../state/selectors/paymentIntent.selector';
 
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
   StripeCardElementOptions,
   StripeElementsOptions
 } from '@stripe/stripe-js';
-import { StripeCardComponent } from 'ngx-stripe';
+import { StripeCardComponent, StripeService } from 'ngx-stripe';
 import { Subscription } from 'rxjs';
 import { Order } from '../../core/models/order.interface';
-import { PaymentService } from '../../services/payment.service';
 import { AppState } from '../../state/app.state';
+import { alert } from '../../utils/alert';
 
 @Component({
   selector: 'app-payment',
@@ -46,8 +47,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private paymentService: PaymentService,
-    private store: Store<AppState>
+    private router: Router,
+    private store: Store<AppState>,
+    private stripeService: StripeService
     ) {}
 
   private subscriptions = new Subscription();
@@ -55,7 +57,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   clientSecret: string | null = null;
 
   ngOnInit() {
-    // Inicializar el formulario con valores vacíos o placeholders.
+
     this.paymentForm = this.fb.group({
       name: [{value: '', disabled: true}],
       email: [{value: '', disabled: true}],
@@ -82,9 +84,33 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(
       this.store.select(selectClientSecret).subscribe(clientSecret => {
-          this.clientSecret = clientSecret;
+          this.clientSecret = clientSecret.clientSecret;
         })
     );
+  }
+
+  confirmPayment() {
+    if (this.card) {
+      this.stripeService
+        .confirmCardPayment(this.clientSecret as string, {
+          payment_method: {
+            card: this.card.element,
+            billing_details: {
+              name: this.paymentForm.get('name')?.value,
+            },
+          },
+        })
+        .subscribe((result) => {
+          if (result.error) {
+            console.log('Error', result.error);
+          } else {
+            if (result.paymentIntent?.status === 'succeeded') {
+              this.router.navigate(['/']);
+              alert('Payment successful', 'Your payment was successful', 'success');
+            }
+          }
+        });
+    }
   }
 
   ngOnDestroy(): void {

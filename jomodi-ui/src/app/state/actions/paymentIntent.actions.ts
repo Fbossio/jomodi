@@ -7,7 +7,7 @@ export const createPaymentIntent = createAction(
 
 export const createPaymentIntentSuccess = createAction(
   '[Payment] Create Payment Intent Success',
-  props<{ clientSecret: string }>()
+  props<{ clientSecret: { clientSecret: string } }>()
 );
 
 export const createPaymentIntentFailure = createAction(

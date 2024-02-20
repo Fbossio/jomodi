@@ -8,6 +8,8 @@ export const initialState = {
 export const paymentIntentReducer = createReducer(
   initialState,
   on(createPaymentIntent, state => ({ ...state })),
-  on(createPaymentIntentSuccess, (state, { clientSecret }) => ({ ...state, clientSecret })),
+  on(createPaymentIntentSuccess, (state, { clientSecret }) => ({
+    ...state, clientSecret: clientSecret.clientSecret,
+  })),
   on(createPaymentIntentFailure, state => ({ ...state })),
 );

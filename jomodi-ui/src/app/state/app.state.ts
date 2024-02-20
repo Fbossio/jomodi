@@ -20,7 +20,7 @@ export interface AppState {
   item: ItemState;
   cart: CartState;
   order: OrderState;
-  paymentIntent: PaymentIntentState;
+  clientSecret: PaymentIntentState;
 }
 
 export const ROOT_REDUCERS: ActionReducerMap<AppState> = {
@@ -30,5 +30,5 @@ export const ROOT_REDUCERS: ActionReducerMap<AppState> = {
   item: itemReducer,
   cart: cartReducer,
   order: orderReducer,
-  paymentIntent: paymentIntentReducer,
+  clientSecret: paymentIntentReducer,
 };
