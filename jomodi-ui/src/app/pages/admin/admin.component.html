@@ -1,1 +1,30 @@
-<p>admin works!</p>
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="side" opened="true">
+    <mat-nav-list>
+      <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Products
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <a mat-list-item routerLink="manage-products">Manage Products</a>
+          <a mat-list-item routerLink="create-product">Create Product</a>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Banner
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <a mat-list-item routerLink="manage-banner">Manage Banner</a>
+          <a mat-list-item routerLink="create-banner">Create Banner</a>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

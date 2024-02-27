@@ -43,6 +43,12 @@ import { BannerEffect } from './state/effects/banner.effect';
 import { ItemsEffect } from './state/effects/items.effect';
 import { OrderEffect } from './state/effects/order.effect';
 import { PaymentIntentEffect } from './state/effects/paymentIntent.effect';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { ManageProductsComponent } from './components/manage-products/manage-products.component';
+import { CreateProductComponent } from './components/create-product/create-product.component';
+import { ManageBannerComponent } from './components/manage-banner/manage-banner.component';
+import { CreateBannerComponent } from './components/create-banner/create-banner.component';
+import { UpdateProductComponent } from './components/update-product/update-product.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +74,12 @@ import { PaymentIntentEffect } from './state/effects/paymentIntent.effect';
     OrderPageComponent,
     OrderDetailsComponent,
     PaymentComponent,
+    ProfilePageComponent,
+    ManageProductsComponent,
+    CreateProductComponent,
+    ManageBannerComponent,
+    CreateBannerComponent,
+    UpdateProductComponent,
   ],
   imports: [
     BrowserModule,

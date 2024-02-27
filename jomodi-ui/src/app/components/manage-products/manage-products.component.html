@@ -1,0 +1,29 @@
+<div class="product-list-container" *ngIf="items$ | async as items">
+  <h2>Product List</h2>
+  <div class="responsive-table mat-elevation-z8">
+    <table>
+      <thead>
+        <tr>
+          <th class="column-name">Name</th>
+          <th>Price</th>
+          <th>Image</th>
+          <th>Stock</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items">
+          <td class="column-name">{{ item.name }}</td>
+          <td>{{ item.price | currency }}</td>
+          <td>
+            <img [src]="item.imageUrl" [alt]="item.name" class="small-image">
+          </td>
+          <td>{{ item.stock }}</td>
+          <td>
+            <button mat-button (click)="edit(item.id)"><mat-icon>edit</mat-icon></button>
+          </td>
+        </tr>
+    </table>
+    <app-paginator></app-paginator>
+  </div>
+</div>

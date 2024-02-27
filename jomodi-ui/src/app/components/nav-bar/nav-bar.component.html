@@ -11,6 +11,7 @@
     </a>
     <span class="example-spacer"></span>
     <div fxShow="true" fxHide.lt-md="true" class="link-container">
+      <a mat-button routerLink="/profile" *ngIf="authService.isLoggedIn() && !authService.isAdmin()">Profile</a>
       <a mat-button routerLink="/admin" *ngIf="authService.isAdmin()">Admin</a>
       <a mat-button routerLink="/signup" *ngIf="!(authService.isLoggedIn())">Sign Up</a>
       <a mat-button routerLink="/login" *ngIf="!(authService.isLoggedIn())">Login</a>
