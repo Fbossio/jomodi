@@ -4,7 +4,8 @@ import { Store, select } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { ItemsService } from '../../services/Items.service';
-import { loadItem, loadItemSuccess, loadItems, loadItemsFailure, loadItemsSuccess } from '../actions/itmems.actions';
+import { AuthService } from '../../services/auth.service';
+import { loadItem, loadItemSuccess, loadItems, loadItemsFailure, loadItemsSuccess, updateItem, updateItemFailure, updateItemSuccess } from '../actions/itmems.actions';
 import { setLimit, setPage } from '../actions/pagination.actions';
 import { AppState } from '../app.state';
 import { selectLimit, selectPage } from '../selectors/pagination.selector';
@@ -15,7 +16,8 @@ export class ItemsEffect {
   constructor(
     private actions$: Actions,
     private store: Store<AppState>,
-    private itemsService: ItemsService
+    private itemsService: ItemsService,
+    private authService: AuthService
   ) {}
 
   loadItems$ = createEffect(() => this.actions$.pipe(
@@ -42,5 +44,18 @@ export class ItemsEffect {
       )
   )),
   );
+
+  updateItem$ = createEffect(() => this.actions$.pipe(
+    ofType(updateItem),
+    exhaustMap(({id, item}) =>
+      this.itemsService.updateItem(id, item, this.authService.getHeaders()).pipe(
+        map(item => updateItemSuccess({ item })),
+        catchError((error) => {
+          console.error('Error updating item:', error);
+          return of(updateItemFailure({ error }));
+        })
+      )
+    )
+  ));
 }
 

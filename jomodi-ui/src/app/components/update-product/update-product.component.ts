@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Item } from '../../core/models/item.interface';
-import { loadItem } from '../../state/actions/itmems.actions';
+import { loadItem, updateItem } from '../../state/actions/itmems.actions';
 import { AppState } from '../../state/app.state';
 import { selectItem } from '../../state/selectors/item.selector';
 
@@ -66,7 +66,26 @@ export class UpdateProductComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    console.log(this.updateProductForm.value);
+    // const formData: FormData = new FormData();
+
+    // formData.append('file', this.updateProductForm.value.file);
+    // formData.append('description', this.updateProductForm.value.description);
+    // formData.append('price', this.updateProductForm.value.price.toString());
+    // formData.append('categoryId', this.updateProductForm.value.categoryId);
+    // formData.append('stock', this.updateProductForm.value.stock.toString());
+    // if (this.updateProductForm.value.file) {
+    //   formData.append('file', this.updateProductForm.value.file);
+    // }
+
+
+    // console.log('file:', formData.get('file'));
+    // console.log('description:', formData.get('description'));
+    // console.log('price:', formData.get('price'));
+    // console.log('categoryId:', formData.get('categoryId'));
+    // console.log('stock:', formData.get('stock'));
+
+    // this.store.dispatch(updateItem({ id: this.product!.id, item: formData }));
+    this.store.dispatch(updateItem({ id: this.product!.id, item: this.updateProductForm.value }));
   }
 
   onFileSelected(event: Event): void {

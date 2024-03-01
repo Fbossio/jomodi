@@ -34,3 +34,19 @@ export const loadItemFailure = createAction(
   '[Item List] Load Item Failure',
   props<{ error: any }>()
 );
+
+export const updateItem = createAction(
+  '[Item List] Update Item',
+  props<{ id: number, item: any }>()
+);
+
+export const updateItemSuccess = createAction(
+  '[Item List] Update Item Success',
+  props<{ item: Item }>()
+);
+
+export const updateItemFailure = createAction(
+  '[Item List] Update Item Failure',
+  props<{ error: any }>()
+);
+

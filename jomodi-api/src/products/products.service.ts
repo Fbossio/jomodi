@@ -35,7 +35,7 @@ export class ProductsService {
   }
   async create(createProductDto: CreateProductDto): Promise<Product> {
     const category = await this.categoryService.findOne(
-      createProductDto.categoryId,
+      createProductDto.categoryId.toString(),
     );
     if (category.id === undefined) {
       throw new BadRequestException('Category not found');
@@ -61,6 +61,14 @@ export class ProductsService {
     id: string,
     updateProductDto: UpdateProductDto,
   ): Promise<Product> {
+    const category = await this.categoryService.findOne(
+      updateProductDto.categoryId.toString(),
+    );
+    if (category.id === undefined) {
+      throw new BadRequestException('Category not found');
+    }
+
+    updateProductDto.category = category;
     return this.productRepository.update(id, updateProductDto);
   }
 

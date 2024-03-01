@@ -21,4 +21,22 @@ export class ItemsService {
     const endpoint = `${this.api}/products/${id}`
     return this.http.get(endpoint);
   }
+
+  updateItem(id: number, item: any, options: any): Observable<any> {
+
+    const inputObject = {
+      name: item.name,
+      description: item.description,
+      stock: item.stock,
+      price: item.price.toString(),
+      categoryId: item.categoryId.toString(),
+     }
+    const endpoint = `${this.api}/products/${id}`
+    return this.http.put(endpoint, inputObject, options);
+  }
+
+  deleteItem(id: number, options: any): Observable<any> {
+    const endpoint = `${this.api}/products/${id}`
+    return this.http.delete(endpoint, options);
+  }
 }

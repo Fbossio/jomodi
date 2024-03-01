@@ -29,6 +29,8 @@ export class ProductEntity extends BaseEntity {
   @ManyToOne(() => CategoryEntity, (category) => category.products)
   @JoinColumn({ name: 'categoryId' })
   category: CategoryEntity;
+  @Column({ nullable: true })
+  categoryId: number;
   @OneToMany(() => OrderDetailsEntity, (orderDetails) => orderDetails.product)
   orderDetails: OrderDetailsEntity[];
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
