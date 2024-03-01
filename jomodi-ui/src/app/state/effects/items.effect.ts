@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { catchError, exhaustMap, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { ItemsService } from '../../services/Items.service';
 import { AuthService } from '../../services/auth.service';
+import { alert } from '../../utils/alert';
 import { loadItem, loadItemSuccess, loadItems, loadItemsFailure, loadItemsSuccess, updateItem, updateItemFailure, updateItemSuccess } from '../actions/itmems.actions';
 import { setLimit, setPage } from '../actions/pagination.actions';
 import { AppState } from '../app.state';
@@ -49,9 +50,12 @@ export class ItemsEffect {
     ofType(updateItem),
     exhaustMap(({id, item}) =>
       this.itemsService.updateItem(id, item, this.authService.getHeaders()).pipe(
-        map(item => updateItemSuccess({ item })),
+        map(item => {
+          alert('Success', 'Item updated successfully', 'success');
+          return updateItemSuccess({ item })
+        }),
         catchError((error) => {
-          console.error('Error updating item:', error);
+          alert('Error', 'Error updating item', 'error');
           return of(updateItemFailure({ error }));
         })
       )
