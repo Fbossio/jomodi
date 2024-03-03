@@ -10,6 +10,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { UpdateCategoryComponent } from './components/update-category/update-category.component';
 import { UpdateProductComponent } from './components/update-product/update-product.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AuthGuard } from './guards/auth.guard';
@@ -39,6 +40,7 @@ const routes: Routes = [
       { path: 'edit-product/:id', component: UpdateProductComponent},
       { path: 'manage-banner', component: ManageBannerComponent },
       { path: 'manage-category', component: ManageCategoriesComponent },
+      { path: 'edit-category/:id', component: UpdateCategoryComponent },
       { path: 'create-banner', component: CreateBannerComponent }
     ]
   },

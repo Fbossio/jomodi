@@ -6,7 +6,8 @@
         <mat-form-field appearance="fill" class="full-width-input">
           <mat-label>Enter category name</mat-label>
           <input formControlName="name" matInput>
-          <mat-error *ngIf="form.controls['name'].invalid">Please enter a valid category name</mat-error>
+          <mat-error *ngIf="form.controls['name'].touched && form.controls['name'].invalid">Please enter a valid
+            category name</mat-error>
         </mat-form-field>
         <button [disabled]="!form.valid" type="submit" mat-raised-button color="primary">Create
           Category</button>
@@ -28,7 +29,7 @@
           <tr *ngFor="let category of categories">
             <td class="column-name">{{ category.name | titlecase }}</td>
             <td>
-              <button mat-button><mat-icon>edit</mat-icon></button>
+              <button mat-button (click)="editCategory(category)"><mat-icon>edit</mat-icon></button>
             </td>
           </tr>
       </table>

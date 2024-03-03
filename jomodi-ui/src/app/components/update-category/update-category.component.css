@@ -1,0 +1,14 @@
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.actions-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}

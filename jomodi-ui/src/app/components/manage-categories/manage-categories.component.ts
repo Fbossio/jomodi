@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Category } from '../../core/models/category.interface';
-import { loadCategories } from '../../state/actions/category.actions';
+import { createCategory, loadCategories, setCurrentCategory } from '../../state/actions/category.actions';
 import { AppState } from '../../state/app.state';
 import { selectCategoryList } from '../../state/selectors/category.selector';
 
@@ -14,7 +15,11 @@ import { selectCategoryList } from '../../state/selectors/category.selector';
 })
 export class ManageCategoriesComponent {
 
-  constructor(private store: Store<AppState>, private fb: FormBuilder,) {}
+  constructor(
+    private store: Store<AppState>,
+    private fb: FormBuilder,
+    private router: Router,
+    ) {}
 
   categories$: Observable<Category[]> = new Observable<Category[]>();
   form!: FormGroup;
@@ -28,6 +33,18 @@ export class ManageCategoriesComponent {
   }
 
   createCategory(category: any) {
-    console.log(category);
+    this.store.dispatch(createCategory({ category }));
+    this.form.reset({
+      name: ''
+    }, {
+      onlySelf: false,
+      emitEvent: false
+    });
+
+  }
+
+  editCategory(category: Category) {
+    this.store.dispatch(setCurrentCategory({ category }));
+    this.router.navigate([`/admin/edit-category/${category.id}`]);
   }
 }

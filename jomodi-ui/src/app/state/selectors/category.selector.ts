@@ -8,3 +8,8 @@ export const selectCategoryList = createSelector(
   selectCategoryFeature,
   (state: CategoryState) => state.categories
 );
+
+export const selectCurrentCategory = createSelector(
+  selectCategoryFeature,
+  (state: CategoryState) => state.currentCategory
+);

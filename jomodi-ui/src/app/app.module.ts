@@ -51,6 +51,7 @@ import { CategoryEffect } from './state/effects/category.effect';
 import { ItemsEffect } from './state/effects/items.effect';
 import { OrderEffect } from './state/effects/order.effect';
 import { PaymentIntentEffect } from './state/effects/paymentIntent.effect';
+import { UpdateCategoryComponent } from './components/update-category/update-category.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { PaymentIntentEffect } from './state/effects/paymentIntent.effect';
     CreateBannerComponent,
     UpdateProductComponent,
     ManageCategoriesComponent,
+    UpdateCategoryComponent,
   ],
   imports: [
     BrowserModule,
