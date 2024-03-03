@@ -1,0 +1,36 @@
+<div class="manage-category-container">
+  <div class="create-category-container">
+    <h2>Create Category</h2>
+    <div class="form-container">
+      <form [formGroup]="form" (ngSubmit)="createCategory(form.value)">
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Enter category name</mat-label>
+          <input formControlName="name" matInput>
+          <mat-error *ngIf="form.controls['name'].invalid">Please enter a valid category name</mat-error>
+        </mat-form-field>
+        <button [disabled]="!form.valid" type="submit" mat-raised-button color="primary">Create
+          Category</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="category-list-container" *ngIf="categories$ | async as categories">
+    <h2>Category List</h2>
+    <div class="responsive-table mat-elevation-z8">
+      <table>
+        <thead>
+          <tr>
+            <th class="column-name">Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of categories">
+            <td class="column-name">{{ category.name | titlecase }}</td>
+            <td>
+              <button mat-button><mat-icon>edit</mat-icon></button>
+            </td>
+          </tr>
+      </table>
+    </div>
+  </div>

@@ -1,0 +1,24 @@
+.manage-category-container {
+  width: 80%;
+  max-width: 500px;
+  margin: auto;
+}
+
+.create-category-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-list-container {
+  padding: 1.5rem;
+}
+
+.responsive-table {
+  padding: 1.5rem;
+}

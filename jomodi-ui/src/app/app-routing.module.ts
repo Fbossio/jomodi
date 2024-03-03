@@ -4,6 +4,7 @@ import { CreateBannerComponent } from './components/create-banner/create-banner.
 import { CreateProductComponent } from './components/create-product/create-product.component';
 import { LoginComponent } from './components/login/login.component';
 import { ManageBannerComponent } from './components/manage-banner/manage-banner.component';
+import { ManageCategoriesComponent } from './components/manage-categories/manage-categories.component';
 import { ManageProductsComponent } from './components/manage-products/manage-products.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PaymentComponent } from './components/payment/payment.component';
@@ -37,6 +38,7 @@ const routes: Routes = [
       { path: 'create-product', component: CreateProductComponent },
       { path: 'edit-product/:id', component: UpdateProductComponent},
       { path: 'manage-banner', component: ManageBannerComponent },
+      { path: 'manage-category', component: ManageCategoriesComponent },
       { path: 'create-banner', component: CreateBannerComponent }
     ]
   },
