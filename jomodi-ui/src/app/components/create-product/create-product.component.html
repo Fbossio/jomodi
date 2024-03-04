@@ -1,1 +1,46 @@
-<p>create-product works!</p>
+<form [formGroup]="form" (ngSubmit)="createProduct(form.value)" class="form-container">
+
+  <mat-form-field appearance="fill" class="full-width-input">
+    <mat-label>Enter product name</mat-label>
+    <input formControlName="name" matInput>
+    <mat-error *ngIf="form.controls['name'].invalid">Please enter a valid product name</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width-input">
+    <mat-label>Enter product description</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+    <mat-error *ngIf="form.controls['description'].invalid">Please enter a valid product description</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width-input">
+    <mat-label>Enter product price</mat-label>
+    <input formControlName="price" matInput>
+    <mat-error *ngIf="form.controls['price'].invalid">Please enter a valid product price</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width-input">
+    <mat-label>Enter product stock</mat-label>
+    <input formControlName="stock" matInput>
+    <mat-error *ngIf="form.controls['stock'].invalid">Please enter a valid product stock</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width-input">
+    <mat-label>Product category</mat-label>
+    <mat-select formControlName="categoryId">
+      <mat-option *ngFor="let category of categories" [value]="category.id">
+        {{category.name | titlecase}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="file-input">
+    <input type="file" id="file" #fileInput (change)="onFileSelected($event)" hidden />
+    <button mat-raised-button (click)="fileInput.click()" class="file-input-button" type="button">
+      <mat-icon>attach_file</mat-icon> Choose File
+    </button>
+    <span class="file-input-filename">{{ fileName }}</span>
+  </div>
+
+  <button [disabled]="!form.valid" type="submit" mat-raised-button color="primary">Create
+    Product</button>
+</form>

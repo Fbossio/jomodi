@@ -12,6 +12,11 @@ export class ItemsService {
 
   constructor(private http: HttpClient) { }
 
+  createItem(item: FormData, options: any): Observable<any> {
+    const endpoint = `${this.api}/products`
+    return this.http.post(endpoint, item, options);
+  }
+
   getItems(page: number=1, limit:number=10): Observable<any> {
     const endpoint = `${this.api}/products/?page=${page}&limit=${limit}`
     return this.http.get(endpoint);
