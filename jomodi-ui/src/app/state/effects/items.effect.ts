@@ -6,7 +6,19 @@ import { catchError, exhaustMap, map, mergeMap, withLatestFrom } from 'rxjs/oper
 import { ItemsService } from '../../services/Items.service';
 import { AuthService } from '../../services/auth.service';
 import { alert } from '../../utils/alert';
-import { loadItem, loadItemSuccess, loadItems, loadItemsFailure, loadItemsSuccess, updateItem, updateItemFailure, updateItemSuccess } from '../actions/itmems.actions';
+import {
+  createItem,
+  createItemFailure,
+  createItemSuccess,
+  loadItem,
+  loadItemSuccess,
+  loadItems,
+  loadItemsFailure,
+  loadItemsSuccess,
+  updateItem,
+  updateItemFailure,
+  updateItemSuccess
+} from '../actions/itmems.actions';
 import { setLimit, setPage } from '../actions/pagination.actions';
 import { AppState } from '../app.state';
 import { selectLimit, selectPage } from '../selectors/pagination.selector';
@@ -57,6 +69,22 @@ export class ItemsEffect {
         catchError((error) => {
           alert('Error', 'Error updating item', 'error');
           return of(updateItemFailure({ error }));
+        })
+      )
+    )
+  ));
+
+  createItem$ = createEffect(() => this.actions$.pipe(
+    ofType(createItem),
+    exhaustMap(({item}) =>
+      this.itemsService.createItem(item, this.authService.getHeaders()).pipe(
+        map(item => {
+          alert('Success', 'Item created successfully', 'success');
+          return createItemSuccess({ item })
+        }),
+        catchError((error) => {
+          alert('Error', 'Error creating item', 'error');
+          return of(createItemFailure({ error }));
         })
       )
     )

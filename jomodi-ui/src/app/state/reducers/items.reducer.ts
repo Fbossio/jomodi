@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { ItemsState } from '../../core/models/item.state';
-import { loadItems, loadItemsFailure, loadItemsSuccess, setCurrentItem } from '../actions/itmems.actions';
+import { createItem, createItemFailure, createItemSuccess, loadItems, loadItemsFailure, loadItemsSuccess, setCurrentItem } from '../actions/itmems.actions';
 
 
 
@@ -16,4 +16,8 @@ export const itemsReducer = createReducer(
   on(loadItemsSuccess, (state, { items, meta }) => ({ ...state, loading: false, items, meta })),
   on(loadItemsFailure, state => ({ ...state, loading: false })),
   on(setCurrentItem, (state, { item }) => ({ ...state, currentItem: item })),
+  on(createItem, state => ({ ...state, loading: true })),
+  on(createItemSuccess, (state, { item }) => ({ ...state, loading: false, items: [...state.items, item] })),
+  on(createItemFailure, state => ({ ...state, loading: false }))
+
 )

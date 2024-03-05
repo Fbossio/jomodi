@@ -32,6 +32,7 @@ export class DiskImageHandlerAdapter implements ImageStoragePort {
         path.join(this.imageDir, `${prefix}${uuid}-${name}`),
       );
     } catch (error) {
+      console.error('Error: ', error);
       return Promise.reject(error);
     }
   }

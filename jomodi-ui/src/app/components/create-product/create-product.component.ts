@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Category } from '../../core/models/category.interface';
 import { loadCategories } from '../../state/actions/category.actions';
+import { createItem } from '../../state/actions/itmems.actions';
 import { AppState } from '../../state/app.state';
 import { selectCategoryList } from '../../state/selectors/category.selector';
 
@@ -39,6 +40,14 @@ export class CreateProductComponent {
   }
 
   createProduct(product: any) {
+    const formData = new FormData();
+    formData.append('name', product.name);
+    formData.append('description', product.description);
+    formData.append('price', product.price);
+    formData.append('categoryId', product.categoryId);
+    formData.append('stock', product.stock);
+    formData.append('file', product.file);
+    this.store.dispatch(createItem({ item: formData }));
     console.log(product);
   }
 
