@@ -1,0 +1,35 @@
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.file-input {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.file-input-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.file-input-filename {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+button {
+  margin-top: 20px;
+}

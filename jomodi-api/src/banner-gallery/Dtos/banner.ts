@@ -13,6 +13,6 @@ export class CreateBannerDto {
 }
 
 export class UpdateBannerDto {
-  @IsEnum(BannerStatus)
-  status: BannerStatus;
+  @IsString()
+  title: string;
 }

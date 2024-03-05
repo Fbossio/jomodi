@@ -77,9 +77,9 @@ export class BannerPostgresAdapter implements BannerRepository {
       throw error;
     }
   }
-  async update(id: string, status: UpdateBannerDto): Promise<Banner> {
+  async update(id: string, title: UpdateBannerDto): Promise<Banner> {
     try {
-      await this.bannerRepository.update(id, status);
+      await this.bannerRepository.update(id, title);
       const updatedBanner = await this.bannerRepository.findOne({
         where: { id: Number(id) },
       });

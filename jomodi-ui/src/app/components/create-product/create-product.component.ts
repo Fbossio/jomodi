@@ -48,7 +48,6 @@ export class CreateProductComponent {
     formData.append('stock', product.stock);
     formData.append('file', product.file);
     this.store.dispatch(createItem({ item: formData }));
-    console.log(product);
   }
 
   onFileSelected(event: Event): void {

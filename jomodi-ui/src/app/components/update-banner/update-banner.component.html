@@ -1,0 +1,12 @@
+<div *ngIf="banner">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title">
+    </mat-form-field>
+    <div class="actions-container">
+      <button mat-raised-button color="warn" type="button" (click)="onDelete()">Delete Banner</button>
+      <button mat-raised-button color="primary" type="submit">Update Banner</button>
+    </div>
+  </form>
+</div>

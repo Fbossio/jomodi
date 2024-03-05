@@ -1,1 +1,18 @@
-<p>create-banner works!</p>
+<form [formGroup]="form" (ngSubmit)="createBanner(form.value)" class="form-container">
+  <mat-form-field appearance="fill" class="full-width-input">
+    <mat-label>Enter banner title</mat-label>
+    <input formControlName="title" matInput>
+    <mat-error *ngIf="form.controls['title'].invalid">Please enter a valid banner title</mat-error>
+  </mat-form-field>
+
+  <div class="file-input">
+    <input type="file" id="file" #fileInput (change)="onFileSelected($event)" hidden />
+    <button mat-raised-button (click)="fileInput.click()" class="file-input-button" type="button">
+      <mat-icon>attach_file</mat-icon> Choose File
+    </button>
+    <span class="file-input-filename">{{ fileName }}</span>
+  </div>
+
+  <button [disabled]="!form.valid" type="submit" mat-raised-button color="primary">Create
+    Product</button>
+</form>

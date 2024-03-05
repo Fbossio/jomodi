@@ -3,3 +3,12 @@ export interface Banner {
   title: string;
   imageUrl: string;
 }
+
+export interface CreateBanner {
+  title: string;
+  imageUrl: string;
+}
+
+export interface UpdateBanner {
+  title: string;
+}

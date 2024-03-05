@@ -12,4 +12,9 @@ export const selectBannerList = createSelector(
 export const selectBannerLoading = createSelector(
   selectBannerFeature,
   (state: BannerState) => state.loading
-)
+);
+
+export const selectCurrentBanner = createSelector(
+  selectBannerFeature,
+  (state: BannerState) => state.currentBanner
+);
