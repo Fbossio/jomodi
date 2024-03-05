@@ -10,6 +10,9 @@ import {
   createItem,
   createItemFailure,
   createItemSuccess,
+  deleteItem,
+  deleteItemFailure,
+  deleteItemSuccess,
   loadItem,
   loadItemSuccess,
   loadItems,
@@ -17,7 +20,7 @@ import {
   loadItemsSuccess,
   updateItem,
   updateItemFailure,
-  updateItemSuccess
+  updateItemSuccess,
 } from '../actions/itmems.actions';
 import { setLimit, setPage } from '../actions/pagination.actions';
 import { AppState } from '../app.state';
@@ -85,6 +88,22 @@ export class ItemsEffect {
         catchError((error) => {
           alert('Error', 'Error creating item', 'error');
           return of(createItemFailure({ error }));
+        })
+      )
+    )
+  ));
+
+  deleteItem$ = createEffect(() => this.actions$.pipe(
+    ofType(deleteItem),
+    exhaustMap(({id}) =>
+      this.itemsService.deleteItem(id, this.authService.getHeaders()).pipe(
+        map(() => {
+          alert('Success', 'Item deleted successfully', 'success');
+          return deleteItemSuccess({ id })
+        }),
+        catchError((error) => {
+          alert('Error', 'Error deleting item', 'error');
+          return of(deleteItemFailure({ error }));
         })
       )
     )

@@ -65,3 +65,18 @@ export const createItemFailure = createAction(
   props<{ error: any }>()
 );
 
+export const deleteItem = createAction(
+  '[Item List] Delete Item',
+  props<{ id: number }>()
+);
+
+export const deleteItemSuccess = createAction(
+  '[Item List] Delete Item Success',
+  props<{ id: number }>()
+);
+
+export const deleteItemFailure = createAction(
+  '[Item List] Delete Item Failure',
+  props<{ error: any }>()
+);
+

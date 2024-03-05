@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Item } from '../../core/models/item.interface';
-import { loadItem, updateItem } from '../../state/actions/itmems.actions';
+import { deleteItem, loadItem, updateItem } from '../../state/actions/itmems.actions';
 import { AppState } from '../../state/app.state';
 import { selectItem } from '../../state/selectors/item.selector';
 
@@ -18,6 +18,7 @@ export class UpdateProductComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private route: ActivatedRoute,
     private fb: FormBuilder,
+    private router: Router
     ){}
 
   private subscriptions = new Subscription();
@@ -66,25 +67,6 @@ export class UpdateProductComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    // const formData: FormData = new FormData();
-
-    // formData.append('file', this.updateProductForm.value.file);
-    // formData.append('description', this.updateProductForm.value.description);
-    // formData.append('price', this.updateProductForm.value.price.toString());
-    // formData.append('categoryId', this.updateProductForm.value.categoryId);
-    // formData.append('stock', this.updateProductForm.value.stock.toString());
-    // if (this.updateProductForm.value.file) {
-    //   formData.append('file', this.updateProductForm.value.file);
-    // }
-
-
-    // console.log('file:', formData.get('file'));
-    // console.log('description:', formData.get('description'));
-    // console.log('price:', formData.get('price'));
-    // console.log('categoryId:', formData.get('categoryId'));
-    // console.log('stock:', formData.get('stock'));
-
-    // this.store.dispatch(updateItem({ id: this.product!.id, item: formData }));
     this.store.dispatch(updateItem({ id: this.product!.id, item: this.updateProductForm.value }));
   }
 
@@ -98,7 +80,8 @@ export class UpdateProductComponent implements OnInit, OnDestroy {
   }
 
   onDelete() {
-    console.log(`Deleting product with id: ${this.product?.id}`);
+    this.store.dispatch(deleteItem({ id: this.product!.id }));
+    this.router.navigate(['/admin/manage-products']);
   }
 
 
