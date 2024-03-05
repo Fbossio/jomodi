@@ -1,1 +1,25 @@
-<p>manage-banner works!</p>
+<div class="banner-list-container" *ngIf="banners$ | async as banners">
+  <h2>Banner List</h2>
+  <div class="responsive-table mat-elevation-z8">
+    <table>
+      <thead>
+        <tr>
+          <th class="column-name">Title</th>
+          <th>Image</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let banner of banners">
+          <td class="column-name">{{ banner.title }}</td>
+          <td>
+            <img [src]="banner.imageUrl" [alt]="banner.title" class="small-image">
+          </td>
+          <td>
+            <button mat-button (click)="edit(banner.id)"><mat-icon>edit</mat-icon></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

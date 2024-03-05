@@ -1,0 +1,56 @@
+.banner-list-container {
+  padding: 1.5rem;
+}
+
+.responsive-table {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+th {
+  background-color: #f0f0f0;
+}
+
+tr {
+  background-color: #f9f9f9;
+}
+
+.small-image {
+  width: 50px;
+  height: 50px;
+}
+
+.total-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 2px;
+  padding: 1.5rem;
+  font-weight: bold;
+  font-size: 1.5rem;
+  background-color: #FFFFFF;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2px;
+  padding: 1.5rem;
+}
+
+@media screen and (max-width: 600px) {
+  .column-name {
+    display: none;
+  }
+}
+
+
