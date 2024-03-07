@@ -53,6 +53,10 @@ import { OrderEffect } from './state/effects/order.effect';
 import { PaymentIntentEffect } from './state/effects/paymentIntent.effect';
 import { UpdateCategoryComponent } from './components/update-category/update-category.component';
 import { UpdateBannerComponent } from './components/update-banner/update-banner.component';
+import { ManageAddressesComponent } from './components/manage-addresses/manage-addresses.component';
+import { CreateAddressComponent } from './components/create-address/create-address.component';
+import { ShowOrdersComponent } from './components/show-orders/show-orders.component';
+import { EditAddressComponent } from './components/edit-address/edit-address.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +91,10 @@ import { UpdateBannerComponent } from './components/update-banner/update-banner.
     ManageCategoriesComponent,
     UpdateCategoryComponent,
     UpdateBannerComponent,
+    ManageAddressesComponent,
+    CreateAddressComponent,
+    ShowOrdersComponent,
+    EditAddressComponent,
   ],
   imports: [
     BrowserModule,

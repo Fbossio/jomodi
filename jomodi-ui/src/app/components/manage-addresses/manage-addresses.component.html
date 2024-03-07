@@ -1,0 +1,22 @@
+<div class="addresses-container" *ngIf="adresses">
+  <div *ngFor="let address of adresses">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-subtitle *ngIf="address.isDefault">Default</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{address.name}}</p>
+        <p>{{address.address}}</p>
+        <p>{{address.city}}</p>
+        <p>{{address.zip}}</p>
+        <p>{{address.country}}</p>
+        <mat-card-actions>
+          <button *ngIf="!address.isDefault" mat-raised-button color="primary"
+            (click)="changeDefaultAddress(address.id)">Set as Default</button>
+          <button mat-raised-button color="warn" (click)="deleteAddress(address.id)">Delete</button>
+        </mat-card-actions>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

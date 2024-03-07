@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./profile-page.component.css']
 })
 export class ProfilePageComponent {
-
+  panelOpenState = false;
 }

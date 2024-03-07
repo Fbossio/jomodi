@@ -1,1 +1,29 @@
-<h2>Profile</h2>
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="side" opened="true">
+    <mat-nav-list>
+      <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Addresses
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <a mat-list-item routerLink="manage-addresses">Manage Addresses</a>
+          <a mat-list-item routerLink="create-address">Create Address</a>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Orders
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <a mat-list-item routerLink="show-orders">Show Orders</a>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

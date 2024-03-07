@@ -1,0 +1,22 @@
+.addresses-container {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.example-card {
+  min-width: 300px;
+  max-width: 400px;
+  min-height: 250px;
+}
+
+mat-card-header {
+  height: 20px;
+}
+
+mat-card-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

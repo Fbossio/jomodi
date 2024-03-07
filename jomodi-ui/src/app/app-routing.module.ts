@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CreateAddressComponent } from './components/create-address/create-address.component';
 import { CreateBannerComponent } from './components/create-banner/create-banner.component';
 import { CreateProductComponent } from './components/create-product/create-product.component';
+import { EditAddressComponent } from './components/edit-address/edit-address.component';
 import { LoginComponent } from './components/login/login.component';
+import { ManageAddressesComponent } from './components/manage-addresses/manage-addresses.component';
 import { ManageBannerComponent } from './components/manage-banner/manage-banner.component';
 import { ManageCategoriesComponent } from './components/manage-categories/manage-categories.component';
 import { ManageProductsComponent } from './components/manage-products/manage-products.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { RegisterComponent } from './components/register/register.component';
+import { ShowOrdersComponent } from './components/show-orders/show-orders.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { UpdateBannerComponent } from './components/update-banner/update-banner.component';
 import { UpdateCategoryComponent } from './components/update-category/update-category.component';
@@ -28,7 +32,15 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'signup', component: RegisterComponent},
   { path: 'product/:id', component: ProductDetailsComponent },
-  { path: 'profile', component: ProfilePageComponent, canActivate: [AuthGuard]},
+  { path: 'profile', component: ProfilePageComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: 'manage-addresses', component: ManageAddressesComponent },
+      { path: 'edit-address/:id', component: EditAddressComponent },
+      { path: 'create-address', component: CreateAddressComponent },
+      { path: 'show-orders', component: ShowOrdersComponent }
+    ]
+  },
   { path: 'cart', component: CartPageComponent},
   { path: 'empty-cart', component: EmptyCartComponent },
   { path: 'order/:id', component: OrderPageComponent, canActivate: [AuthGuard]},
