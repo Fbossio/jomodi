@@ -19,10 +19,13 @@ import { AppComponent } from './app.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { CartFormComponent } from './components/cart-form/cart-form.component';
 import { CartTableComponent } from './components/cart-table/cart-table.component';
+import { CreateAddressComponent } from './components/create-address/create-address.component';
 import { CreateBannerComponent } from './components/create-banner/create-banner.component';
 import { CreateProductComponent } from './components/create-product/create-product.component';
 import { DefaultAddressDisplayComponent } from './components/default-address-display/default-address-display.component';
+import { EditAddressComponent } from './components/edit-address/edit-address.component';
 import { LoginComponent } from './components/login/login.component';
+import { ManageAddressesComponent } from './components/manage-addresses/manage-addresses.component';
 import { ManageBannerComponent } from './components/manage-banner/manage-banner.component';
 import { ManageCategoriesComponent } from './components/manage-categories/manage-categories.component';
 import { ManageProductsComponent } from './components/manage-products/manage-products.component';
@@ -36,6 +39,8 @@ import { ProductItemComponent } from './components/product-item/product-item.com
 import { RegisterComponent } from './components/register/register.component';
 import { ShowcaseComponent } from './components/showcase/showcase.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { UpdateBannerComponent } from './components/update-banner/update-banner.component';
+import { UpdateCategoryComponent } from './components/update-category/update-category.component';
 import { UpdateProductComponent } from './components/update-product/update-product.component';
 import { MaterialModule } from './material/material.module';
 import { AdminComponent } from './pages/admin/admin.component';
@@ -51,12 +56,6 @@ import { CategoryEffect } from './state/effects/category.effect';
 import { ItemsEffect } from './state/effects/items.effect';
 import { OrderEffect } from './state/effects/order.effect';
 import { PaymentIntentEffect } from './state/effects/paymentIntent.effect';
-import { UpdateCategoryComponent } from './components/update-category/update-category.component';
-import { UpdateBannerComponent } from './components/update-banner/update-banner.component';
-import { ManageAddressesComponent } from './components/manage-addresses/manage-addresses.component';
-import { CreateAddressComponent } from './components/create-address/create-address.component';
-import { ShowOrdersComponent } from './components/show-orders/show-orders.component';
-import { EditAddressComponent } from './components/edit-address/edit-address.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +92,6 @@ import { EditAddressComponent } from './components/edit-address/edit-address.com
     UpdateBannerComponent,
     ManageAddressesComponent,
     CreateAddressComponent,
-    ShowOrdersComponent,
     EditAddressComponent,
   ],
   imports: [

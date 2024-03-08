@@ -12,7 +12,6 @@ import { ManageProductsComponent } from './components/manage-products/manage-pro
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { RegisterComponent } from './components/register/register.component';
-import { ShowOrdersComponent } from './components/show-orders/show-orders.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { UpdateBannerComponent } from './components/update-banner/update-banner.component';
 import { UpdateCategoryComponent } from './components/update-category/update-category.component';
@@ -37,8 +36,7 @@ const routes: Routes = [
     children: [
       { path: 'manage-addresses', component: ManageAddressesComponent },
       { path: 'edit-address/:id', component: EditAddressComponent },
-      { path: 'create-address', component: CreateAddressComponent },
-      { path: 'show-orders', component: ShowOrdersComponent }
+      { path: 'create-address', component: CreateAddressComponent }
     ]
   },
   { path: 'cart', component: CartPageComponent},
