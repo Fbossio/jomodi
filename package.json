@@ -7,7 +7,9 @@
     "frontend:install": "cd jomodi-ui && npm install",
     "frontend:start": "cd jomodi-ui && npm run start",
     "api:install": "cd jomodi-api && npm install",
-    "api:start": "cd jomodi-api && npm run start"
+    "api:start": "cd jomodi-api && npm run start",
+    "api:build": "cd jomodi-api && npm run build",
+    "api:start-prod": "cd jomodi-api && npm run start:prod"
   },
   "keywords": [],
   "author": "",
