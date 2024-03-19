@@ -8,6 +8,7 @@
   "scripts": {
     "clean": "rm -rf dist/ || true",
     "build": "npm install && npm run clean && nest build && cp -rf config dist/config && cp -R .elasticbeanstalk dist/.elasticbeanstalk && cp package.json dist/package.json && cd dist && zip -r Archive.zip . && cd ..",
+    "deploy": "npm run build && eb list && eb use jomodi-api-dev && eb deploy",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "NODE_ENV=development nest start --watch",
