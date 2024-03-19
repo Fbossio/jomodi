@@ -55,7 +55,7 @@ jobs:
       - checkout
       - run:
           name: Deploy App
-          # Install, build, deploy in both apps - frontend and backend
+          # Install, build, deploy in both apps
           command: |
             echo "Install, build, deploy in both apps"
             npm run deploy
