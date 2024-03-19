@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "clean": "rm -rf dist/ || true",
-    "build": "npm install && npm run clean && nest build && cp -rf config dist/config && cp -R .elasticbeanstalk dist/.elasticbeanstalk && cp .npmrc dist/.npmrc && cp package.json dist/package.json && cd dist && zip -r Archive.zip . && cd ..",
+    "build": "npm install && npm run clean && nest build && cp -rf config dist/config && cp -R .elasticbeanstalk dist/.elasticbeanstalk && cp package.json dist/package.json && cd dist && zip -r Archive.zip . && cd ..",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "NODE_ENV=development nest start --watch",
