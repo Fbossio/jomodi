@@ -5,11 +5,15 @@
   "main": "index.js",
   "scripts": {
     "frontend:install": "cd jomodi-ui && npm install",
+    "frontend:build": "cd jomodi-ui && npm run build",
+    "frontend:deploy": "cd jomodi-ui && npm run deploy",
     "frontend:start": "cd jomodi-ui && npm run start",
     "api:install": "cd jomodi-api && npm install",
     "api:start": "cd jomodi-api && npm run start",
     "api:build": "cd jomodi-api && npm run build",
-    "api:start-prod": "cd jomodi-api && npm run start:prod"
+    "api:deploy": "cd jomodi-api && npm run deploy",
+    "api:prod": "cd jomodi-api && npm run start:prod",
+    "deploy": "npm run frontend:deploy && npm run api:deploy"
   },
   "keywords": [],
   "author": "",
