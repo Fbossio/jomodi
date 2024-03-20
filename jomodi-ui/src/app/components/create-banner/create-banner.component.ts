@@ -42,6 +42,7 @@ export class CreateBannerComponent {
     let fileList: FileList | null = element.files;
     if (fileList) {
       this.form.get('file')!.setValue(fileList[0]);
+      this.fileName = fileList[0].name;
     }
   }
 
