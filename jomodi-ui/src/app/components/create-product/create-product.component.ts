@@ -48,6 +48,7 @@ export class CreateProductComponent {
     formData.append('stock', product.stock);
     formData.append('file', product.file);
     this.store.dispatch(createItem({ item: formData }));
+    this.clearForm();
   }
 
   onFileSelected(event: Event): void {
@@ -57,6 +58,11 @@ export class CreateProductComponent {
       this.form.get('file')!.setValue(fileList[0]);
       this.fileName = fileList[0].name;
     }
+  }
+
+  clearForm() {
+    this.form.reset();
+    this.fileName = 'No file selected';
   }
 
   ngOnDestroy() {
