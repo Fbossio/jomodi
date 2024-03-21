@@ -7,6 +7,7 @@ import {
   Param,
   Post,
 } from '@nestjs/common';
+import { ApiExcludeEndpoint } from '@nestjs/swagger';
 import { OrderStatus } from './entities/order.entity';
 import { OrdersService } from './orders.service';
 import { PaymentsService } from './payments.service';
@@ -19,6 +20,7 @@ export class PaymentsController {
   ) {}
 
   @Post('stripe-webhooks')
+  @ApiExcludeEndpoint()
   @HttpCode(HttpStatus.OK)
   async handleStripeWebhook(
     @Body() body: any,
