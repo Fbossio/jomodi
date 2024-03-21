@@ -8,12 +8,13 @@ export class CreateAddressDto {
   userId?: number;
   @IsOptional()
   user?: User;
-  @ApiProperty({ example: '123 Main St.' })
+  @ApiProperty({ example: '1014 S Main St' })
   @IsString()
   address: string;
   @ApiProperty({ example: '	Las Cruces' })
   @IsString()
   city: string;
+  @ApiProperty({ example: '88005' })
   @IsString()
   zip: string;
   @IsString()
