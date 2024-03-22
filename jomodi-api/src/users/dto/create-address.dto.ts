@@ -17,7 +17,7 @@ export class CreateAddressDto {
   @ApiProperty({ example: '88005' })
   @IsString()
   zip: string;
-  @ApiProperty({ example: 'New Mexico' })
+  @ApiProperty({ example: 'United States' })
   @IsString()
   country: string;
   @IsOptional()
